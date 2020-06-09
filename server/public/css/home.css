@@ -1,0 +1,23 @@
+body{
+    background-color: black;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+nav{
+    background-color: #204073;
+}
+main {
+    flex: 1 0 auto;
+  }
+  #mainfooter{
+    background-color: #204073;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    
+  }
+  #borderUploadBTN{
+      border-bottom: 10px;
+  }

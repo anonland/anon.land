@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+        Hola! bienvenido a mi red social con la filosofia de que la maxima prioridad es la libertad de expresion.
+        Asi que sos un curioso que viene a ver el codigo fuente eh..
+        Si queres reportar un bug, algun aporte, sugerencia o feedback me podes encontrar en Telegram.
+        https://t.me/GNTok
+    -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express it!</title>
+    <!-- Link CSS.. -->
+    <link rel="stylesheet" href="./css/materialize.css">
+    <link rel="stylesheet" href="./css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/brands.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/svg-with-js.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/v4-shims.min.css">
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+
+<body>
+    <main>
+        <!-- Navbar.. -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="#!">Notificacion 1</a></li>
+            <li><a href="#!">Notificacion 2</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Notificacion 3</a></li>
+        </ul>
+        <ul id="dropdown2" class="dropdown-content">
+            <li><a href="#!">General</a></li>
+            <li><a href="#!">Actualidad</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Entretenimiento</a></li>
+            <li><a href="#!">Preguntas</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Videos</a></li>
+            <li><a href="#!">NSFW</a></li>
+        </ul>
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" class="brand-logo">Express it!</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#">USER ID</a></li>
+                    <li><a href="#">Tutucas: 5</a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="far fa-bell"></i>
+                </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="#" class="dropdown-trigger" data-target="dropdown2"><i class="fas fa-bars"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Footer.. -->
+        <footer class="page-footer black">
+            <div class="container" id="mainfooter">
+                <div class="row">
+                    <div class="col">
+                        <h5 class="white-text">Express it!</h5>
+                        <p class="grey-text text-lighten-4">Expresate anonimamente</p>
+                    </div>
+                    <div class="container section">
+                        <div id="borderUploadBTN" class="col right">
+                            <a href="#modal1" class="btn-floating btn-large waves-effect waves-light red btn modal-trigger"><i
+                                    class="material-icons"><i class="fas fa-plus"></i></i></a>
+                        </div>
+                        <div id="modal1" class="modal">
+                            <div class="modal-content">
+                            <form action="post" method="post">
+                                <div class="input-field">
+                                    <select>
+                                        <option value="" disabled selected>Elegí un nicho</option>
+                                        <option value="">General</option>
+                                        <option value="">Actualidad</option>
+                                        <option value="">Entretenimiento</option>
+                                        <option value="">Preguntas</option>
+                                        <option value="">Videos</option>
+                                        <option value="">NSFW</option>
+
+                                    </select>
+                                    <label>Materialize Select</label>
+                                </div>
+
+
+
+                            </form>
+                            <div class="modal-footer">
+                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+
+            </div>
+            </div>
+        </footer>
+
+
+
+
+
+
+
+        <!--
+        Boton para postear fixeado abajo a la derecha, tiene que abrir un modal con un form
+            <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">+</i></a>
+    -->
+    </main>
+    <!-- Scripts.. -->
+    <script src="./js/materialize.js"></script>
+    <script src="./js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/brands.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/conflict-detection.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/fontawesome.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/regular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/solid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/v4-shims.min.js"></script>
+    <script src="./js/home.js"></script>
+</body>
+
+</html>
