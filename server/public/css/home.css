@@ -21,3 +21,9 @@ main {
   #borderUploadBTN{
       border-bottom: 10px;
   }
+textarea{
+    border-bottom: 10px;
+}
+#mediaFile{
+
+}

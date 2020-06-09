@@ -87,34 +87,52 @@
                     </div>
                     <div class="container section">
                         <div id="borderUploadBTN" class="col right">
-                            <a href="#modal1" class="btn-floating btn-large waves-effect waves-light red btn modal-trigger"><i
+                            <a href="#modal1"
+                                class="btn-floating btn-large waves-effect waves-light red btn modal-trigger"><i
                                     class="material-icons"><i class="fas fa-plus"></i></i></a>
                         </div>
-                        <div id="modal1" class="modal">
+                        <div id="modal1" style="background-color: #204073;" class="modal">
                             <div class="modal-content">
-                            <form action="post" method="post">
-                                <div class="input-field">
-                                    <select>
-                                        <option value="" disabled selected>Elegí un nicho</option>
-                                        <option value="">General</option>
-                                        <option value="">Actualidad</option>
-                                        <option value="">Entretenimiento</option>
-                                        <option value="">Preguntas</option>
-                                        <option value="">Videos</option>
-                                        <option value="">NSFW</option>
+                                <form action="post" method="post">
+                                    <div class="input-field">
+                                        <select class="browser-default">
+                                            <option value="" disabled selected>Elegí un nicho</option>
+                                            <option value="1">General</option>
+                                            <option value="2">Actualidad</option>
+                                            <option value="3">Entretenimiento</option>
+                                            <option value="4">Preguntas</option>
+                                            <option value="5">Videos</option>
+                                            <option value="6">NSFW</option>
+                                            <div class="waves-effect waves-green btn-flat">
+                                                <a href="" class="waves-effect waves-green btn-flat">
+                                                    <i class="fas fa-cloud-upload-alt"></i>
+                                                    <input type="file" name=""
+                                                        class="modal-close waves-effect waves-black btn-flat"
+                                                        id="mediaFile"
+                                                        accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
 
-                                    </select>
-                                    <label>Materialize Select</label>
-                                </div>
+                                                </a>
+
+                                            </div>
+
+                                            <textarea name="textarea" value="" rows=""
+                                                placeholder="Escribi el contenido de tu publicación" maxlength="5000"
+                                                cols=""></textarea>
+                                        </select>
+                                        <br>
+                                        <!-- <label>Materialize Select</label>-->
+                                    </div>
+                                    <div style="text-align: center;" class="modal-footer green">
+                                        <a href="#!" id="publishBTN" type="submit"
+                                            class="modal-close waves-effect waves-green btn-flat">Publicar <i
+                                                class="fas fa-paper-plane"></i></a>
+                                    </div>
 
 
+                                </form>
 
-                            </form>
-                            <div class="modal-footer">
-                                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
                             </div>
                         </div>
-                    </div>
                     </div>
 
                 </div>
