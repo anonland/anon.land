@@ -8,48 +8,35 @@
     -->
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Express it!</title>
-    <!-- Link CSS.. -->
-    <link rel="stylesheet" href="./css/materialize.css">
-    <link rel="stylesheet" href="./css/materialize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/brands.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/regular.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/svg-with-js.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/v4-shims.min.css">
-    <link rel="stylesheet" href="./css/home.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Express it!</title>
+  <!-- Link CSS.. -->
+  <link rel="stylesheet" href="./css/materialize.css">
+  <link rel="stylesheet" href="./css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/brands.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/regular.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/svg-with-js.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/v4-shims.min.css">
+  <link rel="stylesheet" href="./css/home.css">
 </head>
 
 <body>
-    <main> <!-- pagina bien armada con filas y columnas
-        <div class="container">
-            <div class="row">
-                <div class="col s12">
-                     aca va el navbar
-                </div>
-            </div>
-            <div class="row">
-
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    aca va el footer
-
-                </div>
-            </div>
-        </div> -->
-        <!-- Navbar.. -->
-        <ul id="dropdown1" class="dropdown-content">
+  <main>
+    <div>
+      <div class="row">
+        <div class="col s12">
+          <!-- Navbar.. -->
+          <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">Notificacion 1</a></li>
             <li><a href="#!">Notificacion 2</a></li>
             <li class="divider"></li>
             <li><a href="#!">Notificacion 3</a></li>
-        </ul>
-        <ul id="dropdown2" class="dropdown-content">
+          </ul>
+          <ul id="dropdown2" class="dropdown-content">
             <li><a href="#!">General</a></li>
             <li><a href="#!">Actualidad</a></li>
             <li class="divider"></li>
@@ -58,166 +45,154 @@
             <li class="divider"></li>
             <li><a href="#!">Videos</a></li>
             <li><a href="#!">NSFW</a></li>
-        </ul>
-        <nav>
+          </ul>
+          <nav>
             <div class="nav-wrapper">
-                <a href="/home" class="brand-logo">Express it!</a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#">USER ID</a></li>
-                    <li><a href="#">Tutucas: 5 <i class="fas fa-certificate"></i> </a></li>
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="far fa-bell"></i>
-                </ul>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="#" class="dropdown-trigger" data-target="dropdown2"><i class="fas fa-bars"></i></a>
-                    </li>
-                </ul>
+              <a href="/home" class="brand-logo">Express it!</a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="#">USER ID</a></li>
+                <li><a href="#">Tutucas: 5 <i class="fas fa-certificate"></i> </a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="far fa-bell"></i>
+              </ul>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="#" class="dropdown-trigger" data-target="dropdown2"><i class="fas fa-bars"></i></a>
+                </li>
+              </ul>
             </div>
-        </nav>
-        <div class="container">
+          </nav>
+
+        </div>
+      </div>
+      <div class="row ">
+        <!-- aca va el post + el trending -->
+        <div class="col s9" style="padding: 0 45px 10px 25px;">
+          <!-- este es el div del post -->
+          <div id="post">
             <div class="row">
-                <div class="col s9">
-                    <!-- este es el div del post -->
-                    <div id="post">
-                        <div class="row">
-                            <div class="col s3">
-                                <strong>USER ID
-                                    <br>
-                                    USER RANK</strong>
-                            </div>
-                            <div class="col s9">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit aut suscipit labore ex
-                                    vel accusantium ut, iusto voluptatibus odit! Quo quasi laborum dolorum cum aliquam
-                                    amet. Aut assumenda labore quas?</p>
-                                <img src="./img/test.jpg" alt="Imagen del post" srcset="">
-                            </div>
+              <div class="col s3">
+                <strong>USER ID
+                  <br>
+                  USER RANK</strong>
+              </div>
+              <div class="col s9">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit aut suscipit labore ex
+                  vel accusantium ut, iusto voluptatibus odit! Quo quasi laborum dolorum cum aliquam
+                  amet. Aut assumenda labore quas?</p>
+                <div style="width: 50%;"><img style="width: 100%;" src="./img/test.jpg" alt="Imagen del post" srcset="">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col s12">
+                <a href="#"><i class="fas fa-comment"></i>23</a>
+                <a href="#"><i class="fas fa-certificate"></i>3</a>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+        <!-- aca va el trending -->
+        <div class="row">
+
+          <div id="sideNav" class="col s3 nav-wrapper right green darken-4 sidenav-fixed">
+            <!-- Este es el div de los posteos mas puntuados -->
+            <div class="nav-content carousel carousel-slider">
+              <h5 style="text-align: center;">TOPS!</h5>
+              <ul id="tabs-swipe-demo" class="tabs">
+                <li class="tab"><a href="#test-swipe-1">Semana</a></li>
+                <li class="tab"><a class="active" href="#test-swipe-2">Mes</a></li>
+              </ul>
+              <div id="test-swipe-1" class="green darken-4">contenido 1</div>
+              <div id="test-swipe-2" class="green darken-4">contenido 2</div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <!-- aca va el footer -->
+          <!-- Footer.. -->
+          <footer class="page-footer black">
+            <div id="mainfooter">
+              <div class="row">
+                <div class="col">
+                  <h5 class="white-text">Express it!</h5>
+                  <p class="grey-text text-lighten-4">Expresate anonimamente</p>
+                </div>
+                <div class="container section">
+                  <div id="borderUploadBTN" class="col right">
+                    <a href="#modal1" class="btn-floating btn-large waves-effect waves-light red btn modal-trigger"><i
+                        class="material-icons"><i class="fas fa-plus"></i></i></a>
+                  </div>
+                  <div id="modal1" style="background-color: #204073;" class="modal">
+                    <div class="modal-content">
+                      <form id="postForm" action="post" method="post">
+                        <div class="input-field">
+                          <select id="section" class="browser-default">
+                            <option value="" disabled selected>Elegí un nicho</option>
+                            <option value="1" id="off">General</option>
+                            <option value="2" id="new">Actualidad</option>
+                            <option value="3" id="ent">Entretenimiento</option>
+                            <option value="4" id="prg">Preguntas</option>
+                            <option value="5" id="vid">Videos</option>
+                            <option value="6" id="r18">NSFW</option>
+                          </select>
+
+                          <input type="file" name="" class="waves-effect waves-black btn-flat" id="mediaFile"
+                            accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
+                          <label class="waves-effect waves-black btn-flat" for="mediaFile"><i
+                              class="fas fa-cloud-upload-alt"></i></label>
+                          <textarea name="textarea" value="" rows="" id="postTXT"
+                            placeholder="Escribi el contenido de tu publicación" maxlength="5000" cols=""></textarea>
                         </div>
-                        <div class="row">
-                            <div class="col s12">
-                                <a href="#"><i class="fas fa-comment"></i>23</a>
-                                <a href="#"><i class="fas fa-certificate"></i>3</a>
-                            </div>
+                        <div style="text-align: center;" class="modal-footer green">
+                          <a href="#!" id="publishBTN" type="submit"
+                            class="modal-close waves-effect waves-green btn-flat">Publicar
+                            <i class="fas fa-paper-plane"></i></a>
                         </div>
 
+
+                      </form>
 
                     </div>
-
-                </div>
-                <div id="sideNav" class="col s3 nav-wrapper right green darken-4 sidenav-fixed">
-                    <!-- Este es el div de los posteos mas puntuados -->
-                    <div class="nav-content carousel carousel-slider">
-                        <h5 style="text-align: center;">TOPS!</h5>
-                        <ul id="tabs-swipe-demo" class="tabs">
-                            <li class="tab"><a href="#test-swipe-1">Semana</a></li>
-                            <li class="tab"><a class="active" href="#test-swipe-2">Mes</a></li>
-                        </ul>
-                        <div id="test-swipe-1" class="green darken-4">contenido 1</div>
-                        <div id="test-swipe-2" class="green darken-4">contenido 2</div>
-                    </div>
-
-
-
+                  </div>
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+              </div>
 
             </div>
         </div>
-        <!-- Footer.. -->
-        <footer class="page-footer black">
-            <div class="container" id="mainfooter">
-                <div class="row">
-                    <div class="col">
-                        <h5 class="white-text">Express it!</h5>
-                        <p class="grey-text text-lighten-4">Expresate anonimamente</p>
-                    </div>
-                    <div class="container section">
-                        <div id="borderUploadBTN" class="col right">
-                            <a href="#modal1"
-                                class="btn-floating btn-large waves-effect waves-light red btn modal-trigger"><i
-                                    class="material-icons"><i class="fas fa-plus"></i></i></a>
-                        </div>
-                        <div id="modal1" style="background-color: #204073;" class="modal">
-                            <div class="modal-content">
-                                <form action="post" method="post">
-                                    <div class="input-field">
-                                        <select class="browser-default">
-                                            <option value="" disabled selected>Elegí un nicho</option>
-                                            <option value="1">General</option>
-                                            <option value="2">Actualidad</option>
-                                            <option value="3">Entretenimiento</option>
-                                            <option value="4">Preguntas</option>
-                                            <option value="5">Videos</option>
-                                            <option value="6">NSFW</option>
-                                        </select>
-                                        <!--
-                                            <i class="fas fa-cloud-upload-alt"></i>-->
-
-
-                                        <input type="file" name="" class="waves-effect waves-black btn-flat"
-                                            id="mediaFile"
-                                            accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
-                                        <label class="waves-effect waves-black btn-flat" for="mediaFile"><i
-                                                class="fas fa-cloud-upload-alt"></i></label>
-                                        <textarea name="textarea" value="" rows="" id="postTXT"
-                                            placeholder="Escribi el contenido de tu publicación" maxlength="5000"
-                                            cols=""></textarea>
-
-
-                                        <!-- <label>Materialize Select</label>-->
-                                    </div>
-                                    <div style="text-align: center;" class="modal-footer green">
-                                        <a href="#!" id="publishBTN" type="submit"
-                                            class="modal-close waves-effect waves-green btn-flat">Publicar <i
-                                                class="fas fa-paper-plane"></i></a>
-                                    </div>
-
-
-                                </form>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            </div>
         </footer>
+      </div>
+    </div>
+    </div>
 
+    <div class="container">
 
+    </div>
 
-
-
-
-
-        <!--
+    <!--
         Boton para postear fixeado abajo a la derecha, tiene que abrir un modal con un form
             <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">+</i></a>
     -->
-    </main>
-    <!-- Scripts.. -->
-    <script src="./js/materialize.js"></script>
-    <script src="./js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/brands.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/conflict-detection.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/fontawesome.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/regular.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/solid.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/v4-shims.min.js"></script>
-    <script src="./js/home.js"></script>
+  </main>
+  <!-- Scripts.. -->
+  <script src="./js/materialize.js"></script>
+  <script src="./js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/brands.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/conflict-detection.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/fontawesome.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/regular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/solid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/v4-shims.min.js"></script>
+  <script src="./js/home.js"></script>
 </body>
 
 </html>

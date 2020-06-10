@@ -6,6 +6,7 @@ body{
 }
 nav{
     background-color: #204073;
+    display: flexbox;
 }
 main {
     flex: 1 0 auto;

@@ -28,7 +28,7 @@ function register(password) {
 
   xmlhttp.addEventListener("load", function () {
     if (this.status == 200) {
-      // Respuesta de la request
+      // Respuesta de la request BACKEND ACA
     }
   });
 
