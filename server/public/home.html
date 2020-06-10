@@ -25,7 +25,23 @@
 </head>
 
 <body>
-    <main>
+    <main> <!-- pagina bien armada con filas y columnas
+        <div class="container">
+            <div class="row">
+                <div class="col s12">
+                     aca va el navbar
+                </div>
+            </div>
+            <div class="row">
+
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    aca va el footer
+
+                </div>
+            </div>
+        </div> -->
         <!-- Navbar.. -->
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="#!">Notificacion 1</a></li>
@@ -45,10 +61,10 @@
         </ul>
         <nav>
             <div class="nav-wrapper">
-                <a href="#!" class="brand-logo">Express it!</a>
+                <a href="/home" class="brand-logo">Express it!</a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="#">USER ID</a></li>
-                    <li><a href="#">Tutucas: 5</a></li>
+                    <li><a href="#">Tutucas: 5 <i class="fas fa-certificate"></i> </a></li>
                     <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="far fa-bell"></i>
                 </ul>
                 <ul class="right hide-on-med-and-down">
@@ -57,6 +73,50 @@
                 </ul>
             </div>
         </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col s9">
+                    <!-- este es el div del post -->
+                    <div id="post">
+                        <div class="row">
+                            <div class="col s3">
+                                <strong>USER ID
+                                    <br>
+                                    USER RANK</strong>
+                            </div>
+                            <div class="col s9">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit aut suscipit labore ex
+                                    vel accusantium ut, iusto voluptatibus odit! Quo quasi laborum dolorum cum aliquam
+                                    amet. Aut assumenda labore quas?</p>
+                                <img src="./img/test.jpg" alt="Imagen del post" srcset="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12">
+                                <a href="#"><i class="fas fa-comment"></i>23</a>
+                                <a href="#"><i class="fas fa-certificate"></i>3</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div id="sideNav" class="col s3 nav-wrapper right green darken-4 sidenav-fixed">
+                    <!-- Este es el div de los posteos mas puntuados -->
+                    <div class="nav-content carousel carousel-slider">
+                        <h5 style="text-align: center;">TOPS!</h5>
+                        <ul id="tabs-swipe-demo" class="tabs">
+                            <li class="tab"><a href="#test-swipe-1">Semana</a></li>
+                            <li class="tab"><a class="active" href="#test-swipe-2">Mes</a></li>
+                        </ul>
+                        <div id="test-swipe-1" class="green darken-4">contenido 1</div>
+                        <div id="test-swipe-2" class="green darken-4">contenido 2</div>
+                    </div>
+
+
+
+                </div>
 
 
 
@@ -72,11 +132,8 @@
 
 
 
-
-
-
-
-
+            </div>
+        </div>
         <!-- Footer.. -->
         <footer class="page-footer black">
             <div class="container" id="mainfooter">
@@ -103,23 +160,21 @@
                                             <option value="4">Preguntas</option>
                                             <option value="5">Videos</option>
                                             <option value="6">NSFW</option>
-                                            <div class="waves-effect waves-green btn-flat">
-                                                <a href="" class="waves-effect waves-green btn-flat">
-                                                    <i class="fas fa-cloud-upload-alt"></i>
-                                                    <input type="file" name=""
-                                                        class="modal-close waves-effect waves-black btn-flat"
-                                                        id="mediaFile"
-                                                        accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
-
-                                                </a>
-
-                                            </div>
-
-                                            <textarea name="textarea" value="" rows=""
-                                                placeholder="Escribi el contenido de tu publicación" maxlength="5000"
-                                                cols=""></textarea>
                                         </select>
-                                        <br>
+                                        <!--
+                                            <i class="fas fa-cloud-upload-alt"></i>-->
+
+
+                                        <input type="file" name="" class="waves-effect waves-black btn-flat"
+                                            id="mediaFile"
+                                            accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
+                                        <label class="waves-effect waves-black btn-flat" for="mediaFile"><i
+                                                class="fas fa-cloud-upload-alt"></i></label>
+                                        <textarea name="textarea" value="" rows="" id="postTXT"
+                                            placeholder="Escribi el contenido de tu publicación" maxlength="5000"
+                                            cols=""></textarea>
+
+
                                         <!-- <label>Materialize Select</label>-->
                                     </div>
                                     <div style="text-align: center;" class="modal-footer green">

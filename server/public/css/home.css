@@ -25,5 +25,27 @@ textarea{
     border-bottom: 10px;
 }
 #mediaFile{
+    display: none;
+}
+label{
+    margin-top: 70px;
+    
+}
 
+#post {
+	background: linear-gradient(90deg, rgba(42,102,36,1) 33%, rgba(32,64,115,1) 100%, rgba(2,0,36,1) 204073%);
+	background-size: 400% 400%;
+	animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
