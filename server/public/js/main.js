@@ -28,12 +28,12 @@ function register(password) {
 
   xmlhttp.addEventListener("load", function () {
     if (this.status == 200) {
-      // Respuesta de la request BACKEND ACA
+      // Respuesta de la request BACKEND ACA xmlhttp.responseText
     }
   });
 
   xmlhttp.open("POST", "/register", true);
-
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
   xmlhttp.send(JSON.stringify(PW));
   console.log(PW);
 }

@@ -5,10 +5,11 @@ const port = 3000;
 const path = require("path");
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./userDB.js');
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 let userList = [];
@@ -31,7 +32,11 @@ app.post('/register', function (req, res) {
         res.status(400).send("No se recibieron bien los datos");
         return;
     }else{
-    userList.push({password: req.body});
+    userList.push({password: req.body.newPW});
+    db.register(req.body.newPW, (bool) => {
+        if(bool)console.log('success');
+        else{console.log('error in DB')}
+    });
     console.log(userList);
     console.log(req.body);
     res.status(200).send('registrado satisfactoriamente!');

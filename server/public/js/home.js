@@ -38,7 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     xmlhttp.open("POST", "/asd", true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify(formData));
+ 
   }
 
   publishBTN.addEventListener('click', function(){
