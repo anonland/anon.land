@@ -15,7 +15,7 @@ registerBTN.addEventListener("click", function () {
 })
 
 // funcion de login PENDIENTE
-function login(usrID, password) { }
+function login(user, password) { }
 
 // funcion de registro
 function register(password) {
@@ -32,7 +32,7 @@ function register(password) {
     }
   });
 
-  xmlhttp.open("POST", "url", true);
+  xmlhttp.open("POST", "/register", true);
 
   xmlhttp.send(JSON.stringify(PW));
   console.log(PW);

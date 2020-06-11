@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    xmlhttp.open("POST", "url", true);
+    xmlhttp.open("POST", "/asd", true);
     xmlhttp.send(JSON.stringify(formData));
   }
 

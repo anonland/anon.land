@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "handlebars": "^4.7.6",
+    "mongodb": "^3.5.8",
     "nodemon": "^2.0.4"
   }
 }
