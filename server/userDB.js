@@ -5,7 +5,7 @@ const dbName = 'expitDB';
 // perform actions on the collection object
 
 
-
+// login function
 function login(username, password, cbResult) {
 
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
@@ -54,7 +54,6 @@ function login(username, password, cbResult) {
 }
 
 // FUNCTION conults user in the DB
-
 function getUser(username, cbResult) {
     db.MongoClient(db.uri, db.config, (err, client) => {
         if (err) {
@@ -80,6 +79,7 @@ function getUser(username, cbResult) {
     });
 }
 
+// register function
 function register(password, cbResult) {
     console.log("estoy en el register " + password);
 
@@ -93,7 +93,7 @@ function register(password, cbResult) {
             const usersCollection = serverDB.collection('userData');
 
             const newUser = {
-
+                // possible id ?
                 password
             }
             // Insertamos el user en la DB
@@ -103,7 +103,10 @@ function register(password, cbResult) {
                     cbResult(false);
                 } else {
                     cbResult(true);
-                     console.log(result);
+                    console.log(result);
+                }
+                if (err) {
+                    cbResult(false);
                 }
 
                 client.close();
@@ -114,7 +117,41 @@ function register(password, cbResult) {
 
 }
 
+function createPost(postData, cbResult) {
+    db.MongoClient.connect(db.uri, db.config, (err, client) => {
+        if (err) {
+            cbResult(false);
+        } else {
+            const serverDB = client.db('expitDB');
+            const postCollections = serverDB.collection('postData');
+
+            postCollections.insertOne(postData, (err, result) => {
+
+                if (err) {
+                    cbResult(false);
+                } else {
+                    cbResult(true);
+                    console.log(result);
+                }
+                if (err) {
+                    cbResult(false);
+                }
+
+                client.close();
+            });
+
+        }
+
+    });
+
+};
+
+
 
 // client.close();
 
-module.exports = { register };
+module.exports = { 
+    register,
+    createPost
+
+};

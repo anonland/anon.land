@@ -1,17 +1,18 @@
 //global vars..
 const registerBTN = document.getElementById('registerBTN');
-
+const registerForm = document.getElementById('register');
 
 // modal..
 document.addEventListener('DOMContentLoaded', function () {
   let elems = document.querySelectorAll('.modal');
   let instances = M.Modal.init(elems);
 });
-
+console.log(registerForm);
 // Evento del boton de registro
-registerBTN.addEventListener("click", function () {
+registerForm.addEventListener("submit", function (event) {
+  event.preventDefault();
   const newPassword = document.getElementById('newPassword');
-  register(newPassword.value);
+ register(newPassword.value);
 })
 
 // funcion de login PENDIENTE
@@ -29,6 +30,9 @@ function register(password) {
   xmlhttp.addEventListener("load", function () {
     if (this.status == 200) {
       // Respuesta de la request BACKEND ACA xmlhttp.responseText
+      let response = JSON.parse(xmlhttp.responseText);
+      console.log(response);
+      window.location.href = response.redirect;
     }
   });
 

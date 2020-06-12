@@ -23,38 +23,46 @@ app.get('/home', function (req, res) {
     res.sendFile(path.join(__dirname, "/public/home.html"));
 })
 
+// post register
 app.post('/register', function (req, res) {
-
-    
-
     // Verificar si recibí los datos y validarlos
     if(!req.body){
         res.status(400).send("No se recibieron bien los datos");
         return;
     }else{
-    userList.push({password: req.body.newPW});
+    userList.push({password: req.body.newPW, userid: req.body._id});
     db.register(req.body.newPW, (bool) => {
-        if(bool)console.log('success');
+        if(bool){
+           return res.status(200).json({
+               success: true,
+               redirect: "/home"
+           });
+
+        }
         else{console.log('error in DB')}
     });
     console.log(userList);
     console.log(req.body);
-    res.status(200).send('registrado satisfactoriamente!');
+  //  res.status(200)
     }
-  /**  let { newPW } = req.body;
-    console.log(req.body);
-    
-    
-     
-    const erros = [];
-    if(newPW<=0){}
-    if (newPW.length <= 4) { erros.push({ text: "la contraseña tiene que ser de mas de 4 caracteres" }); }
-    if (erros.length > 0){res.render('/register',{newPW});}
-    else{res.send('ok');}
-        
-    ;*/
 })
 
+// post para publicar
+app.post('/exp', function(req, res){
+    if(!req.body){
+        res.status(400).send("Erro al publicar");
+    }else{
+        db.createPost(req.body, (bool) =>{
+            if(bool){
+                return res.status(200).json({
+                    success: true,
+                    redirect: `/exp/${req.body.section}`
+                });
+            }
+        });
+    }
+
+});
 
 
 
