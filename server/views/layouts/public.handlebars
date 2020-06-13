@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express it!</title>
+    <!-- Link CSS.. -->
+  <link rel="stylesheet" href="./css/materialize.css">
+  <link rel="stylesheet" href="./css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/brands.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/regular.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/solid.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/svg-with-js.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/v4-shims.min.css">
+  <link rel="stylesheet" href="./css/home.css">
+</head>
+<body>
+     <div class="row container">
+        <div class="col s12">
+          <!-- Navbar.. -->
+          <ul id="dropdown1" class="dropdown-content">
+            <li><a href="#!">Notificacion 1</a></li>
+            <li><a href="#!">Notificacion 2</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Notificacion 3</a></li>
+          </ul>
+          <ul id="dropdown2" class="dropdown-content">
+            <li><a href="#!">General</a></li>
+            <li><a href="#!">Actualidad</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Entretenimiento</a></li>
+            <li><a href="#!">Preguntas</a></li>
+            <li class="divider"></li>
+            <li><a href="#!">Videos</a></li>
+            <li><a href="#!">NSFW</a></li>
+          </ul>
+          <nav>
+            <div class="nav-wrapper">
+              <a href="/home" class="brand-logo">Express it!</a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="#">USER ID {{userid}}</a></li>
+                <li><a href="#">Tutucas: {{points}} <i class="fas fa-certificate"></i> </a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown1"><i class="far fa-bell"></i>
+              </ul>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="#" class="dropdown-trigger" data-target="dropdown2"><i class="fas fa-bars"></i></a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+
+        </div>
+      </div>
+
+    {{{body}}}
+      <!-- Scripts.. -->
+  <script src="./js/materialize.js"></script>
+  <script src="./js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/brands.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/conflict-detection.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/fontawesome.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/regular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/solid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/v4-shims.min.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+</html>

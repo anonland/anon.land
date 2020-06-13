@@ -34,7 +34,8 @@ function publishForm(mediaFile, postTXT, section) {
       // Respuesta de la request BACKEND ACA
       let response = JSON.parse(xmlhttp.responseText);
       console.log(response);
-      window.location.href = response.redirect;
+     // response.userid
+     // window.location.href = response.redirect;
     }
   });
 

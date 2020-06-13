@@ -92,9 +92,11 @@ function register(password, cbResult) {
             const serverDB = client.db('expitDB');
             const usersCollection = serverDB.collection('userData');
 
-            const newUser = {
+            let newUser = {
                 // possible id ?
-                password
+                rank: "..",
+                password,
+                points: 5
             }
             // Insertamos el user en la DB
             usersCollection.insertOne(newUser, (err, result) => {
@@ -117,6 +119,7 @@ function register(password, cbResult) {
 
 }
 
+/** 
 function createPost(postData, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
@@ -145,13 +148,13 @@ function createPost(postData, cbResult) {
     });
 
 };
-
+*/
 
 
 // client.close();
 
 module.exports = { 
     register,
-    createPost
+
 
 };
