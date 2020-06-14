@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 const db = require('./userDB.js');
 const dbPost = require('./postDB.js');
 const expHbs = require("express-handlebars");
-
+const { register } = require('./userDB.js');
+const session = require('express-session');
 // Setting HBS engine
 app.set("view engine", "handlebars");
 app.engine("handlebars", expHbs({
@@ -17,24 +18,40 @@ app.engine("handlebars", expHbs({
 }));
 app.set('views', path.join(__dirname, "views"))
 
+// set cors policy
 app.use(cors());
+// path public
 app.use(express.static(path.join(__dirname, 'public')));
 // parse application/x-www-form-urlencoded
 // app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
+
+app.use(session({
+    secret: 'jejetabien',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: true }
+}));
+
 app.use(bodyParser.json())
 let userList = [];
 // main endpoint..
 app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+    if (req.session.loggedUser) {
+        res.redirect('/home');
+    } else { res.sendFile(path.join(__dirname, "/public/index.html")); }
+
 })
 
 // home endpoint..
 app.get('/home', function (req, res) {
-    res.render('posting', {
-        layout: 'public'
-    });
- //   res.sendFile(path.join(__dirname, "/public/home.html"));
+    if (req.session.loggedUser) {
+        res.render('posting', {
+            layout: 'public',
+            
+        });
+    } //   res.sendFile(path.join(__dirname, "/public/home.html"));
+    else { res.redirect('/'); }
 })
 
 // post register
@@ -44,19 +61,27 @@ app.post('/register', function (req, res) {
         res.status(400).send("No se recibieron bien los datos");
         return;
     } else {
-        userList.push({ password: req.body.newPW, points: req.body.points, userid: req.body._id });
-        db.register(req.body.newPW, (bool) => {
+        //   userList.push({ password: req.body.newPW, points: req.body.points, userid: req.body._id });
+        db.register(req.body.newPW, (bool, userid) => {
             if (bool) {
-                console.log("asdasd " + req.body._id); // me tira undefined !!!! QUE HAGO
+                //  console.log(db.register.result.insertedId);
+                // userid = req.body.insertedId.toString().slice(0,5);
+                //     console.log("asdasd " + userid); // me tira undefined !!!! QUE HAGO
                 return res.status(200).json({
                     success: true,
                     redirect: "/home",
-                    userid: req.body._id
-                  //  points: req.body.points
+                    userid
+                    //  points: req.body.points
                 });
 
             }
-            else { console.log('error in DB') }
+            else {
+                req.session.message = {
+                    success: false,
+                    text: "Error al registrarse intentelo de nuevo"
+                };
+                res.redirect('/');
+            }
         });
         console.log(userList);
         console.log(req.body);

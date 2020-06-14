@@ -6,7 +6,7 @@ const dbName = 'expitDB';
 
 
 // login function
-function login(username, password, cbResult) {
+function login(userid, password, cbResult) {
 
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if there's a problem connnecting to the server print error msg
@@ -17,8 +17,8 @@ function login(username, password, cbResult) {
             const usersCollection = serverDB.collection('userData');
 
             usersCollection.findOne({
-                user,
-                password: PW
+                _id: userid,
+                password
             }, (err, foundUser) => {
                 if (err) {
                     // if you can consult the collection, return false with a msg, but a different msg
@@ -32,10 +32,10 @@ function login(username, password, cbResult) {
                     } else {
                         cbResult({
                             user: {
-                                user: foundUser.user,
-                                rank: foundUser.rank,
-                                admin: foundUser.admin,
-                                points: foundUser.points,
+                                user: foundUser._id.toString()
+                              //  rank: foundUser.rank,
+                               // admin: foundUser.admin,
+                               // points: foundUser.points,
                             }
                         });
                     }
@@ -47,10 +47,6 @@ function login(username, password, cbResult) {
         }
 
     });
-
-
-
-
 }
 
 // FUNCTION conults user in the DB
@@ -89,7 +85,7 @@ function register(password, cbResult) {
         else {
 
             // get the name of the DB in atlas and the collection with the user documents
-            const serverDB = client.db('expitDB');
+            const serverDB = client.db(dbName);
             const usersCollection = serverDB.collection('userData');
 
             let newUser = {
@@ -104,11 +100,10 @@ function register(password, cbResult) {
                 if (err) {
                     cbResult(false);
                 } else {
-                    cbResult(true);
-                    console.log(result);
-                }
-                if (err) {
-                    cbResult(false);
+                    cbResult(true, result.insertedId);
+                  //  const userid = result.insertedId.toString();
+                 //   return result.insertedId;
+                    console.log("XDXDXDXDX " + result.insertedId.toString());
                 }
 
                 client.close();
