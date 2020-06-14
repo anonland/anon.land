@@ -30,6 +30,10 @@ function createPost(postData, userPost, cbResult) {
 
 };
 
+function filterPost(postData, userPost, cbResult){
+    // esta funcion filtraria los posteos segun su seccion cambiandonlo de endpoint
+}
+
 module.exports={
     createPost
 }

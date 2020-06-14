@@ -16,7 +16,7 @@ registerForm.addEventListener("submit", function (event) {
 })
 
 // funcion de login PENDIENTE
-function login(user, password) { }
+function login(userid, password) { }
 
 // funcion de registro
 function register(password) {
@@ -32,7 +32,7 @@ function register(password) {
       // Respuesta de la request BACKEND ACA xmlhttp.responseText
       let response = JSON.parse(xmlhttp.responseText);
       console.log(response);
-      //window.location.href = response.redirect;
+      window.location.href = response.redirect;
     }
   });
 

@@ -10,6 +10,7 @@ const dbPost = require('./postDB.js');
 const expHbs = require("express-handlebars");
 const { register } = require('./userDB.js');
 const session = require('express-session');
+const { debug } = require('console');
 // Setting HBS engine
 app.set("view engine", "handlebars");
 app.engine("handlebars", expHbs({
@@ -29,8 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
     secret: 'jejetabien',
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: true }
+    saveUninitialized: false
 }));
 
 app.use(bodyParser.json())
@@ -46,11 +46,27 @@ app.get('/', function (req, res) {
 // home endpoint..
 app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
-        res.render('posting', {
-            layout: 'public',
-            
+        db.getUser(req.session.loggedUser, (response) => {
+            if (response.success) {
+                console.log(response);
+                let points = response.user.points;
+                let rank = response.user.rank;
+                let shortId = req.session.loggedUser.slice(0, 5);
+                res.render('posting', {
+                    layout: 'public',
+                    userid: shortId,
+                    points,
+                    rank
+                });
+            } else {
+               return res.json({
+                    message: "error bad"
+                })
+            }
+
         });
-    } //   res.sendFile(path.join(__dirname, "/public/home.html"));
+
+    } //
     else { res.redirect('/'); }
 })
 
@@ -61,19 +77,15 @@ app.post('/register', function (req, res) {
         res.status(400).send("No se recibieron bien los datos");
         return;
     } else {
-        //   userList.push({ password: req.body.newPW, points: req.body.points, userid: req.body._id });
         db.register(req.body.newPW, (bool, userid) => {
             if (bool) {
-                //  console.log(db.register.result.insertedId);
-                // userid = req.body.insertedId.toString().slice(0,5);
-                //     console.log("asdasd " + userid); // me tira undefined !!!! QUE HAGO
+                req.session.loggedUser = userid;
                 return res.status(200).json({
                     success: true,
                     redirect: "/home",
                     userid
                     //  points: req.body.points
                 });
-
             }
             else {
                 req.session.message = {
@@ -83,13 +95,18 @@ app.post('/register', function (req, res) {
                 res.redirect('/');
             }
         });
-        console.log(userList);
-        console.log(req.body);
+
         //  res.status(200)
     }
 })
+// post para loguearse pendiente..
+app.post('/login', function(req, res){
 
-// post para publicar incompleto
+    // req.session.loggedUser = userid;
+
+})
+
+// post para publicar incompleto..
 app.post('/exp', function (req, res) {
     if (!req.body) {
         res.status(400).send("Error al publicar");
@@ -99,6 +116,8 @@ app.post('/exp', function (req, res) {
                 return res.status(200).json({
                     success: true,
                     redirect: `/exp/${req.body.section}`
+                    // ejemplo: /exp/off
+                    // ejemplo de publicacion: /exp/off/jlkaJSLKjasl id de mongo del post
                 });
             }
         });
@@ -106,7 +125,9 @@ app.post('/exp', function (req, res) {
 
 });
 
-
+app.get('/exp/:section/:postId?', function(req, res){
+    console.log(req.params);
+});
 
 
 

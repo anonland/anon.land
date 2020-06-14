@@ -1,4 +1,5 @@
 const db = require("./setup-db.js");
+const { ObjectId } = require("mongodb");
 const dbName = 'expitDB';
 
 //  const collection = client.db(dbName).collection("userData");
@@ -7,7 +8,7 @@ const dbName = 'expitDB';
 
 // login function
 function login(userid, password, cbResult) {
-
+// hacer lo mismo que hice mas o menos en  register
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if there's a problem connnecting to the server print error msg
         if (err) { cbResult({ msg: "Server ERROR" }); }
@@ -50,19 +51,19 @@ function login(userid, password, cbResult) {
 }
 
 // FUNCTION conults user in the DB
-function getUser(username, cbResult) {
-    db.MongoClient(db.uri, db.config, (err, client) => {
+function getUser(userid, cbResult) {
+    db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
             cbResult({ success: false });
         } else {
             // get the name of the DB in atlas and the collection with the user documents
-            const serverDB = client.db('expitDB');
+            const serverDB = client.db(dbName);
             const usersCollection = serverDB.collection('userData');
-
-            usersCollection.findOne({ user: username }, (err, result) => {
+            usersCollection.findOne({ _id: ObjectId(userid)}, (err, result) => {
                 if (err) {
                     cbResult({ success: false });
                 } else {
+                    console.log(result);
                     cbResult({
                         success: true,
                         user: result
@@ -77,8 +78,6 @@ function getUser(username, cbResult) {
 
 // register function
 function register(password, cbResult) {
-    console.log("estoy en el register " + password);
-
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if connection fails return false 
         if (err) { cbResult(false); }
@@ -89,7 +88,6 @@ function register(password, cbResult) {
             const usersCollection = serverDB.collection('userData');
 
             let newUser = {
-                // possible id ?
                 rank: "..",
                 password,
                 points: 5
@@ -101,9 +99,6 @@ function register(password, cbResult) {
                     cbResult(false);
                 } else {
                     cbResult(true, result.insertedId);
-                  //  const userid = result.insertedId.toString();
-                 //   return result.insertedId;
-                    console.log("XDXDXDXDX " + result.insertedId.toString());
                 }
 
                 client.close();
@@ -150,6 +145,7 @@ function createPost(postData, cbResult) {
 
 module.exports = { 
     register,
+    getUser
 
 
 };
