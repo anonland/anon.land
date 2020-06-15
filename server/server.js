@@ -46,9 +46,9 @@ app.get('/', function (req, res) {
 // home endpoint..
 app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
+        console.log("session, "+req.session.loggedUser);
         db.getUser(req.session.loggedUser, (response) => {
             if (response.success) {
-                console.log(response);
                 let points = response.user.points;
                 let rank = response.user.rank;
                 let shortId = req.session.loggedUser.slice(0, 5);
@@ -59,7 +59,7 @@ app.get('/home', function (req, res) {
                     rank
                 });
             } else {
-               return res.json({
+                return res.json({
                     message: "error bad"
                 })
             }
@@ -99,12 +99,23 @@ app.post('/register', function (req, res) {
         //  res.status(200)
     }
 })
-// post para loguearse pendiente..
-app.post('/login', function(req, res){
+// login post..
+app.post('/login', function (req, res) {
+    db.login(req.body.userid, req.body.password, result => {
+        console.log(result.userid);
+        if (result.userid) {
+            req.session.loggedUser = result.userid;
+            res.redirect('/home');
+        } else {
+            req.session.message = {
+                class: "failure",
+                text: "No se pudo iniciar la sesion"
+            };
+            res.redirect('/');
+        }
+    });
 
-    // req.session.loggedUser = userid;
-
-})
+});
 
 // post para publicar incompleto..
 app.post('/exp', function (req, res) {
@@ -125,8 +136,9 @@ app.post('/exp', function (req, res) {
 
 });
 
-app.get('/exp/:section/:postId?', function(req, res){
-    console.log(req.params);
+// posting endpoint..
+app.get('/exp/:section/:postId?', function (req, res) {
+   // console.log(req.params);
 });
 
 

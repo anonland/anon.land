@@ -6,9 +6,8 @@ const dbName = 'expitDB';
 // perform actions on the collection object
 
 
-// login function
+// login function..
 function login(userid, password, cbResult) {
-// hacer lo mismo que hice mas o menos en  register
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if there's a problem connnecting to the server print error msg
         if (err) { cbResult({ msg: "Server ERROR" }); }
@@ -18,7 +17,7 @@ function login(userid, password, cbResult) {
             const usersCollection = serverDB.collection('userData');
 
             usersCollection.findOne({
-                _id: userid,
+                userid,
                 password
             }, (err, foundUser) => {
                 if (err) {
@@ -32,12 +31,10 @@ function login(userid, password, cbResult) {
                         cbResult({ msg: "Invalid user or password" });
                     } else {
                         cbResult({
-                            user: {
-                                user: foundUser._id.toString()
-                              //  rank: foundUser.rank,
-                               // admin: foundUser.admin,
-                               // points: foundUser.points,
-                            }
+
+                            userid: foundUser._id.toString().slice(20, 24),
+                            rank: foundUser.rank,
+                            points: foundUser.points
                         });
                     }
 
@@ -59,11 +56,10 @@ function getUser(userid, cbResult) {
             // get the name of the DB in atlas and the collection with the user documents
             const serverDB = client.db(dbName);
             const usersCollection = serverDB.collection('userData');
-            usersCollection.findOne({ _id: ObjectId(userid)}, (err, result) => {
+            usersCollection.findOne({ userid }, (err, result) => {
                 if (err) {
                     cbResult({ success: false });
                 } else {
-                    console.log(result);
                     cbResult({
                         success: true,
                         user: result
@@ -98,10 +94,34 @@ function register(password, cbResult) {
                 if (err) {
                     cbResult(false);
                 } else {
-                    cbResult(true, result.insertedId);
+                    // updating the userid..
+                    client.close();
+                    const previousResult = result;
+                    db.MongoClient.connect(db.uri, db.config, (err, client) => {
+
+                        const serverDB2 = client.db(dbName);
+                        const usersCollection2 = serverDB2.collection('userData');
+                        usersCollection2.updateOne(
+                            {
+                                _id: result.insertedId
+                            }, {
+                            $set: {
+                                userid: result.insertedId.toString().slice(-5)
+                            }
+                        }, (err, result) => {
+                            if (err) {
+                                cbResult(false);
+                            } else {
+                                cbResult(true, previousResult.insertedId.toString().slice(-5));
+                            }
+                            client.close();
+                        });
+                    });
+
+
                 }
 
-                client.close();
+               // client.close();
             });
 
         }
@@ -143,9 +163,10 @@ function createPost(postData, cbResult) {
 
 // client.close();
 
-module.exports = { 
+module.exports = {
     register,
-    getUser
+    getUser,
+    login
 
 
 };

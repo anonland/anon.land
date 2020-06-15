@@ -1,24 +1,60 @@
 //global vars..
 const registerBTN = document.getElementById('registerBTN');
 const registerForm = document.getElementById('register');
+const loginForm = document.getElementById('login');
+const loginBTN = document.getElementById('loginBTN');
+
 
 // modal..
 document.addEventListener('DOMContentLoaded', function () {
   let elems = document.querySelectorAll('.modal');
   let instances = M.Modal.init(elems);
 });
-console.log(registerForm);
-// Evento del boton de registro
+
+
+// Register event listener..
 registerForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const newPassword = document.getElementById('newPassword');
- register(newPassword.value);
+  register(newPassword.value);
 })
 
-// funcion de login PENDIENTE
-function login(userid, password) { }
 
-// funcion de registro
+// Login event listener..
+loginForm.addEventListener("submit", function (event) {
+  console.log(loginForm);
+  event.preventDefault();
+  const userid = document.getElementById('userid');
+  const password = document.getElementById('password');
+  login(userid.value, password.value);
+});
+
+
+// login function..
+function login(userid, password) {
+
+  let userData = { userid, password };
+
+  // http request..
+  let xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.addEventListener('load', function () {
+
+    if (this.status == 200) {
+      // response of the backend  goes here
+      let response = JSON.parse(xmlhttp.responseText);
+      console.log(response);
+      windows.location.href = response.redirect;
+    }
+  });
+
+  xmlhttp.open('POST', '/login', true);
+  xmlhttp.setRequestHeader("Content-Type", "application/json");
+  xmlhttp.send(JSON.stringify(userData));
+}
+
+
+// register function..
 function register(password) {
 
 
@@ -30,8 +66,8 @@ function register(password) {
   xmlhttp.addEventListener("load", function () {
     if (this.status == 200) {
       // Respuesta de la request BACKEND ACA xmlhttp.responseText
+      console.log("respuesta ", xmlhttp.responseText);
       let response = JSON.parse(xmlhttp.responseText);
-      console.log(response);
       window.location.href = response.redirect;
     }
   });
@@ -39,5 +75,4 @@ function register(password) {
   xmlhttp.open("POST", "/register", true);
   xmlhttp.setRequestHeader("Content-Type", "application/json");
   xmlhttp.send(JSON.stringify(PW));
-  console.log(PW);
 }
