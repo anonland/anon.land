@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 
+// session key
 app.use(session({
     secret: 'jejetabien',
     resave: false,
@@ -46,15 +47,13 @@ app.get('/', function (req, res) {
 // home endpoint..
 app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
-        console.log("session, "+req.session.loggedUser);
-        db.getUser(req.session.loggedUser, (response) => {
+        db.getUser(req.session.loggedUser.userid, (response) => {
             if (response.success) {
                 let points = response.user.points;
                 let rank = response.user.rank;
-                let shortId = req.session.loggedUser.slice(0, 5);
                 res.render('posting', {
                     layout: 'public',
-                    userid: shortId,
+                    userid: req.session.loggedUser.userid,
                     points,
                     rank
                 });
@@ -77,13 +76,13 @@ app.post('/register', function (req, res) {
         res.status(400).send("No se recibieron bien los datos");
         return;
     } else {
-        db.register(req.body.newPW, (bool, userid) => {
+        db.register(req.body.newPW, (bool, user) => {
             if (bool) {
-                req.session.loggedUser = userid;
+                req.session.loggedUser = user;
                 return res.status(200).json({
                     success: true,
                     redirect: "/home",
-                    userid
+                    userid: req.session.loggedUser.userid
                     //  points: req.body.points
                 });
             }
@@ -102,10 +101,12 @@ app.post('/register', function (req, res) {
 // login post..
 app.post('/login', function (req, res) {
     db.login(req.body.userid, req.body.password, result => {
-        console.log(result.userid);
-        if (result.userid) {
-            req.session.loggedUser = result.userid;
-            res.redirect('/home');
+        if (result) {
+            req.session.loggedUser = result;
+            return res.status(200).json({
+                success: true,
+                redirect: "/home"
+            });
         } else {
             req.session.message = {
                 class: "failure",
@@ -117,31 +118,62 @@ app.post('/login', function (req, res) {
 
 });
 
-// post para publicar incompleto..
+// post for pusblish incomplete..
 app.post('/exp', function (req, res) {
     if (!req.body) {
         res.status(400).send("Error al publicar");
     } else {
-        dbPost.createPost(req.body, (bool) => {
+         req.body.userid = req.session.loggedUser.userid;
+        req.body.rank = req.session.loggedUser.rank;
+        dbPost.createPost(req.body, (bool, postid) => {
             if (bool) {
-                return res.status(200).json({
+                res.status(200).json({
                     success: true,
-                    redirect: `/exp/${req.body.section}`
-                    // ejemplo: /exp/off
-                    // ejemplo de publicacion: /exp/off/jlkaJSLKjasl id de mongo del post
+                    redirect: `/exp/${req.body.Section}/${postid}`
                 });
+            } else {
+                req.session.message = {
+                    class: "failure",
+                    text: "No se pudo iniciar la sesion"
+                };
             }
         });
     }
-
 });
 
-// posting endpoint..
+// filter posting endpoint..
 app.get('/exp/:section/:postId?', function (req, res) {
-   // console.log(req.params);
-});
+    // if the section and the post id EXISTS render it..
+    if(req.session.loggedUser){
+    if (req.params.section && req.params.postid) {
+        return res.render('inPost', {
+            layout: 'public',
+            userid: req.body.userid,
+            points,
+            rank
+        })
+    }
+    if (req.params.section) {
+        dbPost.filterPost(req.params.section, (bool, postArray) => {
+            if (bool) {
+                res.render('posting', {
+                    layout: 'public',
+                    postArray
+                });
+            } else {
+                req.session.message = {
+                    class: "failure",
+                    text: "No se pudo iniciar la sesion"
+                };
+            }
+        });
+        //  dbPost.filterPost()
 
-
+    }
+} else{
+    res.redirect('/');
+}
+})
 
 
 

@@ -10,7 +10,9 @@ const dbName = 'expitDB';
 function login(userid, password, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if there's a problem connnecting to the server print error msg
-        if (err) { cbResult({ msg: "Server ERROR" }); }
+        if (err) {
+            cbResult({ msg: "Server ERROR" });
+        }
         else {
             // get the name of the DB in atlas and the collection with the user documents
             const serverDB = client.db(dbName);
@@ -28,14 +30,11 @@ function login(userid, password, cbResult) {
                 } else {
                     // User and password validation..
                     if (!foundUser) {
-                        cbResult({ msg: "Invalid user or password" });
-                    } else {
                         cbResult({
-
-                            userid: foundUser._id.toString().slice(20, 24),
-                            rank: foundUser.rank,
-                            points: foundUser.points
+                            msg: "Invalid user or password"
                         });
+                    } else {
+                        cbResult(foundUser);
                     }
 
                 }
@@ -72,7 +71,7 @@ function getUser(userid, cbResult) {
     });
 }
 
-// register function
+// register function..
 function register(password, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         // if connection fails return false 
@@ -84,44 +83,47 @@ function register(password, cbResult) {
             const usersCollection = serverDB.collection('userData');
 
             let newUser = {
-                rank: "..",
+                rank: "Beta tester",
                 password,
                 points: 5
             }
-            // Insertamos el user en la DB
+            // Insert user in the db..
             usersCollection.insertOne(newUser, (err, result) => {
-
+                console.log("777777777777777777777-- ", result);
                 if (err) {
                     cbResult(false);
                 } else {
                     // updating the userid..
                     client.close();
-                    const previousResult = result;
-                    db.MongoClient.connect(db.uri, db.config, (err, client) => {
+                    console.log("resultado OPS ", result.ops[0].rank);
+                    let previousResult = result.ops[0];
+                    previousResult.userid = previousResult._id.toString().slice(-5);
+                        db.MongoClient.connect(db.uri, db.config, (err, client) => {
 
-                        const serverDB2 = client.db(dbName);
-                        const usersCollection2 = serverDB2.collection('userData');
-                        usersCollection2.updateOne(
-                            {
-                                _id: result.insertedId
-                            }, {
-                            $set: {
-                                userid: result.insertedId.toString().slice(-5)
-                            }
-                        }, (err, result) => {
-                            if (err) {
-                                cbResult(false);
-                            } else {
-                                cbResult(true, previousResult.insertedId.toString().slice(-5));
-                            }
-                            client.close();
+                            const serverDB2 = client.db(dbName);
+                            const usersCollection2 = serverDB2.collection('userData');
+                            // Update the userid to a sliced _id
+                            usersCollection2.updateOne(
+                                {
+                                    _id: result.insertedId
+                                }, {
+                                $set: {
+                                    userid: result.insertedId.toString().slice(-5)
+                                }
+                            }, (err, result) => {
+                                if (err) {
+                                    cbResult(false);
+                                } else {
+                                    cbResult(true, previousResult);
+                                }
+                                client.close();
+                            });
                         });
-                    });
 
 
                 }
 
-               // client.close();
+                // client.close();
             });
 
         }

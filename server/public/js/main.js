@@ -44,7 +44,7 @@ function login(userid, password) {
       // response of the backend  goes here
       let response = JSON.parse(xmlhttp.responseText);
       console.log(response);
-      windows.location.href = response.redirect;
+      window.location.href = response.redirect;
     }
   });
 

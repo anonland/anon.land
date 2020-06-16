@@ -1,7 +1,8 @@
 const db = require("./setup-db.js");
 const dbName = 'expitDB';
 
-function createPost(postData, userPost, cbResult) {
+
+function createPost(postData, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
             cbResult(false);
@@ -10,30 +11,37 @@ function createPost(postData, userPost, cbResult) {
             const postCollections = serverDB.collection('postData');
 
             postCollections.insertOne(postData, (err, result) => {
-
                 if (err) {
                     cbResult(false);
                 } else {
-                    cbResult(true);
-                    console.log(result);
-                }
-                if (err) {
-                    cbResult(false);
+                    cbResult(true, result.insertedId.toString());
                 }
 
                 client.close();
             });
-
         }
-
     });
-
 };
 
-function filterPost(postData, userPost, cbResult){
+function filterPost(Section, cbResult) {
     // esta funcion filtraria los posteos segun su seccion cambiandonlo de endpoint
+    db.MongoClient.connect(db.uri, db.config, (err, client) => {
+        if (err) {
+            cbResult(false);
+        } else {
+            const serverDB = client.db('expitDB');
+            const postCollections = serverDB.collection('postData');
+            postCollections.find({ Section }).toArray(function (err, results) {
+                if (err) {
+                    cbResult(false);
+                } else {
+                    cbResult(true, results);
+                }
+            });
+        }
+    })
 }
-
-module.exports={
-    createPost
+module.exports = {
+    createPost,
+    filterPost
 }

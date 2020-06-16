@@ -22,9 +22,9 @@ document.addEventListener('DOMContentLoaded', function () {
 function publishForm(mediaFile, postTXT, section) {
 
   let formData = {
-    newFile: mediaFile,
-    newTXT: postTXT,
-    newSection: section
+    imgFile: mediaFile,
+    TXT: postTXT,
+    Section: section
   }
   // http request..
   var xmlhttp = new XMLHttpRequest();
