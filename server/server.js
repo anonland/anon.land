@@ -50,7 +50,9 @@ app.get('/home', function (req, res) {
         dbPost.showPost((allPosts) => {
             res.render('posting', {
                 layout: 'public',
+                section: req.params.section,
                 postArray: allPosts,
+                path: '/exp/' + req.params.section + '/' + allPosts._id,
                 userid: req.session.loggedUser.userid,
                 rank: req.session.loggedUser.rank,
                 points: req.session.loggedUser.points
@@ -114,21 +116,24 @@ app.post('/exp', function (req, res) {
     if (!req.body) {
         res.status(400).send("Error al publicar");
     } else {
-        req.body.userid = req.session.loggedUser.userid;
-        req.body.rank = req.session.loggedUser.rank;
-        dbPost.createPost(req.body, (bool, postid) => {
-            if (bool) {
-                res.status(200).json({
-                    success: true,
-                    redirect: `/exp/${req.body.Section}/${postid}`
-                });
-            } else {
-                req.session.message = {
-                    class: "failure",
-                    text: "No se pudo iniciar la sesion"
-                };
-            }
-        });
+        if (req.session.loggedUser) {
+            req.body.userid = req.session.loggedUser.userid;
+            req.body.rank = req.session.loggedUser.rank;
+            dbPost.createPost(req.body, (bool, postid) => {
+                if (bool) {
+                    res.status(200).json({
+                        success: true,
+                        redirect: `/exp/${req.body.Section}/${postid}`
+                    });
+                } else {
+                    req.session.message = {
+                        class: "failure",
+                        text: "No se pudo iniciar la sesion"
+                    };
+                }
+            });
+        } else { res.redirect('/'); }
+
     }
 });
 
@@ -136,38 +141,46 @@ app.post('/exp', function (req, res) {
 app.get('/exp/:section/:postid?', function (req, res) {
     // if the section and the post id EXISTS render it..
     if (req.session.loggedUser) {
+        console.log("jijo server ", req.params);
         if (req.params.section && req.params.postid) {
             console.log('pase por aca!');
-            dbPost.getPost(req.params.id, (bool, postid) => {
-                if (bool) {
-                    console.log(postid);
-                    console.log("jijo server ", req.params.postid);
-                    return res.render('inPost', {
-                        layout: 'post',
-                        postid: req.params.postid,
-                        userid: req.session.loggedUser.userid,
-                        rank: req.session.loggedUser.rank,
-                        points: req.session.loggedUser.points
-                    })
+            return dbPost.getPost(req.params.postid, (postid, bool) => {
+                console.log('que esetoo', req.params.id); // undefined
+                console.log('mamita pollo', postid); // undefined??
 
-                } else {
-                    req.session.message = {
-                        class: "failure",
-                        text: "No se pudo llegar"
-                    };
-                }
+                console.log('voxed caca '); // empty???
+                res.render('inPost', {
+                    layout: 'post',
+                    //  postid: postid._id, // undefined?!
+                    opid: postid.result.userid,
+                    opRank: postid.result.rank,
+                    TXT: postid.result.TXT,
+                    imgFile: postid.result.imgFile,
+                    userid: req.session.loggedUser.userid,
+                    rank: req.session.loggedUser.rank,
+                    points: req.session.loggedUser.points
+                })
+                console.log('mamita asdasdasd ', postid); // you dont say undefined? lol
+
+
             })
         }
 
         if (req.params.section) {
-            dbPost.filterPost(req.params.section, (bool, postArray) => {
+            console.log("jijo ssss ", req.params);
+            return dbPost.filterPost(req.params.section, (bool, postArray) => {
                 if (bool) {
+                    console.log('aguante voxed', postArray[0]._id);
                     console.log("LA RE CTM", req.params.section);
-                    console.log("pipo pi ", req.params.postid);
-                    res.render('posting', {
+                    console.log("pipo pi ", req.params);
+                    let postingid = postArray[0]._id.toString();
+                    console.log('que es esto? ',typeof postingid);
+                    let redir = `/exp/${req.params.section}/${postingid}`;
+                    return res.render('posting', {
                         layout: 'public',
                         postArray,
                         section: req.params.section,
+                        path: redir,
                         userid: req.session.loggedUser.userid,
                         rank: req.session.loggedUser.rank,
                         points: req.session.loggedUser.points

@@ -72,15 +72,16 @@ function getPost(postid, cbResult) {
             // get the name of the DB in atlas and the collection with the user documents
             const serverDB = client.db(dbName);
             const postCollection = serverDB.collection('postData');
-            postCollection.findOne({ _id: new db.ObjectID(postid) }, (err, result) => {
+            postCollection.findOne({ _id: db.ObjectID(postid) }, (err, result) => {
                 if (err) {
                     cbResult({ success: false });
                 } else {
-                    console.log('asdasdasd ', result);
                     cbResult({
                         success: true,
-                        postid,
+                        //postid: result._id.toString(),
+                        result
                     });
+                  // console.log('asdasdasd ', result); // null ???
                 }
                 client.close();
 
