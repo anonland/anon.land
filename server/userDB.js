@@ -70,7 +70,6 @@ function getUser(userid, cbResult) {
         }
     });
 }
-
 // register function..
 function register(password, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
@@ -89,13 +88,11 @@ function register(password, cbResult) {
             }
             // Insert user in the db..
             usersCollection.insertOne(newUser, (err, result) => {
-                console.log("777777777777777777777-- ", result);
                 if (err) {
                     cbResult(false);
                 } else {
                     // updating the userid..
                     client.close();
-                    console.log("resultado OPS ", result.ops[0].rank);
                     let previousResult = result.ops[0];
                     previousResult.userid = previousResult._id.toString().slice(-5);
                         db.MongoClient.connect(db.uri, db.config, (err, client) => {
@@ -123,7 +120,6 @@ function register(password, cbResult) {
 
                 }
 
-                // client.close();
             });
 
         }
@@ -131,44 +127,9 @@ function register(password, cbResult) {
 
 }
 
-/** 
-function createPost(postData, cbResult) {
-    db.MongoClient.connect(db.uri, db.config, (err, client) => {
-        if (err) {
-            cbResult(false);
-        } else {
-            const serverDB = client.db('expitDB');
-            const postCollections = serverDB.collection('postData');
-
-            postCollections.insertOne(postData, (err, result) => {
-
-                if (err) {
-                    cbResult(false);
-                } else {
-                    cbResult(true);
-                    console.log(result);
-                }
-                if (err) {
-                    cbResult(false);
-                }
-
-                client.close();
-            });
-
-        }
-
-    });
-
-};
-*/
-
-
-// client.close();
 
 module.exports = {
     register,
     getUser,
     login
-
-
 };

@@ -47,25 +47,16 @@ app.get('/', function (req, res) {
 // home endpoint..
 app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
-        db.getUser(req.session.loggedUser.userid, (response) => {
-            if (response.success) {
-                let points = response.user.points;
-                let rank = response.user.rank;
-                res.render('posting', {
-                    layout: 'public',
-                    userid: req.session.loggedUser.userid,
-                    points,
-                    rank
-                });
-            } else {
-                return res.json({
-                    message: "error bad"
-                })
-            }
-
+        dbPost.showPost((allPosts) => {
+            res.render('posting', {
+                layout: 'public',
+                postArray: allPosts,
+                userid: req.session.loggedUser.userid,
+                rank: req.session.loggedUser.rank,
+                points: req.session.loggedUser.points
+            });
         });
-
-    } //
+    }
     else { res.redirect('/'); }
 })
 
@@ -123,7 +114,7 @@ app.post('/exp', function (req, res) {
     if (!req.body) {
         res.status(400).send("Error al publicar");
     } else {
-         req.body.userid = req.session.loggedUser.userid;
+        req.body.userid = req.session.loggedUser.userid;
         req.body.rank = req.session.loggedUser.rank;
         dbPost.createPost(req.body, (bool, postid) => {
             if (bool) {
@@ -142,40 +133,81 @@ app.post('/exp', function (req, res) {
 });
 
 // filter posting endpoint..
-app.get('/exp/:section/:postId?', function (req, res) {
+app.get('/exp/:section/:postid?', function (req, res) {
     // if the section and the post id EXISTS render it..
-    if(req.session.loggedUser){
-    if (req.params.section && req.params.postid) {
-        return res.render('inPost', {
-            layout: 'public',
-            userid: req.body.userid,
-            points,
-            rank
-        })
-    }
-    if (req.params.section) {
-        dbPost.filterPost(req.params.section, (bool, postArray) => {
-            if (bool) {
-                res.render('posting', {
-                    layout: 'public',
-                    postArray
-                });
-            } else {
-                req.session.message = {
-                    class: "failure",
-                    text: "No se pudo iniciar la sesion"
-                };
-            }
-        });
-        //  dbPost.filterPost()
+    if (req.session.loggedUser) {
+        if (req.params.section && req.params.postid) {
+            console.log('pase por aca!');
+            dbPost.getPost(req.params.id, (bool, postid) => {
+                if (bool) {
+                    console.log(postid);
+                    console.log("jijo server ", req.params.postid);
+                    return res.render('inPost', {
+                        layout: 'post',
+                        postid: req.params.postid,
+                        userid: req.session.loggedUser.userid,
+                        rank: req.session.loggedUser.rank,
+                        points: req.session.loggedUser.points
+                    })
 
+                } else {
+                    req.session.message = {
+                        class: "failure",
+                        text: "No se pudo llegar"
+                    };
+                }
+            })
+        }
+
+        if (req.params.section) {
+            dbPost.filterPost(req.params.section, (bool, postArray) => {
+                if (bool) {
+                    console.log("LA RE CTM", req.params.section);
+                    console.log("pipo pi ", req.params.postid);
+                    res.render('posting', {
+                        layout: 'public',
+                        postArray,
+                        section: req.params.section,
+                        userid: req.session.loggedUser.userid,
+                        rank: req.session.loggedUser.rank,
+                        points: req.session.loggedUser.points
+                    })
+                } else {
+                    req.session.message = {
+                        class: "failure",
+                        text: "No se pudo llegar"
+                    };
+                }
+            });
+        }
+    } else {
+        res.redirect('/');
     }
-} else{
-    res.redirect('/');
-}
 })
 
+/* app.get('/exp/:section/:postid', function(req, res) {
+    if(req.session.loggedUser){
+        if (req.params.section && req.params.postid) {
+            dbPost.getPost(req.params.id, (postid) => {
+                console.log("jijo server ", postid);
 
+                return res.render('inPost', {
+                    layout: 'post',
+                    postid,
+                    userid: req.session.loggedUser.userid,
+                    rank: req.session.loggedUser.rank,
+                    points: req.session.loggedUser.points
+                })
+            })
+        }
+    } else {
+        res.redirect('/');
+    }
+
+
+
+
+}) */
 
 // Opening port..
 app.listen(port, function () {
