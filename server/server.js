@@ -11,6 +11,8 @@ const expHbs = require("express-handlebars");
 const { register } = require('./userDB.js');
 const session = require('express-session');
 const { debug } = require('console');
+const multer = require('multer');
+const upload = multer({dest: '/public/img/imgPost'});
 // Setting HBS engine
 app.set("view engine", "handlebars");
 app.engine("handlebars", expHbs({
@@ -48,11 +50,15 @@ app.get('/', function (req, res) {
 app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
         dbPost.showPost((allPosts) => {
+            allPosts.map(element => {
+                element.path = `/exp/${element.Section}/${element._id}`;
+            });
+            console.log(allPosts);
             res.render('posting', {
                 layout: 'public',
                 section: req.params.section,
                 postArray: allPosts,
-                path: '/exp/' + req.params.section + '/' + allPosts._id,
+                path: path,
                 userid: req.session.loggedUser.userid,
                 rank: req.session.loggedUser.rank,
                 points: req.session.loggedUser.points
@@ -141,14 +147,8 @@ app.post('/exp', function (req, res) {
 app.get('/exp/:section/:postid?', function (req, res) {
     // if the section and the post id EXISTS render it..
     if (req.session.loggedUser) {
-        console.log("jijo server ", req.params);
         if (req.params.section && req.params.postid) {
-            console.log('pase por aca!');
             return dbPost.getPost(req.params.postid, (postid, bool) => {
-                console.log('que esetoo', req.params.id); // undefined
-                console.log('mamita pollo', postid); // undefined??
-
-                console.log('voxed caca '); // empty???
                 res.render('inPost', {
                     layout: 'post',
                     //  postid: postid._id, // undefined?!
@@ -160,27 +160,20 @@ app.get('/exp/:section/:postid?', function (req, res) {
                     rank: req.session.loggedUser.rank,
                     points: req.session.loggedUser.points
                 })
-                console.log('mamita asdasdasd ', postid); // you dont say undefined? lol
-
 
             })
         }
 
         if (req.params.section) {
-            console.log("jijo ssss ", req.params);
             return dbPost.filterPost(req.params.section, (bool, postArray) => {
                 if (bool) {
-                    console.log('aguante voxed', postArray[0]._id);
-                    console.log("LA RE CTM", req.params.section);
-                    console.log("pipo pi ", req.params);
-                    let postingid = postArray[0]._id.toString();
-                    console.log('que es esto? ',typeof postingid);
-                    let redir = `/exp/${req.params.section}/${postingid}`;
+                    postArray.map(element => {
+                        element.path = `/exp/${element.Section}/${element._id}`;
+                    });
                     return res.render('posting', {
                         layout: 'public',
                         postArray,
                         section: req.params.section,
-                        path: redir,
                         userid: req.session.loggedUser.userid,
                         rank: req.session.loggedUser.rank,
                         points: req.session.loggedUser.points
@@ -198,29 +191,11 @@ app.get('/exp/:section/:postid?', function (req, res) {
     }
 })
 
-/* app.get('/exp/:section/:postid', function(req, res) {
-    if(req.session.loggedUser){
-        if (req.params.section && req.params.postid) {
-            dbPost.getPost(req.params.id, (postid) => {
-                console.log("jijo server ", postid);
-
-                return res.render('inPost', {
-                    layout: 'post',
-                    postid,
-                    userid: req.session.loggedUser.userid,
-                    rank: req.session.loggedUser.rank,
-                    points: req.session.loggedUser.points
-                })
-            })
-        }
-    } else {
-        res.redirect('/');
-    }
-
-
-
-
-}) */
+app.post('/public/img/imgPost', upload.single('img'), function (req, res, next) {
+    
+    // req.file is the `avatar` file
+    // req.body will hold the text fields, if there were any
+  })
 
 // Opening port..
 app.listen(port, function () {

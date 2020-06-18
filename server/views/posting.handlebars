@@ -3,8 +3,8 @@
   <div class="col s9" style="padding: 0 45px 10px 25px;">
     <!-- este es el div del post -->
     
-    <a href='{{path}}'>
     {{#each postArray}}
+        <a href='{{this.path}}'>
       <div id="post">
         <div class="row">
           <div class="col s3">
@@ -27,8 +27,8 @@
           </div>
         </div>
       </div>
+      </a>
       {{/each}}
-    </a>
     
   </div>
   <!-- aca va el trending -->
