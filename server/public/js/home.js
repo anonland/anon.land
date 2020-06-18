@@ -33,9 +33,6 @@ function publishForm(mediaFile, postTXT, section) {
     if (this.status == 200) {
       // Respuesta de la request BACKEND ACA
       let response = JSON.parse(xmlhttp.responseText);
-      console.log(response);
-     // response.userid
-     // window.location.href = response.redirect;
     }
   });
 

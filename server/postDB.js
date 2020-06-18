@@ -78,10 +78,8 @@ function getPost(postid, cbResult) {
                 } else {
                     cbResult({
                         success: true,
-                        //postid: result._id.toString(),
                         result
                     });
-                  // console.log('asdasdasd ', result); // null ???
                 }
                 client.close();
 

@@ -22,7 +22,6 @@ registerForm.addEventListener("submit", function (event) {
 
 // Login event listener..
 loginForm.addEventListener("submit", function (event) {
-  console.log(loginForm);
   event.preventDefault();
   const userid = document.getElementById('userid');
   const password = document.getElementById('password');
@@ -43,7 +42,6 @@ function login(userid, password) {
     if (this.status == 200) {
       // response of the backend  goes here
       let response = JSON.parse(xmlhttp.responseText);
-      console.log(response);
       window.location.href = response.redirect;
     }
   });
@@ -66,7 +64,6 @@ function register(password) {
   xmlhttp.addEventListener("load", function () {
     if (this.status == 200) {
       // Respuesta de la request BACKEND ACA xmlhttp.responseText
-      console.log("respuesta ", xmlhttp.responseText);
       let response = JSON.parse(xmlhttp.responseText);
       window.location.href = response.redirect;
     }
