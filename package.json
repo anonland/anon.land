@@ -2,7 +2,7 @@
   "name": "expressit",
   "version": "1.0.0",
   "description": "Project for a free speech social media",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon ./server/server.js"
   },
@@ -16,5 +16,14 @@
     "mongodb": "^3.5.8",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/igruntplay/ExpressIt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/igruntplay/ExpressIt/issues"
+  },
+  "homepage": "https://github.com/igruntplay/ExpressIt#readme"
 }
