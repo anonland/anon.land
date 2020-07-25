@@ -119,7 +119,6 @@ app.post('/login', function (req, res) {
     db.login(req.body.userid, req.body.password, result => {
         if (result) {
             req.session.loggedUser = result;
-            console.log(result);
             return res.status(200).json({
                 success: true,
                 redirect: "/home"
@@ -167,9 +166,10 @@ app.get('/exp/:section/:postid?', function (req, res) {
     if (req.session.loggedUser) {
         if (req.params.section && req.params.postid) {
             return dbPost.getPost(req.params.postid, (postid, bool) => {
+                console.log(postid.result.postDate);
                 res.render('inPost', {
                     layout: 'post',
-                    //  postid: postid._id, // undefined?!
+                    postDate: postid.result.postDate,
                     opid: postid.result.userid,
                     opRank: postid.result.rank,
                     TXT: postid.result.TXT,

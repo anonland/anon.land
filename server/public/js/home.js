@@ -19,9 +19,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function publishForm(mediaFile, postTXT, section) {
-
+function publishForm(mediaFile, postTXT, section, date) {
+  let postDate = new Date();
   let formData = {
+    postDate: date,
     imgFile: mediaFile,
     TXT: postTXT,
     Section: section
@@ -43,17 +44,22 @@ function publishForm(mediaFile, postTXT, section) {
   xmlhttp.send(JSON.stringify(formData));
 
 }
-
+// event listener click function..
 publishBTN.addEventListener('click', function () {
 
   const mediaFile = document.getElementById('mediaFile').value;
   const postTXT = document.getElementById('postTXT').value;
   const section = document.getElementById('section').value;
+  let date = new Date()
+
+ // let date = date.now();
   if(postTXT == "" || postTXT.length<=5){
     alert("el texto de la publicación está vacío, o es muy corto");
     return false;
   }else{
-  publishForm(mediaFile, postTXT, section);
+    console.log('acá esta la fecha! ' + date);
+  publishForm(mediaFile, postTXT, section, date);
+// hacer una especie de request que si se publicó que me redirija al post..
 }
 });
 

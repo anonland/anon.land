@@ -1,7 +1,7 @@
 const db = require("./setup-db.js");
 const dbName = 'expitDB';
 
-
+// create post function..
 function createPost(postData, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
@@ -14,6 +14,7 @@ function createPost(postData, cbResult) {
                 if (err) {
                     cbResult(false);
                 } else {
+                    // This gives to the post, an ID to make the Endpoint for the post..
                     cbResult(true, result.insertedId.toString());
                 }
 
@@ -46,6 +47,7 @@ function showPost(cbResult) {
 }
 // function for post filtering..
 function filterPost(Section, cbResult) {
+    // acá voy a hacer que se filtre por Date (fecha)
     // esta funcion filtraria los posteos segun su seccion cambiandonlo de endpoint
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
