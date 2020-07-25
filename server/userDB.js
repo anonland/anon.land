@@ -30,9 +30,7 @@ function login(userid, password, cbResult) {
                 } else {
                     // User and password validation..
                     if (!foundUser) {
-                        cbResult({
-                            msg: "Invalid user or password"
-                        });
+                        cbResult(err);
                     } else {
                         cbResult(foundUser);
                     }

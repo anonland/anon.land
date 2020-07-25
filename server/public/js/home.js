@@ -49,6 +49,11 @@ publishBTN.addEventListener('click', function () {
   const mediaFile = document.getElementById('mediaFile').value;
   const postTXT = document.getElementById('postTXT').value;
   const section = document.getElementById('section').value;
+  if(postTXT == "" || postTXT.length<=5){
+    alert("el texto de la publicación está vacío, o es muy corto");
+    return false;
+  }else{
   publishForm(mediaFile, postTXT, section);
+}
 });
 

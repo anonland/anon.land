@@ -3,14 +3,14 @@ Social media with 100% speech freedom
 
 Express It! is a project for a total free speech freedom and semi-anon.
 
-# Project in stand by
+# Project in constant develope :D
 
 ## TO DO LIST:
 - [ ] Upload imgs in posts (multer).
 - [ ] Sort the posts by date.
 - [ ] Add comments in posts.
 - [ ] Add points in posts.
-- [ ] Make compulsory all the inputs in all forms.
+- [x] Make compulsory all the inputs in all forms.
 - [ ] Make it responsive.
 - [ ] Make an admin control panel for deleting posts.
 - [ ] Add greentext stories ">".

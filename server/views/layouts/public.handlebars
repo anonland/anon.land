@@ -77,7 +77,7 @@
                   <form id="postForm" action="post" name="postUpload" enctype="multipart/form-data" method="post">
                     <div class="input-field">
                       <select id="section" class="browser-default">
-                        <option value="" disabled selected>Elegí un nicho</option>
+                        <option value="off" id="off" disabled selected>Elegí un nicho</option>
                         <option value="off" id="off">General</option>
                         <option value="pol" id="new">Actualidad</option>
                         <option value="ent" id="ent">Entretenimiento</option>
@@ -86,12 +86,12 @@
                         <option value="r18" id="r18">NSFW</option>
                       </select>
 
-                      <input enctype="multipart/form-data" type="file" name="postPic"
+                      <input required enctype="multipart/form-data" type="file" name="postPic"
                         class="waves-effect waves-black btn-flat" id="mediaFile"
                         accept="image/gif, image/jpeg, image/jpg, image/png, video/webm">
                       <label class="waves-effect waves-black btn-flat" for="mediaFile"><i
                           class="fas fa-cloud-upload-alt"></i></label>
-                      <textarea name="textarea" value="" rows="" id="postTXT"
+                      <textarea required name="textarea" value="" rows="" id="postTXT"
                         placeholder="Escribi el contenido de tu publicación" maxlength="5000" cols=""></textarea>
                     </div>
                     <div style="text-align: center;" class="modal-footer green">

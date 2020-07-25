@@ -119,6 +119,7 @@ app.post('/login', function (req, res) {
     db.login(req.body.userid, req.body.password, result => {
         if (result) {
             req.session.loggedUser = result;
+            console.log(result);
             return res.status(200).json({
                 success: true,
                 redirect: "/home"

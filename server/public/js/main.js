@@ -16,7 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
 registerForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const newPassword = document.getElementById('newPassword');
+  if(newPassword.value == "" || newPassword.value.length<=4){
+    alert('Pon una contraseña mas fuerte');
+    return false;
+  }else {
   register(newPassword.value);
+}
 })
 
 
@@ -25,7 +30,12 @@ loginForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const userid = document.getElementById('userid');
   const password = document.getElementById('password');
+  if(userid.value == "" && password.value == "" || userid.value.length != 5 && password.value.length <=4){
+    alert('Datos vacíos, volvé a ingresarlos');
+    return false;
+  }else{
   login(userid.value, password.value);
+}
 });
 
 
@@ -42,7 +52,7 @@ function login(userid, password) {
     if (this.status == 200) {
       // response of the backend  goes here
       let response = JSON.parse(xmlhttp.responseText);
-      window.location.href = response.redirect;
+      window.location.href = response.redirect; // important line
     }
   });
 
@@ -65,7 +75,7 @@ function register(password) {
     if (this.status == 200) {
       // Respuesta de la request BACKEND ACA xmlhttp.responseText
       let response = JSON.parse(xmlhttp.responseText);
-      window.location.href = response.redirect;
+      window.location.href = response.redirect; // important line
     }
   });
 
