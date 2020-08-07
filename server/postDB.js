@@ -66,6 +66,7 @@ function filterPost(Section, cbResult) {
     })
 }
 
+
 function getPost(postid, cbResult) {
     db.MongoClient.connect(db.uri, db.config, (err, client) => {
         if (err) {
@@ -89,9 +90,38 @@ function getPost(postid, cbResult) {
         }
     });
 }
+
+// function to add comments in the postdb documents..
+function comment(postData, cbResult) {
+    db.MongoClient.connect(db.uri, db.config, (err, client) => {
+        if (err) {
+            cbResult(false);
+        } else {
+            const serverDB = client.db(dbName);
+            const postCollection = serverDB.collection('postData');
+
+            postCollection.insert(postData, (err, result) => {
+                if (err) {
+                    cbResult(false);
+                } else {
+                    cbResult(true, result);
+                }
+
+                client.close();
+            });
+
+
+
+
+        }
+    });
+}
+
+
 module.exports = {
     createPost,
     filterPost,
     showPost,
-    getPost
+    getPost,
+    comment
 }
