@@ -12,13 +12,14 @@ const { register } = require('./userDB.js');
 const session = require('express-session');
 const { debug } = require('console');
 const multer = require('multer');
+const e = require('express');
 
 
 const storage = multer.diskStorage({
     destination: '/public/img/imgPost',
     filename: (req, file, cb) => {
-        cb(null, file.fieldname+'-'+Date.now()+path.extname(file.originalname))
-        
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+
     }
 });
 app.use(multer({
@@ -166,7 +167,7 @@ app.get('/exp/:section/:postid?', function (req, res) {
     if (req.session.loggedUser) {
         if (req.params.section && req.params.postid) {
             return dbPost.getPost(req.params.postid, (postid, bool) => {
-                console.log(postid.result.postDate);
+                console.log(postid.result.Section);
                 res.render('inPost', {
                     layout: 'post',
                     postDate: postid.result.postDate,
@@ -176,7 +177,9 @@ app.get('/exp/:section/:postid?', function (req, res) {
                     imgFile: postid.result.imgFile,
                     userid: req.session.loggedUser.userid,
                     rank: req.session.loggedUser.rank,
-                    points: req.session.loggedUser.points
+                    points: req.session.loggedUser.points,
+                    postid: postid.result._id,
+                    Section: postid.result.Section
                 })
 
             })
@@ -209,10 +212,32 @@ app.get('/exp/:section/:postid?', function (req, res) {
     }
 })
 
+// coments post..
+app.post('/exp/:section/:postid?'), function (req, res) {
+    if (!req.body) {
+        res.status(400).send("Error");
+    } else {
+        if (req.session.loggedUser) {
+            console.log(req.body);
+            dbPost.comment(req.body.commentTXT, (bool, comment)=>{
+
+            });
+
+        } else {
+            req.session.message = {
+                class: "failure",
+                text: "No se pudo iniciar la sesion"
+            };
+        }
+    }
+}
+
+
+// doesnt work yet..
 app.post('/imgupload', function (req, res, cb) {
-    upload(req, res, (err) =>{
-        if(err){res.redirect('/home');}
-        else{
+    upload(req, res, (err) => {
+        if (err) { res.redirect('/home'); }
+        else {
             console.log(req.file);
             res.redirect('/home');
         }

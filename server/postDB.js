@@ -100,19 +100,27 @@ function comment(postData, cbResult) {
             const serverDB = client.db(dbName);
             const postCollection = serverDB.collection('postData');
 
-            postCollection.insert(postData, (err, result) => {
-                if (err) {
-                    cbResult(false);
-                } else {
-                    cbResult(true, result);
-                }
+            postCollection.updateOne({
+                _id: result.insertedId
+            },
+                {
+                    $push: {
+                        comment: {
+                            userid,
+                            userRank,
+                            commentDate,
+                            commentTXT
+                        }
+                    }
 
-                client.close();
-            });
-
-
-
-
+                }, (err, result) => {
+                    if (err) {
+                        cbResult(false);
+                    } else {
+                        cbResult(true);
+                    }
+                    client.close();
+                });
         }
     });
 }

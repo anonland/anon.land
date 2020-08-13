@@ -1,6 +1,6 @@
 let commentBTN = document.getElementById('commentbtn');
-
-
+let Section = document.getElementById('Section').value;
+let postid = document.getElementById('postid').value;
 // function for comment..
 function comment(commentTXT, date) {
     let commentDate = new Date();
@@ -21,7 +21,7 @@ function comment(commentTXT, date) {
 
 
 
-    xmlhttp.open("POST", `/exp/`, true);
+    xmlhttp.open("POST", `/exp/${Section}/${postid}`, true);
     xmlhttp.setRequestHeader("Content-Type", "application/json");
     xmlhttp.send(JSON.stringify(commentData));
 
