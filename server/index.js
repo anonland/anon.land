@@ -65,7 +65,7 @@ app.get('/', function (req, res) {
 })
 
 // home endpoint..
-app.get('/home', upload.single('postPic'), function (req, res) {
+app.get('/home', function (req, res) {
     if (req.session.loggedUser) {
         dbPost.showPost((allPosts) => {
             allPosts.map(element => {
@@ -231,7 +231,7 @@ app.post('/exp/:section/:postid?'), function (req, res) {
     }
 }
 
-
+/** 
 // doesnt work yet..
 app.post('/imgupload', function (req, res, cb) {
     upload(req, res, (err) => {
@@ -246,7 +246,7 @@ app.post('/imgupload', function (req, res, cb) {
     // req.file is the `avatar` file
     // req.body will hold the text fields, if there were any
 })
-
+*/
 
 // heroku port access..
 app.set('port', process.env.PORT || 3000);
