@@ -13,7 +13,7 @@ const { debug } = require('console');
 const multer = require('multer');
 const e = require('express');
 
-
+/** 
 const storage = multer.diskStorage({
     destination: '/public/img/imgPost',
     filename: (req, file, cb) => {
@@ -28,7 +28,7 @@ app.use(multer({
 const upload = multer({
     storage
 });
-
+*/
 // Setting HBS engine
 app.set("view engine", "handlebars");
 app.engine("handlebars", expHbs({
