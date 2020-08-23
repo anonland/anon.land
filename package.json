@@ -1,11 +1,11 @@
 {
   "name": "expressit",
   "version": "1.0.0",
-  "description": "Project for a free speech social media",
-  "main": "server.js",
+  "description": "Social network project with true freedom of expression",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./server/server.js",
-    "startDev": "nodemon ./server/server.js"
+    "start": "node ./server/index.js",
+    "startDev": "nodemon ./server/index.js"
   },
   "author": "Grunt",
   "license": "ISC",
