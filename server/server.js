@@ -248,7 +248,11 @@ app.post('/imgupload', function (req, res, cb) {
     // req.body will hold the text fields, if there were any
 })
 
+
+// heroku port access..
+app.set('port', process.env.PORT || 3000);
+
 // Opening port..
 app.listen(port, function () {
-    console.log("Opening port at " + port + ` http://localhost:${port}`);
+    console.log("Opening..");
 })

@@ -4,7 +4,8 @@
   "description": "Project for a free speech social media",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./server/server.js"
+    "start": "node ./server/server.js",
+    "startDev": "nodemon ./server/server.js"
   },
   "author": "Grunt",
   "license": "ISC",
