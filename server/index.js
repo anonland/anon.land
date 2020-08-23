@@ -1,7 +1,6 @@
 // import things..
 const express = require('express')
 const app = express()
-const port = 3000;
 const path = require("path");
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -249,7 +248,9 @@ app.post('/imgupload', function (req, res, cb) {
 })
 
 
+// heroku port access..
+app.set('port', process.env.PORT || 3000);
 // Opening port..
-app.listen(process.env.PORT || 3000, function () {
+app.listen(app.get('port'),()=> {
     console.log("Opening..");
 })
