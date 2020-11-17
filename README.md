@@ -28,6 +28,7 @@ Express It! is a project for a total free speech freedom and semi-anon.
 
 
 ### non-so higher priorities
+- [ ] Add express routing node.
 - [ ] Add points in posts.
 - [x] Make compulsory all the inputs in all forms.
 - [ ] Add greentext stories ">".
