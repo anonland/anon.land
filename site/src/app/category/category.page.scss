@@ -1,0 +1,31 @@
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.container div::after {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+
+.container .text {
+  position: absolute;
+  color: white;
+  padding: 7px;
+}
+
+.container div {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  background-image: url('../../assets/neo.jpg');
+  background-size: cover;
+}
