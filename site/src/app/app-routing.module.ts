@@ -10,7 +10,11 @@ const routes: Routes = [
   {
     path: 'category/:id',
     loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
+  },  {
+    path: 'new-vox',
+    loadChildren: () => import('./new-vox/new-vox.module').then( m => m.NewVoxPageModule)
   }
+
 ];
 
 @NgModule({
