@@ -19,12 +19,12 @@ Express It! is a project for a total free speech freedom and semi-anon.
 ## TO DO LIST:
 
 ### high priorities
-- [ ] Split front and back.
+- [x] Split front and back.
 - [ ] Sort the posts by date.
 - [ ] User's password encryption.
 - [ ] Make an admin control panel for deleting posts.
 - [ ] Upload imgs in posts (multer).
-- [ ] Make it responsive.
+- [x] Make it responsive.
 - [ ] Add comments in posts.
 
 
