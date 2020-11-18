@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="primary" fill="solid" (click)="startNewVox()">
+        <ion-icon name="add"></ion-icon> Iniciar Vox
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{ category }}</ion-title>
   </ion-toolbar>
 </ion-header>

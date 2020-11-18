@@ -23,8 +23,8 @@ export class AppComponent implements OnInit {
       icon: 'help'
     },
     {
-      title: 'Musica',
-      url: '/category/Musica',
+      title: 'Música',
+      url: '/category/Música',
       icon: 'musical-notes'
     },
     {
