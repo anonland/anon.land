@@ -6,12 +6,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./userDB.js');
 const dbPost = require('./postDB.js');
-const expHbs = require("express-handlebars");
 const { register } = require('./userDB.js');
 const session = require('express-session');
 const { debug } = require('console');
 const multer = require('multer');
-const e = require('express');
 
 /** 
 const storage = multer.diskStorage({
@@ -29,13 +27,7 @@ const upload = multer({
     storage
 });
 */
-// Setting HBS engine
-app.set("view engine", "handlebars");
-app.engine("handlebars", expHbs({
-    defaultLayout: "public",
-    layoutsDir: path.join(__dirname, "views/layouts")
-}));
-app.set('views', path.join(__dirname, "views"))
+app.set('views', path.join(__dirname, "s"))
 
 // set cors policy
 app.use(cors());
@@ -71,15 +63,7 @@ app.get('/home', function (req, res) {
             allPosts.map(element => {
                 element.path = `/exp/${element.Section}/${element._id}`;
             });
-            res.render('posting', {
-                layout: 'public',
-                section: req.params.section,
-                postArray: allPosts,
-                path: path,
-                userid: req.session.loggedUser.userid,
-                rank: req.session.loggedUser.rank,
-                points: req.session.loggedUser.points
-            });
+
         });
     }
     else { res.redirect('/'); }
@@ -167,19 +151,7 @@ app.get('/exp/:section/:postid?', function (req, res) {
         if (req.params.section && req.params.postid) {
             return dbPost.getPost(req.params.postid, (postid, bool) => {
                 console.log(postid.result.Section);
-                res.render('inPost', {
-                    layout: 'post',
-                    postDate: postid.result.postDate,
-                    opid: postid.result.userid,
-                    opRank: postid.result.rank,
-                    TXT: postid.result.TXT,
-                    imgFile: postid.result.imgFile,
-                    userid: req.session.loggedUser.userid,
-                    rank: req.session.loggedUser.rank,
-                    points: req.session.loggedUser.points,
-                    postid: postid.result._id,
-                    Section: postid.result.Section
-                })
+
 
             })
         }
@@ -190,14 +162,7 @@ app.get('/exp/:section/:postid?', function (req, res) {
                     postArray.map(element => {
                         element.path = `/exp/${element.Section}/${element._id}`;
                     });
-                    return res.render('posting', {
-                        layout: 'public',
-                        postArray,
-                        section: req.params.section,
-                        userid: req.session.loggedUser.userid,
-                        rank: req.session.loggedUser.rank,
-                        points: req.session.loggedUser.points
-                    })
+
                 } else {
                     req.session.message = {
                         class: "failure",
