@@ -2,6 +2,14 @@ ion-menu-button {
   color: var(--ion-color-primary);
 }
 
+ion-badge{
+  padding: 2px;
+
+  ion-icon{
+    font-size: 11.62px;
+  }
+}
+
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
@@ -17,6 +25,8 @@ ion-menu-button {
   position: absolute;
   color: white;
   padding: 7px;
+  font-size: 80%;
+  font-weight: bold;
 }
 
 .container div {
@@ -24,9 +34,20 @@ ion-menu-button {
   overflow: hidden;
 }
 
+.options-badge{
+  position: absolute !important;
+  right: 0px;
+  top: 0px;
+}
+
+.margin-right-5px{
+  margin-right: 5px;
+}
+
 .image {
   background-image: url('../../assets/neo.jpg');
   background-size: cover;
+  cursor: pointer;
 }
 
 //For typical mobile devices
