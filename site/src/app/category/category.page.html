@@ -4,8 +4,11 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end">
+      <ion-button color="primary" shape="round" (click)="openNotificationsPreview($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
       <ion-button color="primary" fill="solid" (click)="startNewVox()">
-        <ion-icon name="add"></ion-icon> Iniciar Vox
+        <ion-icon name="add"></ion-icon> Nuevo Vox
       </ion-button>
     </ion-buttons>
     <ion-title>{{ category }}</ion-title>
@@ -20,9 +23,15 @@
   </ion-header>
 
   <div class="container">
-    <div class="image" *ngFor="let post of posts">
-      <div class="text">{{post.title}}</div>
+    <div class="image" *ngFor="let post of posts" routerLink="../../vox">
+      <div class="text">
+        <ion-badge color="medium" class="margin-right-5px" (click)="showOptions($event)">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-badge>
+        <ion-badge color="primary">PRG</ion-badge>
+        <br>
+        {{post.title}}
+      </div>
     </div>
   </div>
-
 </ion-content>

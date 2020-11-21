@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { NotificationsPreviewComponent } from '../components/notifications-preview/notifications-preview.component';
+import { VoxOptionsComponent } from '../components/vox-options/vox-options.component';
 import { NewVoxPage } from '../new-vox/new-vox.page';
 
 @Component({
@@ -55,7 +57,8 @@ export class CategoryPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private popoverCtrl: PopoverController
   ) { }
 
   ngOnInit() {
@@ -73,4 +76,20 @@ export class CategoryPage implements OnInit {
     }
   }
 
+  async showOptions($event: MouseEvent) {
+    $event.stopPropagation();
+    const popover = await this.popoverCtrl.create({
+       component: VoxOptionsComponent,
+       event: $event
+      });
+    await popover.present();
+  }
+
+  async openNotificationsPreview($event: MouseEvent) {
+    const popover = await this.popoverCtrl.create({
+       component: NotificationsPreviewComponent,
+       event: $event
+      });
+    await popover.present();
+  }
 }

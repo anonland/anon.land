@@ -13,6 +13,10 @@ const routes: Routes = [
   },  {
     path: 'new-vox',
     loadChildren: () => import('./new-vox/new-vox.module').then( m => m.NewVoxPageModule)
+  },
+  {
+    path: 'vox',
+    loadChildren: () => import('./vox/vox.module').then( m => m.VoxPageModule)
   }
 
 ];
