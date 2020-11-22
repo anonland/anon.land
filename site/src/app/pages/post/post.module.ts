@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { VoxPageRoutingModule } from './vox-routing.module';
+import { PostPageRoutingModule } from './post-routing.module';
 
-import { VoxPage } from './vox.page';
+import { PostPage } from './post.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    VoxPageRoutingModule
+    PostPageRoutingModule
   ],
-  declarations: [VoxPage]
+  declarations: [PostPage]
 })
-export class VoxPageModule {}
+export class PostPageModule {}

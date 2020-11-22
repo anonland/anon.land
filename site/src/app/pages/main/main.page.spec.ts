@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
+import { RouterModule } from '@angular/router';
+import { MainPage } from './main.page';
 
-import { VoxOptionsComponent } from './vox-options.component';
-
-describe('VoxOptionsComponent', () => {
-  let component: VoxOptionsComponent;
-  let fixture: ComponentFixture<VoxOptionsComponent>;
+describe('MainPage', () => {
+  let component: MainPage;
+  let fixture: ComponentFixture<MainPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VoxOptionsComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ MainPage ],
+      imports: [IonicModule.forRoot(), RouterModule.forRoot([])]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(VoxOptionsComponent);
+    fixture = TestBed.createComponent(MainPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

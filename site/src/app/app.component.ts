@@ -14,37 +14,37 @@ export class AppComponent implements OnInit {
   public appPages = [
     {
       title: 'General',
-      url: '/category/General',
+      url: '',
       icon: 'grid'
     },
     {
       title: 'Preguntas',
-      url: '/category/Preguntas',
+      url: '/prg',
       icon: 'help'
     },
     {
       title: 'Música',
-      url: '/category/Música',
+      url: '/mus',
       icon: 'musical-notes'
     },
     {
       title: 'Películas',
-      url: '/category/Películas',
+      url: '/pel',
       icon: 'videocam'
     },
     {
       title: 'Ciencia',
-      url: '/category/Ciencia',
+      url: '/cie',
       icon: 'telescope'
     },
     {
       title: 'Arte',
-      url: '/category/Arte',
+      url: '/art',
       icon: 'brush'
     },
     {
       title: 'Programación',
-      url: '/category/Programación',
+      url: '/pro',
       icon: 'code'
     }
   ];
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('category/')[1];
+    const path = window.location.pathname;
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
