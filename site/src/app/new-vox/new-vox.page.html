@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button color="danger" fill="solid" (click)="cancel()">
+        CANCELAR
+      </ion-button>
+      <ion-button color="success" fill="solid" [disabled]="!newVoxForm.valid" (click)="create()">
+        CREAR
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Nuevo vox</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        Expresate anonimamente
+      </ion-label>
+    </ion-list-header>
+
+    <form [formGroup]="newVoxForm">
+
+      <ion-item>
+        <ion-label>Categoría</ion-label>
+        <ion-select value="general" okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
+          <ion-select-option value="general">General</ion-select-option>
+          <ion-select-option value="preguntas">Preguntas</ion-select-option>
+          <ion-select-option value="musica">Música</ion-select-option>
+          <ion-select-option value="peliculas">Películas</ion-select-option>
+          <ion-select-option value="ciencia">Ciencia</ion-select-option>
+          <ion-select-option value="arte">Arte</ion-select-option>
+          <ion-select-option value="programacion">Programación</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Imágen</ion-label>
+        <ion-input type="file" name="image" formControlName="image"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Contenido de la publicación</ion-label>
+        <ion-textarea placeholder="Escribi el contenido de tu publicación" maxlength="5000" name="content" formControlName="content"></ion-textarea>
+      </ion-item>
+
+    </form>
+
+  </ion-list>
+
+</ion-content>

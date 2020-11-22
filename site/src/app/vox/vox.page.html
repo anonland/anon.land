@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="end">
+      <ion-back-button text="Atrás" defaultHref="category/General"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{titulo}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="7">
+        <div class="ion-text-center">
+          <img src="../../assets/neo.jpg" height="50%">
+        </div>
+        <h2>este es el texto del vox</h2>
+      </ion-col>
+      <ion-col size="5" class="comments-container">
+        <ion-textarea placeholder="Hacer un comentario" maxlength="500" autofocus="true" rows="7" #txtComment></ion-textarea>
+        <div class="comment-button">
+          <ion-button color="dark" (click)="comment()">Comentar</ion-button>
+        </div>
+        <ion-list>
+          <ion-item>
+            <h4>Comentarios:</h4>
+          </ion-item>
+          <ion-item *ngFor="let comment of comments">
+            {{comment.text}}
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
