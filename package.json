@@ -18,7 +18,9 @@
     "nodemon": "^2.0.4",
     "path": "^0.12.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "2.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/igruntplay/voxed4.git"
