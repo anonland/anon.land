@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { VoxPage } from './vox.page';
+import { MainPage } from './main.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: VoxPage
+    component: MainPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class VoxPageRoutingModule {}
+export class MainPageRoutingModule {}

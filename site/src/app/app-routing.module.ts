@@ -4,21 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'category/General',
-    pathMatch: 'full'
+    loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule)
+  }, {
+    path: ':category',
+    loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule)
   },
   {
-    path: 'category/:id',
-    loadChildren: () => import('./category/category.module').then( m => m.CategoryPageModule)
-  },  {
-    path: 'new-vox',
-    loadChildren: () => import('./new-vox/new-vox.module').then( m => m.NewVoxPageModule)
-  },
-  {
-    path: 'vox',
-    loadChildren: () => import('./vox/vox.module').then( m => m.VoxPageModule)
+    path: ':category/:postId',
+    loadChildren: () => import('./pages/post/post.module').then(m => m.PostPageModule)
   }
-
 ];
 
 @NgModule({
@@ -27,4 +21,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

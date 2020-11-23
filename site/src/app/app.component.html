@@ -3,9 +3,6 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Anon Land</ion-list-header>
-          <ion-note>Expresate anonimamente</ion-note>
-
           <ion-list-header class="ion-padding">Categorias</ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
@@ -15,7 +12,15 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+
         </ion-list>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerDirection="root" routerLink="/login" lines="none" detail="false">
+            <ion-icon slot="start" ios="log-in-outline" md="log-in-sharp"></ion-icon>
+            <ion-label>Iniciar sesión (Mod)</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
 
       </ion-content>
     </ion-menu>

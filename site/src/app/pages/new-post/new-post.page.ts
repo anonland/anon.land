@@ -3,18 +3,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-new-vox',
-  templateUrl: './new-vox.page.html',
-  styleUrls: ['./new-vox.page.scss'],
+  selector: 'app-new-post',
+  templateUrl: './new-post.page.html',
+  styleUrls: ['./new-post.page.scss'],
 })
-export class NewVoxPage implements OnInit {
-  public newVoxForm: FormGroup;
+export class NewPostPage implements OnInit {
+  public newPostForm: FormGroup;
 
   constructor(private modalCtrl: ModalController) {
-    this.newVoxForm = new FormGroup({
+    this.newPostForm = new FormGroup({
       category: new FormControl('general', Validators.required),
       image: new FormControl(undefined, Validators.required),
-      content: new FormControl(undefined, Validators.required),
+      title: new FormControl(undefined, Validators.required),
+      content: new FormControl(undefined),
     });
    }
 
@@ -26,8 +27,8 @@ export class NewVoxPage implements OnInit {
   }
 
   create(){
-    const {category, image, content } = this.newVoxForm.value;
+    const {category, image, title, content } = this.newPostForm.value;
 
-    this.modalCtrl.dismiss({ category, image, content});
+    this.modalCtrl.dismiss({ category, image, title, content});
   }
 }

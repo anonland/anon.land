@@ -1,0 +1,36 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>{{ category | fullCategory }}</ion-title>
+
+    <ion-label></ion-label>
+
+    <ion-buttons slot="end">
+      <ion-button color="primary" shape="round" (click)="openNotificationsPreview($event)">
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" fill="solid" (click)="createPost()">
+        <ion-icon name="add"></ion-icon> Nuevo post
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="container">
+    <div class="image" *ngFor="let post of posts" (click)="openPost(post)">
+      <!--[routerLink]="post.category + '/' + post.id" -->
+      <div class="text">
+        <ion-badge color="medium" class="margin-right-5px" (click)="showOptions($event)">
+          <ion-icon name="ellipsis-vertical"></ion-icon>
+        </ion-badge>
+        <ion-badge color="primary">{{post.category | uppercase}}</ion-badge>
+        <br>
+        {{post.title}}
+      </div>
+    </div>
+  </div>
+</ion-content>

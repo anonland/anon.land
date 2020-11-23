@@ -9,5 +9,6 @@ export class PostService {
   constructor(private db: AngularFirestore) { }
 
   getPostList(){
+    return this.db.collection('posts').snapshotChanges();
   }
 }

@@ -1,0 +1,93 @@
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+ion-badge{
+  padding: 2px;
+
+  ion-icon{
+    font-size: 11.62px;
+  }
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.container div::after {
+  content: "";
+  padding-bottom: 100%;
+  display: block;
+}
+
+.container .text {
+  position: absolute;
+  color: white;
+  padding: 7px;
+  font-size: 80%;
+  font-weight: bold;
+}
+
+.container div {
+  position: relative;
+  overflow: hidden;
+}
+
+.options-badge{
+  position: absolute !important;
+  right: 0px;
+  top: 0px;
+}
+
+.margin-right-5px{
+  margin-right: 5px;
+}
+
+.image {
+  background-image: url('../../../assets/neo.jpg');
+  background-size: cover;
+  cursor: pointer;
+}
+
+//For typical mobile devices
+@media only screen and (max-width: 479px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+//For mobile (landscape)
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+//For tablets
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+//For small desktop
+@media only screen and (min-width: 980px) and (max-width: 1023px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+//For typical desktop
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+//For large desktop
+@media only screen and (min-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
