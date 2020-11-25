@@ -1,33 +1,35 @@
-# ExpressIt = voxed 4.0
+# ExpressIt = The new Voxed = (anon.land)[http://anon.land/]
 
 ---
 
 ## PRS ARE WELCOME || PRS BIENVENIDOS
 
-https://t.me/newvoxed4
-https://t.me/grunt1234
-http://t.me/voxed4
+### contact me!
+[![](https://telegram.com.es/wp-content/uploads/2018/02/telegram.png)](https://t.me/grunt1234)
+
+(TG channel)[http://t.me/voxed4]
+
+
 
 Tras la caida de voxed.net, voy a retomar este proyecto.
 
 Social media with 100% speech freedom
 
-Express It! is a project for a total free speech freedom and semi-anon.
-
+Anon Land! is a project for a total free speech freedom and semi-anon.
 
 ## TO DO LIST:
 
 ### high priorities
 - [x] Split front and back.
+- [x] Create the Firebase DB.
 - [ ] Sort the posts by date.
-- [ ] User's password encryption.
 - [ ] Make an admin control panel for deleting posts.
 - [ ] Upload imgs in posts (multer).
 - [x] Make it responsive.
 - [ ] Add comments in posts.
 
-
 ### non-so higher priorities
+- [ ] User's password encryption.
 - [ ] Add express routing node.
 - [ ] Add points in posts.
 - [x] Make compulsory all the inputs in all forms.
