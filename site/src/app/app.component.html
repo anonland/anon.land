@@ -3,25 +3,45 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header class="ion-padding">Categorias</ion-list-header>
+          <ion-list-header class="ion-padding">nichos</ion-list-header>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none"
-              detail="false" [class.selected]="selectedIndex == i">
-              <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngFor="let p of appPages; let i = index"
+          >
+            <ion-item
+              (click)="selectedIndex = i"
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              [class.selected]="selectedIndex == i"
+            >
+              <ion-icon
+                slot="start"
+                [ios]="p.icon + '-outline'"
+                [md]="p.icon + '-sharp'"
+              ></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
-
         </ion-list>
 
         <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" routerLink="/login" lines="none" detail="false">
-            <ion-icon slot="start" ios="log-in-outline" md="log-in-sharp"></ion-icon>
+          <ion-item
+            routerDirection="root"
+            routerLink="/login"
+            lines="none"
+            detail="false"
+          >
+            <ion-icon
+              slot="start"
+              ios="log-in-outline"
+              md="log-in-sharp"
+            ></ion-icon>
             <ion-label>Iniciar sesión (Mod)</ion-label>
           </ion-item>
         </ion-menu-toggle>
-
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

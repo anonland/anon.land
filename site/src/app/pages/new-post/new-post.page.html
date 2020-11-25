@@ -4,7 +4,12 @@
       <ion-button color="danger" fill="solid" (click)="cancel()">
         CANCELAR
       </ion-button>
-      <ion-button color="success" fill="solid" [disabled]="!newPostForm.valid" (click)="create()">
+      <ion-button
+        color="success"
+        fill="solid"
+        [disabled]="!newPostForm.valid"
+        (click)="create()"
+      >
         CREAR
       </ion-button>
     </ion-buttons>
@@ -13,14 +18,16 @@
 </ion-header>
 
 <ion-content>
-
   <ion-list>
-
     <form [formGroup]="newPostForm">
-
       <ion-item>
-        <ion-label>Categoría</ion-label>
-        <ion-select okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
+        <ion-label>Nicho</ion-label>
+        <ion-select
+          okText="Elegir"
+          cancelText="Cancelar"
+          name="category"
+          formControlName="category"
+        >
           <ion-select-option value="prg">Preguntas</ion-select-option>
           <ion-select-option value="mus">Música</ion-select-option>
           <ion-select-option value="pel">Películas</ion-select-option>
@@ -40,14 +47,21 @@
       </ion-item>
 
       <ion-item>
-        <ion-input name="title" formControlName="title" placeholder="Título"></ion-input>
+        <ion-input
+          name="title"
+          formControlName="title"
+          placeholder="Título"
+        ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-textarea placeholder="Contenido" maxlength="5000" name="content" formControlName="content"></ion-textarea>
+        <ion-textarea
+          placeholder="Contenido"
+          maxlength="5000"
+          name="body"
+          formControlName="body"
+        ></ion-textarea>
       </ion-item>
     </form>
-
   </ion-list>
-
 </ion-content>
