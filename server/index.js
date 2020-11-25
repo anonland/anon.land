@@ -5,11 +5,11 @@ const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const { debug } = require("console");
 const multer = require("multer");
 const firebase = require("./db/firebase");
 const http = require("http");
 const { v4: uuidv4 } = require("uuid");
+const fireDate = require("@google-cloud/firestore");
 // set cors policy
 app.use(cors());
 // path public
@@ -49,12 +49,26 @@ app.post("/session", async (req, res) => {
   }
 });
 
-app.post("/create", (req, res) => {
-  console.log(req.headers["x-forwarded-for"]);
-  /**
-   * Sesión para crear publicaciones.
-   * Pendiente..
-   */
+app.post("/create", async (req, res) => {
+  // console.log(req.headers["x-forwarded-for"]);
+  console.log("body", req.body);
+
+  if (res.status(200)) {
+    const userIP = req.headers["x-forwarded-for"];
+    const { category, img, title, body } = req.body.data;
+    const postData = {
+      category,
+      img,
+      title,
+      body,
+      //  createdAt: Timestamp.now(),
+    };
+    await firebase.db.collection("posts").add(postData);
+    console.log("post agregado!");
+    return res.status(200);
+  } else {
+    console.log("Error de conexión");
+  }
 });
 
 // testeo firebase

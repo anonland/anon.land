@@ -9,6 +9,7 @@ import { PostService } from "../../services/post.service";
 import { PostPage } from "../post/post.page";
 import { Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { Session } from "protractor";
 
 @Component({
   selector: "app-main",
@@ -32,13 +33,18 @@ export class MainPage implements OnInit {
 
   ngOnInit() {
     this.category = this.activatedRoute.snapshot.paramMap.get("category");
-    let sesion = this.http
+
+    // session creation.. DESCOMENTAR PARA PRODUCCION
+    /**     let session = this.http
       .post(
         "http://localhost:3000/session",
         {},
         { headers: { "x-forwarded-for": "192.168.0.1" } }
       )
-      .subscribe((data) => console.log(data));
+      .subscribe((data) =>
+        localStorage.setItem("session", JSON.stringify(data))
+      );*/
+
     this.postServ.getPostList().subscribe((posts) => {
       this.posts = posts.map((post) => {
         const postObj: Post = post.payload.doc.data() as Post;
@@ -78,11 +84,14 @@ export class MainPage implements OnInit {
       cssClass: "div-modal",
     });
     await modal.present();
-
     const event = await modal.onDidDismiss();
-
     if (event.data != null) {
-      //TODO: Guardar en BD
+      this.http
+        .post("http://localhost:3000/create", {
+          session: JSON.parse(localStorage.getItem("session")),
+          data: event.data,
+        })
+        .subscribe((data) => console.log(data));
     }
   }
 
