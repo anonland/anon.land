@@ -1,4 +1,4 @@
-# ExpressIt = The new Voxed = (anon.land)[http://anon.land/]
+# ExpressIt = The new Voxed = [anon.land](http://anon.land/)
 
 ---
 
