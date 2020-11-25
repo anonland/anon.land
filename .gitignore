@@ -1,4 +1,3 @@
 node_modules
-db
-postDataExample.json
-.prettierrc
+server/db
+site/www
