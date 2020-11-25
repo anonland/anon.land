@@ -6,8 +6,7 @@
 
 ### contact me!
 [![](https://telegram.com.es/wp-content/uploads/2018/02/telegram.png)](https://t.me/grunt1234)
-
-(TG channel)[http://t.me/voxed4]
+[(TG channel](http://t.me/voxed4)
 
 
 
@@ -23,6 +22,7 @@ Anon Land! is a project for a total free speech freedom and semi-anon.
 - [x] Split front and back.
 - [x] Create the Firebase DB.
 - [ ] Sort the posts by date.
+- [ ] Make a system for reporting posts.
 - [ ] Make an admin control panel for deleting posts.
 - [ ] Upload imgs in posts (multer).
 - [x] Make it responsive.
