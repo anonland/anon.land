@@ -6,7 +6,9 @@
 
 ### contact me!
 [![](https://telegram.com.es/wp-content/uploads/2018/02/telegram.png)](https://t.me/grunt1234)
-[(TG channel](http://t.me/voxed4)
+
+
+[TG channel](http://t.me/voxed4)
 
 
 
