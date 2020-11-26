@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +53,9 @@ export class AppComponent implements OnInit {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private authServ: AuthService,
+    private toastCtrl: ToastController
   ) {
     this.initializeApp();
   }
@@ -69,5 +72,15 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+  }
+
+  async googleSignin() {
+    await this.authServ.googleSignin()
+      .then(_ => this.toastCtrl.create({ header: '¡Bienvenido! A moddear', position: 'top', duration: 4000 }).then(toast => toast.present()))
+      .catch(_ => this.toastCtrl.create({ header: 'Mooods un anon quiere entrar', position: 'top', duration: 4000 }).then(toast => toast.present())) 
+  }
+
+  async googleSignout() {
+    await this.authServ.signOut();
   }
 }

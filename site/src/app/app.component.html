@@ -3,7 +3,7 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header class="ion-padding">nichos</ion-list-header>
+          <ion-list-header class="ion-padding">Nichos</ion-list-header>
 
           <ion-menu-toggle
             auto-hide="false"
@@ -27,21 +27,20 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-menu-toggle auto-hide="false">
-          <ion-item
-            routerDirection="root"
-            routerLink="/login"
-            lines="none"
-            detail="false"
-          >
-            <ion-icon
-              slot="start"
-              ios="log-in-outline"
-              md="log-in-sharp"
-            ></ion-icon>
+        <ion-menu-toggle auto-hide="false" [hidden]="this.authServ.user != undefined">
+          <ion-item (click)="googleSignin()" class="pointer" routerDirection="root" lines="none" detail="false">
+            <ion-icon slot="start" ios="log-in-outline" md="log-in-sharp"></ion-icon>
             <ion-label>Iniciar sesión (Mod)</ion-label>
           </ion-item>
         </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false" [hidden]="this.authServ.user == undefined">
+          <ion-item (click)="googleSignout()" class="pointer" routerDirection="root" lines="none" detail="false">
+            <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
+            <ion-label>Cerrar sesión (Mod)</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
