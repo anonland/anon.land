@@ -30,7 +30,47 @@
     --height: 100% !important;
 }
 
-.div-modal{
+.div-modal {
     --width: 40% !important;
     --height: 70% !important;
+}
+
+//For typical mobile devices in portrait or landscape
+@media only screen and (max-width: 767px) {
+    .div-modal {
+        --width: 90% !important;
+        --height: 80% !important;
+    }
+}
+
+//For tablets
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+    .div-modal {
+        --width: 70% !important;
+        --height: 70% !important;
+    }
+}
+
+//For small desktop
+@media only screen and (min-width: 980px) and (max-width: 1023px) {
+    .div-modal {
+        --width: 50% !important;
+        --height: 70% !important;
+    }
+}
+
+//For typical desktop
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+    .div-modal {
+        --width: 50% !important;
+        --height: 70% !important;
+    }
+}
+
+//For large desktop
+@media only screen and (min-width: 1200px) {
+    .div-modal {
+        --width: 30% !important;
+        --height: 70% !important;
+    }
 }

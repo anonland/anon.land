@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { Post } from 'src/app/interfaces/post';
@@ -17,10 +18,12 @@ export class PostPage implements OnInit {
   constructor(
     public toastCtrl: ToastController,
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController,
+    private title: Title) { }
 
   ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
+    this.title.setTitle(this.post.title + ' | Anon Land');
   }
 
   async comment() {

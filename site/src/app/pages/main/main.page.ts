@@ -10,6 +10,7 @@ import { PostPage } from "../post/post.page";
 import { Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Session } from "protractor";
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: "app-main",
@@ -28,12 +29,12 @@ export class MainPage implements OnInit {
     private postServ: PostService,
     private location: Location,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private title: Title
   ) {}
 
   ngOnInit() {
     this.category = this.activatedRoute.snapshot.paramMap.get("category");
-
     // session creation.. DESCOMENTAR PARA PRODUCCION
     /**     let session = this.http
       .post(
@@ -68,6 +69,7 @@ export class MainPage implements OnInit {
     await modal.onDidDismiss();
 
     this.changeUrl(this.category ?? "");
+    this.title.setTitle('Anon Land');
   }
 
   private changeUrl(url: string) {
