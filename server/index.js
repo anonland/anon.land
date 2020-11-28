@@ -10,13 +10,20 @@ const firebase = require("./db/firebase");
 const http = require("http");
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
+
 // set cors policy
 app.use(cors());
-const middleware = (req, res, next) => {
-  return checkBlackList("192.168.0.3").then((banned) => {
-    if (banned) res.sendStatus(401);
+
+const middleware = async (req, res, next) => {
+  if (req.originalUrl == '/') {
+    const banned = await checkBlackList("192.168.0.1");
+    if (banned)
+      res.sendStatus(401);
+    else
+      next();
+  } else {
     next();
-  });
+  }
 };
 
 // path public
