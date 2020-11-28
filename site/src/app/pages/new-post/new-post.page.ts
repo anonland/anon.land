@@ -20,7 +20,7 @@ export class NewPostPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   cancel() {
     this.modalCtrl.dismiss();
@@ -29,6 +29,6 @@ export class NewPostPage implements OnInit {
   create() {
     const { category, img, title, body } = this.newPostForm.value;
 
-    this.modalCtrl.dismiss({ category, img, title, body });
+    this.modalCtrl.dismiss({ category, img, title, body, opid: localStorage.getItem('session') });
   }
 }

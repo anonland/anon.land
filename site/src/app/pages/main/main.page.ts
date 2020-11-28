@@ -9,7 +9,6 @@ import { PostService } from "../../services/post.service";
 import { PostPage } from "../post/post.page";
 import { Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
-import { Session } from "protractor";
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -31,27 +30,22 @@ export class MainPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private title: Title
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.category = this.activatedRoute.snapshot.paramMap.get("category");
+
     // session creation.. DESCOMENTAR PARA PRODUCCION
-    /**     let session = this.http
-      .post(
-        "http://localhost:3000/session",
-        {},
-        { headers: { "x-forwarded-for": "192.168.0.1" } }
-      )
-      .subscribe((data) =>
-        localStorage.setItem("session", JSON.stringify(data))
-      );*/
+    if (localStorage.getItem('session') == '')
+      this.http.post("http://localhost:3000/session", {}, { headers: { "x-forwarded-for": "192.168.0.1" } })
+        .subscribe(data => localStorage.setItem("session", data.toString()));
 
-    this.postServ.getPostList().subscribe((posts) => {
-      this.posts = posts.map((post) => {
-        const postObj: Post = post.payload.doc.data() as Post;
-        postObj.id = post.payload.doc.id;
+    this.postServ.getPostList().then((posts) => {
+      posts.forEach(post => {
+        const postObj: Post = post.data() as Post;
+        postObj.id = post.id;
 
-        return postObj;
+        this.posts.push(postObj);
       });
     });
   }
@@ -89,10 +83,7 @@ export class MainPage implements OnInit {
     const event = await modal.onDidDismiss();
     if (event.data != null) {
       this.http
-        .post("http://localhost:3000/create", {
-          session: JSON.parse(localStorage.getItem("session")),
-          data: event.data,
-        })
+        .post("http://localhost:3000/create", event.data)
         .subscribe((data) => console.log(data));
     }
   }

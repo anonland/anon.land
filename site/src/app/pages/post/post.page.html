@@ -27,7 +27,10 @@
             <h4>Comentarios:</h4>
           </ion-item>
           <ion-item *ngFor="let comment of comments">
-            {{comment.text}}
+            <ion-badge color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
+            <ion-badge color="medium" *ngIf="comment.userId != post.opid">ANON</ion-badge>
+            <ion-badge color="medium">{{comment.userId}}</ion-badge>
+            {{comment.body}}
           </ion-item>
         </ion-list>
       </ion-col>
