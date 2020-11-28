@@ -12,20 +12,22 @@ const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
 // set cors policy
 app.use(cors());
+const middleware = (req, res, next) => {
+  return checkBlackList("192.168.0.3").then((banned) => {
+    if (banned) res.sendStatus(401);
+    next();
+  });
+};
+
 // path public
-app.use(express.static(path.join(__dirname, "../site/www")));
+app.use(middleware, express.static(path.join(__dirname, "../site/www")));
 
-// session key
-app.use(
-  session({
-    secret: "jejetabien",
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-
-app.use(bodyParser.json());
-let userList = [];
+async function checkBlackList(userIP) {
+  let blackDoc = (await firebase.db.collection(`blacklist`).doc(userIP).get())
+    .exists;
+  console.log(blackDoc);
+  return blackDoc;
+}
 
 // main endpoint..
 app.get("/*", (req, res) => {
@@ -61,7 +63,7 @@ app.post("/create", async (req, res) => {
       img,
       title,
       body,
-      //  createdAt: Timestamp.now(),
+      createdAt: fireDate.Timestamp.now(),
     };
     await firebase.db.collection("posts").add(postData);
     console.log("post agregado!");
@@ -69,23 +71,6 @@ app.post("/create", async (req, res) => {
   } else {
     console.log("Error de conexión");
   }
-});
-
-// testeo firebase
-app.get("/test", (req, res) => {
-  console.log(req.body);
-  //const obj = JSON.parse(result.body);
-  const quoteData = {
-    quote: "",
-    author: "",
-  };
-  return firebase.db
-    .collection("exampleData")
-    .doc("testing")
-    .set(quoteData)
-    .then(() => {
-      console.log("nueva cita textual agregada a la DB");
-    });
 });
 
 // aca
