@@ -13,6 +13,7 @@ const fireDate = require("@google-cloud/firestore");
 
 // set cors policy
 app.use(cors());
+
 app.use(bodyParser.json());
 
 const middleware = async (req, res, next) => {
