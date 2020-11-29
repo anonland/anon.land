@@ -23,12 +23,12 @@ Anon Land! is a project for a total free speech freedom and semi-anon.
 ### high priorities
 - [x] Split front and back.
 - [x] Create the Firebase DB.
-- [ ] Sort the posts by date.
+- [x] Sort the posts by date.
 - [ ] Make a system for reporting posts.
 - [ ] Make an admin control panel for deleting posts.
 - [ ] Upload imgs in posts (multer).
 - [x] Make it responsive.
-- [ ] Add comments in posts.
+- [x] Add comments in posts.
 
 ### non-so higher priorities
 - [ ] User's password encryption.
