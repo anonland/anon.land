@@ -14,6 +14,8 @@ const fireDate = require("@google-cloud/firestore");
 // set cors policy
 app.use(cors());
 
+app.use(bodyParser.json());
+
 const middleware = async (req, res, next) => {
   if (req.originalUrl == '/') {
     const banned = await checkBlackList("192.168.0.1");
@@ -46,11 +48,9 @@ app.post("/session", async (req, res) => {
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
     const userID = uuidv4().slice(-6);
-    const userData = {
-      userIP,
-      userID,
-    };
-    res.json(userData);
+    const userData = { userIP, userID };
+
+    res.json(userID);
     await firebase.db.collection("users").add(userData);
     console.log("user agregado!");
   } else {
@@ -64,16 +64,40 @@ app.post("/create", async (req, res) => {
 
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
-    const { category, img, title, body } = req.body.data;
+    const { category, img, title, body, opid} = req.body;
     const postData = {
       category,
       img,
       title,
       body,
+      opid,
       createdAt: fireDate.Timestamp.now(),
     };
     await firebase.db.collection("posts").add(postData);
     console.log("post agregado!");
+    return res.status(200);
+  } else {
+    console.log("Error de conexión");
+  }
+});
+
+
+app.post("/comment", async (req, res) => {
+  // console.log(req.headers["x-forwarded-for"]);
+  console.log("body", req.body);
+
+  if (res.status(200)) {
+    const userIP = req.headers["x-forwarded-for"];
+    const { body, img, postId, userId } = req.body;
+    const commentData = {
+      body,
+      img,
+      postId,
+      userId,
+      createdAt: fireDate.Timestamp.now(),
+    };
+    await firebase.db.collection("comments").add(commentData);
+    console.log("comentario agregado!");
     return res.status(200);
   } else {
     console.log("Error de conexión");
