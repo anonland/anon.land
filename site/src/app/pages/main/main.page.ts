@@ -1,20 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { ModalController, PopoverController } from "@ionic/angular";
-import { NotificationsPreviewComponent } from "../../components/notifications-preview/notifications-preview.component";
-import { PostOptionsComponent } from "../../components/post-options/post-options.component";
-import { Post } from "../../interfaces/post";
-import { NewPostPage } from "../new-post/new-post.page";
-import { PostService } from "../../services/post.service";
-import { PostPage } from "../post/post.page";
-import { Location } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { NotificationsPreviewComponent } from '../../components/notifications-preview/notifications-preview.component';
+import { PostOptionsComponent } from '../../components/post-options/post-options.component';
+import { Post } from '../../interfaces/post';
+import { NewPostPage } from '../new-post/new-post.page';
+import { PostService } from '../../services/post.service';
+import { PostPage } from '../post/post.page';
+import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: "app-main",
-  templateUrl: "./main.page.html",
-  styleUrls: ["./main.page.scss"],
+  selector: 'app-main',
+  templateUrl: './main.page.html',
+  styleUrls: ['./main.page.scss'],
 })
 export class MainPage implements OnInit {
   public category: string;
@@ -33,12 +33,12 @@ export class MainPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.category = this.activatedRoute.snapshot.paramMap.get("category");
+    this.category = this.activatedRoute.snapshot.paramMap.get('category');
 
     // session creation.. DESCOMENTAR PARA PRODUCCION
     if (localStorage.getItem('session') == '')
-      this.http.post("http://localhost:3000/session", {}, { headers: { "x-forwarded-for": "192.168.0.1" } })
-        .subscribe(data => localStorage.setItem("session", data.toString()));
+      this.http.post('http://localhost:3000/session', {}, { headers: { 'x-forwarded-for': '192.168.0.1' } })
+        .subscribe(data => localStorage.setItem('session', data.toString()));
 
     this.postServ.getPostList().then((posts) => {
       posts.forEach(post => {
@@ -54,7 +54,7 @@ export class MainPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: PostPage,
       componentProps: { post: post },
-      cssClass: "div-fullscreen",
+      cssClass: 'div-fullscreen',
     });
 
     this.changeUrl(`${post.category}/${post.id}`);
@@ -62,7 +62,7 @@ export class MainPage implements OnInit {
     await modal.present();
     await modal.onDidDismiss();
 
-    this.changeUrl(this.category ?? "");
+    this.changeUrl(this.category ?? '');
     this.title.setTitle('Anon Land');
   }
 
@@ -77,13 +77,13 @@ export class MainPage implements OnInit {
   async createPost() {
     const modal = await this.modalCtrl.create({
       component: NewPostPage,
-      cssClass: "div-modal",
+      cssClass: 'create-new-post-modal',
     });
     await modal.present();
     const event = await modal.onDidDismiss();
     if (event.data != null) {
       this.http
-        .post("http://localhost:3000/create", event.data)
+        .post('http://localhost:3000/create', event.data)
         .subscribe((data) => console.log(data));
     }
   }

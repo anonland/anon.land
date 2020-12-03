@@ -1,3 +1,4 @@
 node_modules
 server/db
 site/www
+firebase-debug.log

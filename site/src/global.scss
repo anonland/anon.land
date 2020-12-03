@@ -25,21 +25,48 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.div-fullscreen {
+// Global standard font family.
+@font-face {
+    font-family: "Manrope";
+    src: local("Manrope"), url(./assets/fonts/Manrope/Manrope-variable.ttf)
+    format("truetype");
+}
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Manrope";
+}
+
+.create-new-post-modal .modal-wrapper {
+    height: 70vh;
+    width: 60vw;
+}
+
+.create-post-modal-full {
     --width: 100% !important;
     --height: 100% !important;
 }
 
-.div-modal {
+.create-post-modal-full {
     --width: 40% !important;
     --height: 70% !important;
 }
 
+.div-fullscreen {
+    --height: 100vh !important;
+    --width: 100vw !important;
+}
+
 //For typical mobile devices in portrait or landscape
 @media only screen and (max-width: 767px) {
-    .div-modal {
-        --width: 90% !important;
-        --height: 80% !important;
+    .create-new-post-modal .modal-wrapper {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .ion-page {
+        flex-direction: column-reverse;
     }
 }
 
