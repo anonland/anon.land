@@ -13,13 +13,13 @@ const fireDate = require("@google-cloud/firestore");
 const fs = require("fs");
 const { json } = require("express");
 const { type } = require("os");
+const { FieldValue } = require("@google-cloud/firestore");
 // set cors policy
 app.use(cors());
 
 app.use(bodyParser.json());
 
 const middleware = (req, res, next) => {
-  console.log(req.originalUrl);
   if (req.originalUrl == "/" || "/create" || "/session" || "/comment") {
     const cb = (err, data) => {
       const userIP = req.headers["x-forwarded-for"];
@@ -103,6 +103,20 @@ app.post("/comment", async (req, res) => {
       createdAt: fireDate.Timestamp.now(),
     };
     await firebase.db.collection("comments").add(commentData);
+    return res.status(200);
+  } else {
+    console.log("Error de conexión");
+  }
+});
+
+app.post("/report", async (req, res) => {
+  if (res.status(200)) {
+    console.log(req.body.postID);
+    await firebase.db
+      .collection("posts")
+      .doc(req.body.postID)
+      .update({ denuncias: FieldValue.increment(1) });
+    console.log("asdasd");
     return res.status(200);
   } else {
     console.log("Error de conexión");
