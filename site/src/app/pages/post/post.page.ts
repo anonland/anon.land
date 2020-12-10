@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { Post } from 'src/app/interfaces/post';
+import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -24,7 +25,9 @@ export class PostPage implements OnInit {
     private modalCtrl: ModalController,
     private title: Title,
     private http: HttpClient,
-    private postServ: PostService) { }
+    private postServ: PostService,
+    private authServ: AuthService,
+    private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
@@ -59,5 +62,34 @@ export class PostPage implements OnInit {
       .then(comments => comments
         .forEach(comment => this.comments.push(comment.data()))
       )
+  }
+
+  async deletePost() {
+    // this.alertCtrl.create({header: 'Borrar post', body: '¿Estas seguro de borrar este post?'})
+    this.postServ.deletePost(this.post.id);
+    const toast = await this.toastCtrl.create({ header: 'Post borrado correctamente' });
+    await toast.present();
+    this.modalCtrl.dismiss();
+  }
+
+  deleteComment() {
+
+  }
+
+  movePost() {
+
+  }
+
+  async banUser() {
+    await this.http.post('http://localhost:3000', { opIP: this.post.opIP }).toPromise();
+    const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente' });
+    await toast.present();
+  }
+
+  report() {
+    this.http.post('http://localhost:3000/report', { postID: this.post.id }, { responseType: 'text' }).subscribe(async () => {
+      const toast = await this.toastCtrl.create({ header: 'Post reportado correctamente', position: 'top' });
+      await toast.present();
+    });
   }
 }

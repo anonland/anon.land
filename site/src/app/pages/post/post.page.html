@@ -14,6 +14,22 @@
         <div class="ion-text-center">
           <img src="../../../assets/neo.jpg" height="50%">
         </div>
+        <div *ngIf="this.authServ.user != undefined">
+          <ion-button (click)="deletePost()">
+            <ion-icon name="trash-outline"></ion-icon>Borrar
+          </ion-button>
+          <ion-button (click)="movePost()">
+            <ion-icon name="arrow-redo"></ion-icon>Mover
+          </ion-button>
+          <ion-button (click)="banUser()">
+            <ion-icon name="skull"></ion-icon>Banear
+          </ion-button>
+        </div>
+        <div *ngIf="this.authServ.user == undefined">
+          <ion-button (click)="report()">
+            <ion-icon slot="start" name="flag"></ion-icon>Reportar
+          </ion-button>
+        </div>
         <h2>{{post.body}}</h2>
       </ion-col>
       <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">

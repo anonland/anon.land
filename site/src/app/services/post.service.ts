@@ -21,4 +21,12 @@ export class PostService {
       this.getComments(postId);
     }
   }
+
+  async deletePost(postId: string) {
+    return this.db.collection('posts').doc(postId).delete();
+  }
+
+  async changePostCategory(postId: string, category: string) {
+    return this.db.collection('posts').doc(postId).set({ category: category }, { merge: true })
+  }
 }

@@ -76,8 +76,8 @@ export class AppComponent implements OnInit {
 
   async googleSignin() {
     await this.authServ.googleSignin()
-      .then(_ => this.toastCtrl.create({ header: '¡Bienvenido! A moddear', position: 'top', duration: 4000 }).then(toast => toast.present()))
-      .catch(_ => this.toastCtrl.create({ header: 'Mooods un anon quiere entrar', position: 'top', duration: 4000 }).then(toast => toast.present())) 
+      .then(_ => this.toastCtrl.create({ header: 'Sesión iniciada correctamente', position: 'top', duration: 4000 }).then(toast => toast.present()))
+      .catch(_ => this.toastCtrl.create({ header: 'No tenes permisos de moderación', position: 'top', duration: 4000 }).then(toast => toast.present())) 
   }
 
   async googleSignout() {
