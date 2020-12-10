@@ -110,17 +110,13 @@ app.post("/comment", async (req, res) => {
 });
 
 app.post("/report", async (req, res) => {
-  if (res.status(200)) {
-    console.log(req.body.postID);
-    await firebase.db
-      .collection("posts")
-      .doc(req.body.postID)
-      .update({ denuncias: FieldValue.increment(1) });
-    console.log("asdasd");
-    return res.status(200);
-  } else {
-    console.log("Error de conexión");
-  }
+  console.log(req.body.postID);
+  await firebase.db
+    .collection("posts")
+    .doc(req.body.postID)
+    .update({ reports: FieldValue.increment(1) });
+  console.log("asdasd");
+  res.sendStatus(200);
 });
 
 // aca

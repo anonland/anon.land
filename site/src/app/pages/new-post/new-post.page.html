@@ -4,12 +4,7 @@
       <ion-button color="danger" fill="solid" (click)="cancelCreate()">
         ANULAR
       </ion-button>
-      <ion-button
-        color="secondary"
-        fill="solid"
-        [disabled]="!newPostForm.valid"
-        (click)="create()"
-      >
+      <ion-button color="secondary" fill="solid" [disabled]="!newPostForm.valid" (click)="create()">
         PUBLICAR
       </ion-button>
     </ion-buttons>
@@ -19,64 +14,50 @@
 
 <!-- <ion-content>
   <ion-list> -->
-    <form class="new-post-form" [formGroup]="newPostForm">
-      <div class="new-post-img">
-        <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)" />
-        <label for="upload-img" id="file-drag">
-          <img [src]="img" alt="">
-          <ion-item *ngIf="showUploadImgText" lines="none">
-            <ion-icon color="bright" slot="start" name="cloud-upload"></ion-icon>
-            <ion-label>Cargar Imágen.<br><p>Vacio. Miniatura por defecto.</p></ion-label> <br>
-          </ion-item>
-        </label>
+<form class="new-post-form" [formGroup]="newPostForm">
+  <div class="new-post-img">
+    <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)" />
+    <label for="upload-img" id="file-drag">
+      <img [src]="img" alt="">
+      <ion-item *ngIf="showUploadImgText" lines="none">
+        <ion-icon color="bright" slot="start" name="cloud-upload"></ion-icon>
+        <ion-label>Cargar Imágen.<br>
+          <p>Vacio. Miniatura por defecto.</p>
+        </ion-label> <br>
+      </ion-item>
+    </label>
 
-        <!-- <ion-button>
+    <!-- <ion-button>
           Subir imágen
         </ion-button> -->
-      </div>
-      <div class="new-post-content">
-        <div class="new-post-category">
-          <ion-label>Nicho</ion-label>
-          <ion-select
-            value="General"
-            okText="Elegir"
-            cancelText="Cancelar"
-            name="category"
-            formControlName="category"
-          >
-            <ion-select-option value="Grl">General</ion-select-option>
-            <ion-select-option value="prg">Preguntas</ion-select-option>
-            <ion-select-option value="mus">Música</ion-select-option>
-            <ion-select-option value="pel">Películas</ion-select-option>
-            <ion-select-option value="cie">Ciencia</ion-select-option>
-            <ion-select-option value="art">Arte</ion-select-option>
-            <ion-select-option value="pro">Programación</ion-select-option>
-          </ion-select>
-        </div>
-        <div class="new-post-content-text">
-          <ion-item>
-            <ion-input
-              name="title"
-              formControlName="title"
-              placeholder="Título"
-            ></ion-input>
-          </ion-item>
-        </div>
-        <div class="new-post-content-text">
-          <ion-item>
-            <ion-textarea
-              rows="11"
-              cols="30"
-              placeholder="Contenido"
-              maxlength="5000"
-              name="body"
-              formControlName="body">
-            </ion-textarea>
-          </ion-item>
-        </div>
-      </div>
+  </div>
+  <div class="new-post-content">
+    <div class="new-post-category">
+      <ion-label>Nicho</ion-label>
+      <ion-select value="General" okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
+        <ion-select-option value="Grl">General</ion-select-option>
+        <ion-select-option value="prg">Preguntas</ion-select-option>
+        <ion-select-option value="mus">Música</ion-select-option>
+        <ion-select-option value="pel">Películas</ion-select-option>
+        <ion-select-option value="cie">Ciencia</ion-select-option>
+        <ion-select-option value="art">Arte</ion-select-option>
+        <ion-select-option value="pro">Programación</ion-select-option>
+      </ion-select>
+    </div>
+    <div class="new-post-content-text">
+      <ion-item>
+        <ion-input name="title" formControlName="title" placeholder="Título"></ion-input>
+      </ion-item>
+    </div>
+    <div class="new-post-content-text">
+      <ion-item>
+        <ion-textarea rows="11" cols="30" placeholder="Contenido" maxlength="5000" name="body" formControlName="body">
+        </ion-textarea>
+      </ion-item>
+    </div>
+  </div>
 
 
-  </form>
+</form>
 <!-- </ion-list>
 </ion-content> -->

@@ -88,11 +88,12 @@ export class MainPage implements OnInit {
     }
   }
 
-  async showOptions($event: MouseEvent) {
+  async showOptions($event: MouseEvent, postId: string) {
     $event.stopPropagation();
     const popover = await this.popoverCtrl.create({
       component: PostOptionsComponent,
       event: $event,
+      componentProps: { postId: postId }
     });
     await popover.present();
   }
