@@ -8,7 +8,7 @@
 [![](https://telegram.com.es/wp-content/uploads/2018/02/telegram.png)](https://t.me/grunt1234)
 
 
-[TG channel](http://t.me/voxed4)
+[TG channel](https://t.me/newvoxed4)
 
 
 
@@ -24,17 +24,16 @@ Anon Land! is a project for a total free speech freedom and semi-anon.
 - [x] Split front and back.
 - [x] Create the Firebase DB.
 - [x] Sort the posts by date.
-- [ ] Make a system for reporting posts.
-- [ ] Make an admin control panel for deleting posts.
-- [ ] Upload imgs in posts (multer).
+- [x] Make a system for reporting posts.
 - [x] Make it responsive.
 - [x] Add comments in posts.
-
+- [ ] Make an admin control panel for deleting posts.
+- [ ] Upload imgs in posts (multer).
+- [ ] Add notifications
+- [ ] Add User ID tagging
 ### non-so higher priorities
-- [ ] User's password encryption.
 - [ ] Add express routing node.
 - [ ] Add points in posts.
-- [x] Make compulsory all the inputs in all forms.
 - [ ] Add greentext stories ">".
 - [ ] Make a real rank system with the points.
 - [ ] Make a trending posts.
