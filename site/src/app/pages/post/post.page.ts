@@ -64,6 +64,13 @@ export class PostPage implements OnInit {
       )
   }
 
+    // Random ANON icon.
+  randomAnon() {
+    const randomAnonNumber = Math.floor((Math.random() * 9) + 1);
+    const anon = `../../../assets/anon/anon-${randomAnonNumber}.svg`;
+    return anon;
+  }
+
   async deletePost() {
     // this.alertCtrl.create({header: 'Borrar post', body: '¿Estas seguro de borrar este post?'})
     this.postServ.deletePost(this.post.id);

@@ -1,0 +1,82 @@
+<div class="modal-title">
+  <ion-tile>
+      Cambiar el tema
+  </ion-tile>
+</div>
+
+<div class="container">
+  <div class="options">
+    <div class="select-escena">
+      <ion-label>Escena</ion-label>
+      <div class="escena-toggle">
+        <ion-icon name="sunny-sharp"></ion-icon>
+        <ion-toggle (ionChange)="setScene($event)" checked="{{ sceneValue }}"></ion-toggle>
+      <ion-icon name="moon-sharp"></ion-icon>
+      </div>
+    </div>
+
+    <ion-list class="select-color">
+      <ion-label>Color</ion-label>
+      <ion-radio-group value="{{ themeValue }}">
+        <ion-item class="color-selected" (click)="setTheme('normal')">
+          <ion-label>Normal</ion-label>
+          <ion-radio slot="start" color="light" value="normal"></ion-radio>
+        </ion-item>
+        <ion-item class="color-selected" (click)="setTheme('redpilled')">
+          <ion-label>Redpilado</ion-label>
+          <ion-radio slot="start" color="light" value="redpilled"></ion-radio>
+        </ion-item>
+        <ion-item class="color-selected" (click)="setTheme('dexov')">
+          <ion-label>Dexov</ion-label>
+          <ion-radio slot="start" color="light" value="dexov"></ion-radio>
+        </ion-item>
+        <ion-item class="color-selected" (click)="setTheme('verza')">
+          <ion-label>Verza</ion-label>
+          <ion-radio slot="start" color="light" value="verza"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </div>
+
+<!-- Color scheme image preview in Desktop.-->
+  <div class="img-preview-desktop">
+    <svg width="240" height="145" viewBox="0 0 240 145" fill="none">
+      <g>
+      <rect width="240" height="145" rx="8"/>
+      <rect x="12" y="38.9785" width="51.4286" height="40.5376"/>
+      <rect x="94.2856" y="38.9785" width="51.4286" height="40.5376"/>
+      <rect x="94.2856" y="91.9893" width="51.4286" height="41.3172"/>
+      <rect x="174" y="91.9893" width="51.4286" height="41.3172"/>
+      <rect x="174" y="38.9785" width="51.4286" height="40.5376"/>
+      <rect x="12" y="91.9893" width="51.4286" height="41.3172"/>
+      <rect width="22.2857" height="20.2688" transform="matrix(-1 0 0 1 34.2856 6.23657)"/>
+      <rect width="79.7143" height="20.2688" transform="matrix(-1 0 0 1 225.429 6.23657)"/>
+      </g>
+    </svg>
+  </div>
+
+<!-- Color scheme image preview in Mobile.-->
+  <div class="img-preview-mobile">
+    <svg width="120" height="228" viewBox="0 0 120 228" fill="none">
+      <g>
+      <rect width="120" height="227.919"/>
+      <rect x="7.24805" y="73.2888" width="48.3221" height="41.8792"/>
+      <rect x="7.24805" y="11.2751" width="48.3221" height="41.8792"/>
+      <rect x="7.24805" y="135.302" width="48.3221" height="41.8792"/>
+      <rect x="63.6245" y="73.2888" width="48.3221" height="41.8792"/>
+      <rect x="63.6245" y="11.2751" width="48.3221" height="41.8792"/>
+      <rect x="63.6245" y="135.302" width="48.3221" height="41.8792"/>
+      <rect width="20.9396" height="20.9396" transform="matrix(-1 0 0 1 28.188 195.705)"/>
+      <rect width="56.3758" height="20.9396" transform="matrix(-1 0 0 1 111.946 195.705)"/>
+      </g>  
+    </svg>
+  </div>
+
+  <div class="close-button" (click)="closeModal()">
+    <ion-icon name="close" style="margin-right: 1%;"></ion-icon>
+    <p>Cerrar</p>
+  </div>
+</div>
+
+
+
