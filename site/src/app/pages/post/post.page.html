@@ -36,17 +36,36 @@
         <ion-textarea placeholder="Hacer un comentario" maxlength="500" autofocus="true" rows="7" #txtComment>
         </ion-textarea>
         <div class="comment-button">
-          <ion-button color="dark" (click)="comment()">Comentar</ion-button>
+          <ion-button><ion-icon name="image"></ion-icon></ion-button>
+          <ion-button><ion-icon name="link"></ion-icon></ion-button>
+          <div class="spacer"></div>
+          <ion-button (click)="comment()"><ion-icon slot="end" name="send"></ion-icon>Comentar</ion-button>
         </div>
         <ion-list>
           <ion-item>
             <h4>Comentarios:</h4>
           </ion-item>
-          <ion-item *ngFor="let comment of comments">
-            <ion-badge color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
-            <ion-badge color="medium" *ngIf="comment.userId != post.opid">ANON</ion-badge>
-            <ion-badge color="medium">{{comment.userId}}</ion-badge>
-            {{comment.body}}
+          <ion-item  class="post-comments" *ngFor="let comment of comments">
+            <ion-avatar slot="start">
+              <!-- TODO: load the function only on init -->
+              <img class="anon-img" [src]="randomAnon()">
+            </ion-avatar>
+            <ion-label>
+              <div class="anon-information">
+                <ion-badge class="post-tags post-op" color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
+                <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON</ion-badge>
+                <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
+                <!-- TODO: options for hide a comment (only hide for the client that did chosen), report comment. -->
+                <ion-badge color="medium" class="comment-options-button"
+                  (click)="showOptions($event, comment.id)"
+                >
+                  <ion-icon name="chevron-down"></ion-icon>
+                </ion-badge>
+              </div>
+                <div class="comment-content">
+                {{comment.body}}
+              </div>
+            </ion-label>
           </ion-item>
         </ion-list>
       </ion-col>
