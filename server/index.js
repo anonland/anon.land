@@ -19,6 +19,27 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+      cb(null, __dirname)
+  },
+  filename: function (req, file, cb) {
+      const parts = file.mimetype.split("/");
+      cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
+  }
+});
+const upload = multer({
+  storage,
+  limits: {fileSize: 15000000},
+  fileFilter: (req, file, cb)=>{
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+    cb(new Error('Subí solo imagenes'))
+  } {
+    cb(undefined, true);
+    }
+  }
+});
+
 const middleware = (req, res, next) => {
   if (req.originalUrl == "/" || "/create" || "/session" || "/comment") {
     const cb = (err, data) => {
@@ -66,21 +87,27 @@ app.post("/session", async (req, res) => {
   }
 });
 
-app.post("/create", async (req, res) => {
-  console.log("body", req.body);
+
+
+app.post("/create", upload.single("post-img-upload") , async (req, res) => {
 
   if (res.status(200)) {
-    const { category, img, title, body, opid } = req.body;
+    const img = req.file;
+    const imgPath = req.file.path;
+    const { category, title, body, opid } = req.body;
     const postData = {
       category,
-      img,
+      imgPath,
       title,
       body,
       opid,
       createdAt: fireDate.Timestamp.now(),
     };
+    console.log("body", req.body);
+    console.log('image', imgPath)
+  
     await firebase.db.collection("posts").add(postData);
-    return res.status(200);
+    return res.sendStatus(200);
   } else {
     console.log("Error de conexión");
   }
