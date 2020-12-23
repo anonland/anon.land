@@ -20,9 +20,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, __dirname)
-  },
+  destination: "uploads",
   filename: function (req, file, cb) {
       const parts = file.mimetype.split("/");
       cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
