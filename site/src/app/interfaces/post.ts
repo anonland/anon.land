@@ -1,4 +1,5 @@
 export interface Post{
+    icon: string;
     id: string;
     opIP: string;
     title: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ColorSchemeService } from '../../services/color-scheme.service';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/Storage';
 
 // Themes.
 const themes = {

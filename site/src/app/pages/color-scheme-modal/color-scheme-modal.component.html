@@ -2,6 +2,7 @@
   <ion-tile>
       Cambiar el tema
   </ion-tile>
+  <ion-button color="danger" (click)="closeModal()">Cerrar</ion-button>
 </div>
 
 <div class="container">
@@ -32,7 +33,7 @@
         </ion-item>
         <ion-item class="color-selected" (click)="setTheme('verza')">
           <ion-label>Verza</ion-label>
-          <ion-radio slot="start" color="light" value="verza"></ion-radio>
+          <ion-radio slot="start" color="dark" value="verza"></ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-list>
@@ -71,12 +72,4 @@
       </g>  
     </svg>
   </div>
-
-  <div class="close-button" (click)="closeModal()">
-    <ion-icon name="close" style="margin-right: 1%;"></ion-icon>
-    <p>Cerrar</p>
-  </div>
 </div>
-
-
-

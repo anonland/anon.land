@@ -38,6 +38,14 @@
     font-family: "Manrope";
 }
 
+.alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-color-light);
+}
+
+[aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-color-medium);
+}
+
 .create-new-post-modal .modal-wrapper {
     border-radius: 2em;
     height: 70vh;
