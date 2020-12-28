@@ -1,9 +1,11 @@
 .modal-title {
+    align-items: center;
     color: white;
+    display: flex;
     font-size: 1.2em;
     font-weight: bold;
+    justify-content: space-between;
     padding: 5%;
-    text-align: center;
 }
 
 ion-content,
@@ -84,9 +86,9 @@ ion-radio-group {
     }
     &:nth-child(4) {
         --background: #4fff75;
+        --color: var(--ion-color-dark);
     }
     &:hover {
-        --color: white;
         filter: brightness(80%);
         transition: 0.4s ease;
     }
@@ -101,24 +103,6 @@ ion-radio-group {
 .img-preview-mobile {
     display: none;
 }
-
-.close-button {
-    align-items: center;
-    bottom: 0;
-    color: var(--ion-color-danger-shade);
-    cursor: pointer;
-    display: flex;
-    font-size: 1.2em;
-    font-weight: bold;
-    height: 60px;
-    justify-content: center;
-    position: absolute;
-    width: 100%;
-    &:hover {
-        filter: brightness(120%)
-    }
-}
-
 
 g rect:nth-child(1) {
     fill: var(--ion-background-color);

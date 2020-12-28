@@ -12,7 +12,7 @@
     <ion-row>
       <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
         <div class="ion-text-center">
-          <img src="../../../assets/neo.jpg" height="50%">
+          <img [src]="post.image" height="50%">
         </div>
         <div *ngIf="this.authServ.user != undefined">
           <ion-button (click)="deletePost()">
@@ -33,7 +33,7 @@
         <h2>{{post.body}}</h2>
       </ion-col>
       <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">
-        <ion-textarea placeholder="Hacer un comentario" maxlength="500" autofocus="true" rows="7" #txtComment>
+        <ion-textarea placeholder="Hacer un comentario" maxlength="4096" autofocus="true" rows="7" #txtComment>
         </ion-textarea>
         <div class="comment-button">
           <ion-button><ion-icon name="image"></ion-icon></ion-button>

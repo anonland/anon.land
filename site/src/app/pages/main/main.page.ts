@@ -70,6 +70,11 @@ export class MainPage implements OnInit {
     this.title.setTitle('Anon Land');
   }
 
+    // Close post.
+    async closePost() {
+      await this.modalCtrl.dismiss();
+    }
+
   private changeUrl(url: string) {
     // Generate the URL:
     const generatedUrl = this.router.createUrlTree([url]).toString();

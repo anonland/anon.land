@@ -8,19 +8,23 @@ export class FullCategoryPipe implements PipeTransform {
   transform(value: unknown, ...args: unknown[]): unknown {
     switch (value) {
       case 'prg':
-        return 'Preguntas';
+        return '/prg/';
       case 'mus':
-        return 'Música';
-      case 'pel':
-        return 'Películas';
-      case 'cie':
-        return 'Ciencia';
+        return '/mus/';
+      case 'cin':
+        return '/cin/';
+      case 'sci':
+        return '/sci/';
       case 'art':
-        return 'Arte';
-      case 'pro':
-        return 'Programación';
+        return '/art/';
+      case 'pol':
+        return '/pol/';
+      case 'nor':
+        return '/nor/';
+      case 'uff':
+        return '/uff/';
       default:
-        return 'General';
+        return '/off/';
     }
   }
 
