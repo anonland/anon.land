@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, ModalController, ToastController } from '@ionic/angular';
@@ -12,7 +12,7 @@ import { PostService } from 'src/app/services/post.service';
   templateUrl: './post.page.html',
   styleUrls: ['./post.page.scss'],
 })
-export class PostPage implements OnInit {
+export class PostPage implements OnInit, AfterViewInit {
   public postId: string;
   public post: Post;
   public comments = new Array<any>();
@@ -35,13 +35,17 @@ export class PostPage implements OnInit {
     this.getComments();
   }
 
+  ngAfterViewInit() {
+    this.randomAnon();
+  }
+
   async comment() {
     const body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
     this.http.post('http://localhost:3000/comment', {
       body,
       img: '',
       postId: this.post.id,
-      userId: localStorage.getItem("session")
+      userId: localStorage.getItem("session"),
     }).subscribe(async _ => {
       const toast = await this.toastCtrl.create({ message: 'Mensaje publicado correctamente', position: 'top', duration: 3000 });
       await toast.present();
@@ -62,6 +66,17 @@ export class PostPage implements OnInit {
       .then(comments => comments
         .forEach(comment => this.comments.push(comment.data()))
       )
+  }
+
+  // Random ANON icon.
+  randomAnon() {
+    const randomAnonNumber = Math.floor((Math.random() * 9) + 1);
+    return `../../../assets/anon/anon-${randomAnonNumber}.svg`;
+  }
+
+  // Comments options.
+  showOptions() {
+    alert('Este comentario no tiene opciones.');
   }
 
   async deletePost() {

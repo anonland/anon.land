@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 
 import { Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
+import { ModalController } from '@ionic/angular';
+import { ColorSchemeModalPage } from './pages/color-scheme-modal/color-scheme-modal.component';
+
+import { ColorSchemeService } from './services/color-scheme.service';
 
 @Component({
   selector: 'app-root',
@@ -14,39 +18,49 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: 'General',
+      title: '/off/',
       url: '',
       icon: 'grid'
     },
     {
-      title: 'Preguntas',
+      title: '/prg/',
       url: '/prg',
       icon: 'help'
     },
     {
-      title: 'Música',
+      title: '/mus/',
       url: '/mus',
       icon: 'musical-notes'
     },
     {
-      title: 'Películas',
-      url: '/pel',
+      title: '/cin/',
+      url: '/cin',
       icon: 'videocam'
     },
     {
-      title: 'Ciencia',
-      url: '/cie',
+      title: '/sci/',
+      url: '/sci',
       icon: 'telescope'
     },
     {
-      title: 'Arte',
+      title: '/pol/',
+      url: '/pol',
+      icon: 'megaphone'
+    },
+    {
+      title: '/art/',
       url: '/art',
       icon: 'brush'
     },
     {
-      title: 'Programación',
-      url: '/pro',
-      icon: 'code'
+      title: '/nor/',
+      url: '/nor',
+      icon: 'walk'
+    },
+    {
+      title: '/uff/',
+      url: '/uff',
+      icon: 'dice'
     }
   ];
 
@@ -55,7 +69,9 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authServ: AuthService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private modalCtrl: ModalController,
+    private theme: ColorSchemeService,
   ) {
     this.initializeApp();
   }
@@ -76,11 +92,24 @@ export class AppComponent implements OnInit {
 
   async googleSignin() {
     await this.authServ.googleSignin()
-      .then(_ => this.toastCtrl.create({ header: 'Sesión iniciada correctamente', position: 'top', duration: 4000 }).then(toast => toast.present()))
-      .catch(_ => this.toastCtrl.create({ header: 'No tenes permisos de moderación', position: 'top', duration: 4000 }).then(toast => toast.present())) 
+      .then(_ => this.toastCtrl.create({
+        header: 'Sesión iniciada correctamente', position: 'top', duration: 4000
+      }).then(toast => toast.present()))
+      .catch(_ => this.toastCtrl.create({
+        header: 'No tenes permisos de moderación', position: 'top', duration: 4000
+      }).then(toast => toast.present()));
   }
 
   async googleSignout() {
     await this.authServ.signOut();
+  }
+
+  // Color Scheme Changer function.
+  async chageColorScheme() {
+    const modal = await this.modalCtrl.create({
+      component: ColorSchemeModalPage,
+      cssClass: 'color-scheme-changer-modal',
+    });
+    await modal.present();
   }
 }

@@ -4,7 +4,7 @@
       <ion-button color="danger" fill="solid" (click)="cancelCreate()">
         ANULAR
       </ion-button>
-      <ion-button color="secondary" fill="solid" [disabled]="!newPostForm.valid" (click)="create()">
+      <ion-button color="secondary" fill="solid" [disabled]="!newPostForm.valid" (click)="createNewPost()">
         PUBLICAR
       </ion-button>
     </ion-buttons>
@@ -26,22 +26,20 @@
         </ion-label> <br>
       </ion-item>
     </label>
-
-    <!-- <ion-button>
-          Subir imágen
-        </ion-button> -->
   </div>
   <div class="new-post-content">
     <div class="new-post-category">
       <ion-label>Nicho</ion-label>
-      <ion-select value="General" okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
-        <ion-select-option value="Grl">General</ion-select-option>
-        <ion-select-option value="prg">Preguntas</ion-select-option>
-        <ion-select-option value="mus">Música</ion-select-option>
-        <ion-select-option value="pel">Películas</ion-select-option>
-        <ion-select-option value="cie">Ciencia</ion-select-option>
-        <ion-select-option value="art">Arte</ion-select-option>
-        <ion-select-option value="pro">Programación</ion-select-option>
+      <ion-select value="off" okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
+        <ion-select-option value="off">/off/</ion-select-option>
+        <ion-select-option value="prg">/prg/</ion-select-option>
+        <ion-select-option value="mus">/mus/</ion-select-option>
+        <ion-select-option value="cin">/cin/</ion-select-option>
+        <ion-select-option value="sci">/sci/</ion-select-option>
+        <ion-select-option value="pol">/pol/</ion-select-option>
+        <ion-select-option value="art">/art/</ion-select-option>
+        <ion-select-option value="nor">/nor/</ion-select-option>
+        <ion-select-option value="uff">/uff/</ion-select-option>
       </ion-select>
     </div>
     <div class="new-post-content-text">
@@ -50,7 +48,7 @@
       </ion-item>
     </div>
     <div class="new-post-content-text">
-      <ion-item>
+      <ion-item class="content-text-last">
         <ion-textarea rows="11" cols="30" placeholder="Contenido" maxlength="5000" name="body" formControlName="body">
         </ion-textarea>
       </ion-item>

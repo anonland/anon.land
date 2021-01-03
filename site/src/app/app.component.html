@@ -33,6 +33,13 @@
           </ion-item>
         </ion-menu-toggle>
 
+        <ion-menu-toggle auto-hide="true">
+          <ion-item (click)="chageColorScheme()" class="pointer">
+            <ion-icon slot="start" ios="color-palette-outline" md="color-palette-sharp"></ion-icon>
+            <ion-label>Cambiar el tema</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

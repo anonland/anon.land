@@ -36,9 +36,13 @@ export class MainPage implements OnInit {
     this.category = this.activatedRoute.snapshot.paramMap.get('category');
 
     // session creation.. DESCOMENTAR PARA PRODUCCION
-    if (localStorage.getItem('session') == '')
-      this.http.post('http://localhost:3000/session', {}, { headers: { 'x-forwarded-for': '192.168.0.1' } })
-        .subscribe(data => localStorage.setItem('session', data.toString()));
+    if (localStorage.getItem('session') === '') {
+      this.http.post('http://localhost:3000/session',
+        {},
+        { headers: { 'x-forwarded-for': '192.168.0.1' } }
+      )
+      .subscribe(data => localStorage.setItem('session', data.toString()));
+    }
 
     this.postServ.getPostList().then((posts) => {
       posts.forEach(post => {
@@ -65,6 +69,11 @@ export class MainPage implements OnInit {
     this.changeUrl(this.category ?? '');
     this.title.setTitle('Anon Land');
   }
+
+    // Close post.
+    async closePost() {
+      await this.modalCtrl.dismiss();
+    }
 
   private changeUrl(url: string) {
     // Generate the URL:
