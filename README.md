@@ -4,6 +4,8 @@
 
 ## PRS ARE WELCOME || PRS BIENVENIDOS
 
+[contributions](https://github.com/New-Voxed/voxed4/blob/master/CONTRIBUTING.md)
+
 ### contact me!
 [![](https://telegram.com.es/wp-content/uploads/2018/02/telegram.png)](https://t.me/grunt1234)
 
@@ -28,7 +30,7 @@ Anon Land! is a project for a total free speech freedom and semi-anon.
 - [x] Make it responsive.
 - [x] Add comments in posts.
 - [ ] Make an admin control panel for deleting posts.
-- [ ] Upload imgs in posts (multer).
+- [x] Upload imgs in posts (multer).
 - [ ] Add notifications
 - [ ] Add User ID tagging
 ### non-so higher priorities
