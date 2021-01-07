@@ -10,21 +10,17 @@ import { ModalController } from '@ionic/angular';
 })
 export class NewPostPage implements OnInit {
   public newPostForm: FormGroup;
+  private showUploadImgText = true;
 
   constructor(private modalCtrl: ModalController, private http: HttpClient) {
     this.newPostForm = new FormGroup({
       category: new FormControl('general', Validators.required),
       img: new FormControl(''),
+      imgPreview: new FormControl(''),
       title: new FormControl(undefined, Validators.required),
       body: new FormControl(undefined),
     });
   }
-
-  // Image preview container.
-  img: any = '';
-
-  // Text on Img upload input.
-  showUploadImgText = true;
 
   ngOnInit() { }
 
@@ -33,9 +29,7 @@ export class NewPostPage implements OnInit {
   }
 
   createNewPost() {
-    const { category, img, title, body } = this.newPostForm.value;
-
-    this.modalCtrl.dismiss({ category, img, title, body });
+    this.modalCtrl.dismiss(this.newPostForm.value);
   }
 
   onSelectFile(preview: any) {
@@ -47,7 +41,8 @@ export class NewPostPage implements OnInit {
       reader.readAsDataURL(preview.target.files[0]); // read file as data url
 
       reader.onload = (event) => { // called once readAsDataURL is completed
-        this.img = event.target.result;
+        this.newPostForm.patchValue({ img: preview.target.files[0] });
+        this.newPostForm.patchValue({ imgPreview: event.target.result });
       };
     }
   }

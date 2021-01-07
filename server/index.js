@@ -22,18 +22,18 @@ app.use(bodyParser.json());
 const storage = multer.diskStorage({
   destination: "uploads",
   filename: function (req, file, cb) {
-      const parts = file.mimetype.split("/");
-      cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
+    const parts = file.mimetype.split("/");
+    cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
   }
 });
 const upload = multer({
   storage,
-  limits: {fileSize: 15000000},
-  fileFilter: (req, file, cb)=>{
+  limits: { fileSize: 15000000 },
+  fileFilter: (req, file, cb) => {
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-    cb(new Error('Subí solo imagenes'))
-  } {
-    cb(undefined, true);
+      cb(new Error('Subí solo imagenes'))
+    } {
+      cb(undefined, true);
     }
   }
 });
@@ -87,23 +87,26 @@ app.post("/session", async (req, res) => {
 
 
 
-app.post("/create", upload.single("post-img-upload") , async (req, res) => {
-//
+app.post("/create", upload.single("post-img-upload"), async (req, res) => {
+  //
   if (res.status(200)) {
     const img = req.file;
     const imgPath = req.file.path;
     const { category, title, body, opid } = req.body;
+
+    const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
+    const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
+    const publicUrl = signedUrls[0];
+
     const postData = {
       category,
-      imgPath,
+      imgPath: publicUrl,
       title,
       body,
       opid,
       createdAt: fireDate.Timestamp.now(),
     };
-    console.log("body", req.body);
-    console.log('image', imgPath)
-  
+
     await firebase.db.collection("posts").add(postData);
     return res.sendStatus(200);
   } else {

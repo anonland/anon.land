@@ -6,6 +6,7 @@ import { AlertController, ModalController, ToastController } from '@ionic/angula
 import { Post } from 'src/app/interfaces/post';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-post',
@@ -27,7 +28,8 @@ export class PostPage implements OnInit, AfterViewInit {
     private http: HttpClient,
     private postServ: PostService,
     private authServ: AuthService,
-    private alertCtrl: AlertController) { }
+    private alertCtrl: AlertController,
+    private sessionServ: SessionService) { }
 
   ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
@@ -45,7 +47,7 @@ export class PostPage implements OnInit, AfterViewInit {
       body,
       img: '',
       postId: this.post.id,
-      userId: localStorage.getItem("session"),
+      userId: this.sessionServ.getSession(),
     }).subscribe(async _ => {
       const toast = await this.toastCtrl.create({ message: 'Mensaje publicado correctamente', position: 'top', duration: 3000 });
       await toast.present();
