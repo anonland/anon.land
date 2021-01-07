@@ -18,7 +18,7 @@
   <div class="new-post-img">
     <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)" />
     <label for="upload-img" id="file-drag">
-      <img [src]="img" alt="">
+      <img [src]="newPostForm.value.imgPreview" alt="">
       <ion-item *ngIf="showUploadImgText" lines="none">
         <ion-icon color="bright" slot="start" name="cloud-upload"></ion-icon>
         <ion-label>Cargar Imágen.<br>

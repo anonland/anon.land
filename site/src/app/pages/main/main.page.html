@@ -21,7 +21,8 @@
 
 <ion-content [fullscreen]="true" onLoad="closePost()">
   <div class="container">
-    <div class="image" *ngFor="let post of posts" (click)="openPost(post)">
+    <div class="image" *ngFor="let post of posts" (click)="openPost(post)"
+      [ngStyle]="{'background-image': 'url('+post.imgPath+')'}">
       <div class="text">
         <!-- Uncomment for enable post options below -->
         <!-- <ion-badge color="medium" class="margin-right-5px" (click)="showOptions($event, post.id)">
