@@ -40,9 +40,9 @@
 ### high priorities
 
 + [x] Split front and back.
-+ [ ] Sort the posts by date.
++ [x] Sort the posts by date.
 + [ ] Make an admin control panel for deleting posts.
-+ [ ] Upload imgs in posts (multer).
++ [x] Upload imgs in posts (multer).
 + [x] Make it responsive.
 + [x] Add comments in posts.
 
