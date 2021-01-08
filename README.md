@@ -1,6 +1,6 @@
 <p align="center">
     <img width="200" alt="Anon-Land Logo"
-    src="https://github.com/New-Voxed/voxed4/raw/develop/site/src/assets/icon/logo.svgg">
+    src="https://github.com/New-Voxed/voxed4/blob/develop/site/src/assets/icon/logo.svg">
 </p>
 
 <h1 align="center">
