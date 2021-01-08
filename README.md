@@ -17,7 +17,7 @@
     <img alt="telegram-chat" src="./resources/chat.png">
   </a>
 
-  <a href="github.com/New-Voxed/voxed4/blob/master/LICENSE.md">
+  <a href="https://github.com/New-Voxed/voxed4/blob/master/LICENSE.md">
     <img alt="licence" src="./resources/licence.png">
   </a>
 
