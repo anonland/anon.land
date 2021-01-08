@@ -26,7 +26,7 @@
 
 # PRS ARE WELCOME / PRS BIENVENIDOS.
 
-### Social media with 100% speech freedom.
+### Social media with 100% freedom of speech
 
 ### _Express It!_
 
@@ -46,10 +46,10 @@
 + [x] Make it responsive.
 + [x] Add comments in posts.
 
-### non-so higher priorities
+### not-so-higher priorities
 
 + [ ] Add points in posts.
-+ [x] Make compulsory all the inputs in all forms.
++ [x] Make all the inputs required in all forms.
 + [ ] Add greentext stories ">".
 + [ ] Make a real rank system with the points.
 + [ ] Make a trending posts.
