@@ -1,37 +1,95 @@
-# ExpressIt = voxed 4.0
+<p align="center">
+    <img width="200" alt="Anon-Land Logo"
+    src="./site/src/assets/icon/logo.svg">
+</p>
 
----
+<h1 align="center">
+    <strong>Anon Land</strong>
+    <p style="font-size: .8em">A anonymous expression lounge</p>
 
-## PRS ARE WELCOME || PRS BIENVENIDOS
+<p align="center">
 
-https://t.me/newvoxed4
-https://t.me/grunt1234
-http://t.me/voxed4
+  <a href="http://anon.land/">
+    <img alt="anon.land" src="./resources/page.png">
+  </a>
 
-Tras la caida de voxed.net, voy a retomar este proyecto.
+  <a href="https://t.me/joinchat/WAifmux-tOZamET7">
+    <img alt="telegram-chat" src="./resources/chat.png">
+  </a>
 
-Social media with 100% speech freedom
+  <a href="github.com/New-Voxed/voxed4/blob/master/LICENSE.md">
+    <img alt="licence" src="./resources/licence.png">
+  </a>
 
-Express It! is a project for a total free speech freedom and semi-anon.
+</p>
+</h1>
 
-# Project in Stand-by
+# PRS ARE WELCOME / PRS BIENVENIDOS.
 
-## TO DO LIST:
+### Social media with 100% speech freedom.
+
+### _Express It!_
+
+# Project under construction
+
+## How to contribute
+
+1. Fork this repository.
+2. Clone your fork.
+3. > cd voxed4/site
+4. > npm install
+
++ > npm install -g @ionic/cli native-run cordova-res
++ > ng serve
++ Or run for all devices in your network.
++ > ng serve --host _your.local.ip.addr_ --disableHostCheck true
+
+5. **_Lets code_**
+6. Commit changes.
+7. Push changes to new a branch.
+8. Make pull request.
+
+## TO DO LIST
 
 ### high priorities
-- [ ] Split front and back.
-- [ ] Sort the posts by date.
-- [ ] Make an admin control panel for deleting posts.
-- [ ] Upload imgs in posts (multer).
-- [ ] Make it responsive.
-- [ ] Add comments in posts.
 
++ [x] Split front and back.
++ [ ] Sort the posts by date.
++ [ ] Make an admin control panel for deleting posts.
++ [ ] Upload imgs in posts (multer).
++ [x] Make it responsive.
++ [x] Add comments in posts.
 
 ### non-so higher priorities
-- [ ] Add points in posts.
-- [x] Make compulsory all the inputs in all forms.
-- [ ] Add greentext stories ">".
-- [ ] Make a real rank system with the points.
-- [ ] Make a trending posts.
-- [ ] Use an api or npm pkg for the user's ip and country flag. :jp: :it: :fr:
-- [ ] Make a system ladder with the rank system with season and rewards.
+
++ [ ] Add points in posts.
++ [x] Make compulsory all the inputs in all forms.
++ [ ] Add greentext stories ">".
++ [ ] Make a real rank system with the points.
++ [ ] Make a trending posts.
++ [ ] Use an api or npm pkg for the user's ip and country flag. :jp: :it: :fr:
++ [ ] Make a system ladder with the rank system with season and rewards.
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore -->
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/igruntplay">
+      <img src="https://avatars0.githubusercontent.com/u/52015401?   s=460&u=013befea64b76cc716dce93e0f550a702254c657&   v=4" width="100px;" alt="Grunt"/>
+      <br /><b>Grunt</b>
+    </td>
+    <td align="center">
+      <a href="https://github.com/rufiandev">
+      <img src="https://avatars0.githubusercontent.com/u/74627264?s=460&u=1b84670c1196db1069c49a9c1cd3592b60406ad4&v=4" width="100px;" alt="Rufian"/>
+      <br /><b>Rufian</b>
+    </td>
+    <td align="center">
+      <a href="https://github.com/martnpz">
+      <img src="https://avatars2.githubusercontent.com/u/53195698?s=460&u=0b7b1739a6b4a4d93bb4ddbd898c9cf5de39efce&v=4" width="100px;" alt="martnpz"/>
+      <br /><b>Martín</b>
+    </td>
+   </tr>
+</table>
