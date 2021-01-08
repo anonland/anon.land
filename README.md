@@ -34,21 +34,7 @@
 
 ## How to contribute
 
-1. Fork this repository.
-2. Clone your fork.
-3. > cd voxed4/site
-4. > npm install
-
-+ > npm install -g @ionic/cli native-run cordova-res
-+ > ng serve
-+ Or run for all devices in your network.
-+ > ng serve --host _your.local.ip.addr_ --disableHostCheck true
-
-5. **_Lets code_**
-6. Commit changes.
-7. Push changes to new a branch.
-8. Make pull request.
-
+[Contributions](./CONTRIBUTING.md)
 ## TO DO LIST
 
 ### high priorities
