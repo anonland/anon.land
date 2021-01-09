@@ -105,7 +105,7 @@ export class AppComponent implements OnInit {
   }
 
   // Color Scheme Changer function.
-  async chageColorScheme() {
+  async changeColorScheme() {
     const modal = await this.modalCtrl.create({
       component: ColorSchemeModalPage,
       cssClass: 'color-scheme-changer-modal',

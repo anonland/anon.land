@@ -38,8 +38,13 @@
         <div class="comment-button">
           <ion-button><ion-icon name="image"></ion-icon></ion-button>
           <ion-button><ion-icon name="link"></ion-icon></ion-button>
-          <div class="spacer"></div>
-          <ion-button (click)="comment()"><ion-icon slot="end" name="send"></ion-icon>Comentar</ion-button>
+          <div class="timer">
+            {{ timer }}
+          </div>
+          <ion-button disabled="{{ commentBtnDisabled }}" (click)="comment()">
+            <ion-icon slot="end" name="send"></ion-icon>
+            Comentar
+          </ion-button>
         </div>
         <ion-list>
           <ion-item>
