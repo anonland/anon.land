@@ -1,5 +1,15 @@
-.comments-container,
-ion-textarea { }
+.margin-left {
+    margin-left: 3%;
+}
+
+.post-img {
+    display: grid;
+    place-content: center;
+    img {
+        min-width: 350px;
+        width: 90vh;
+    }
+}
 
 .comment-button {
     display: grid;
