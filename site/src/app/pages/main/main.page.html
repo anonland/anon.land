@@ -21,16 +21,18 @@
 
 <ion-content [fullscreen]="true" onLoad="closePost()">
   <div class="container">
-    <div class="image" *ngFor="let post of posts" (click)="openPost(post)"
-      [ngStyle]="{'background-image': 'url('+post.imgPath+')'}">
-      <div class="text">
-        <!-- Uncomment for enable post options below -->
-        <!-- <ion-badge color="medium" class="margin-right-5px" (click)="showOptions($event, post.id)">
-          <ion-icon name="ellipsis-vertical"></ion-icon>
-        </ion-badge> -->
-        <ion-badge color="primary">{{post.category | uppercase}}</ion-badge>
-        <br>
-        {{post.title}}
+    <div class="main-post-img" *ngFor="let post of posts"
+      (click)="openPost(post)">
+      <img [src]="post.imgPath" [alt]="post.title">
+      <div class="content">
+        <div class="information">
+          <!-- Uncomment for enable post options below -->
+          <ion-badge color="medium" class="options" (click)="showOptions($event, post.id)">
+            <ion-icon name="ellipsis-vertical"></ion-icon>
+          </ion-badge>
+          <ion-badge color="primary">{{post.category | uppercase}}</ion-badge>
+        </div>
+        <h1>{{post.title}}</h1>
       </div>
     </div>
   </div>

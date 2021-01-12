@@ -1,5 +1,15 @@
-.comments-container,
-ion-textarea { }
+.margin-left {
+    margin-left: 3%;
+}
+
+.post-img {
+    display: grid;
+    place-content: center;
+    img {
+        min-width: 350px;
+        width: 90vh;
+    }
+}
 
 .comment-button {
     display: grid;
@@ -17,8 +27,14 @@ ion-row {
     height: 100%;
 }
 
-ion-textarea {
-    // border-radius: 2em;
+.timer {
+    align-items: center;
+    color: var(--ion-color-secondary);
+    display: flex;
+    font-size: 1em;
+    font-weight: bold;
+    justify-content: flex-end;
+    padding: 0.5em;
 }
 
 .post-comments {

@@ -17,6 +17,8 @@ export class PostPage implements OnInit, AfterViewInit {
   public postId: string;
   public post: Post;
   public comments = new Array<any>();
+  public commentBtnDisabled = false; // Button is enable.
+  public timer: string;
 
   @ViewChild("txtComment") private txtComment: HTMLIonTextareaElement;
 
@@ -41,18 +43,53 @@ export class PostPage implements OnInit, AfterViewInit {
     this.randomAnon();
   }
 
+  commentTimer() {
+    this.commentBtnDisabled = true;
+
+    setTimeout(() => {
+      this.commentBtnDisabled = false;
+    }, 30000); // Time to wait for comment.
+
+    let timeLeft = 30;
+    const commentTime = setInterval(() => {
+      timeLeft--;
+      this.timer = `Esperar ${timeLeft}s`;
+      if (timeLeft === 0) {
+        clearInterval(commentTime);
+        this.timer = ''; // Disappear timer.
+      }
+    }, 1000); // Refresh each 1s.
+  }
+
   async comment() {
     const body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let buttonAlert: string;
+
+    // If comment is void send an alert.
+    // Else the timer start.
+    switch (body.length) {
+      case 0:
+        buttonAlert = 'El comentario está vacio.';
+        break;
+      default:
+        buttonAlert = 'Mensaje publicado correctamente.';
+        this.commentTimer();
+        break;
+    }
+
     this.http.post('http://localhost:3000/comment', {
       body,
       img: '',
       postId: this.post.id,
       userId: this.sessionServ.getSession(),
     }).subscribe(async _ => {
-      const toast = await this.toastCtrl.create({ message: 'Mensaje publicado correctamente', position: 'top', duration: 3000 });
+      const toast = await this.toastCtrl.create({
+        message: buttonAlert,
+        position: 'top',
+        duration: 3000
+      });
       await toast.present();
-    })
-
+    });
   }
 
   async goBack() {

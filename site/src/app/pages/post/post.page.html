@@ -3,7 +3,7 @@
     <ion-buttons slot="end">
       <ion-back-button text="Atrás" (click)="goBack()" defaultHref="/"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{post.title}}</ion-title>
+    <ion-title class="margin-left">{{post.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,8 +11,8 @@
   <ion-grid>
     <ion-row>
       <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
-        <div class="ion-text-center">
-          <img [src]="post.image" height="50%">
+        <div class="post-img">
+          <img [src]='post.imgPath'>
         </div>
         <div *ngIf="this.authServ.user != undefined">
           <ion-button (click)="deletePost()">
@@ -26,11 +26,11 @@
           </ion-button>
         </div>
         <div *ngIf="this.authServ.user == undefined">
-          <ion-button (click)="report()">
+          <ion-button class="margin-left" (click)="report()">
             <ion-icon slot="start" name="flag"></ion-icon>Reportar
           </ion-button>
         </div>
-        <h2>{{post.body}}</h2>
+        <h2 class="margin-left">{{post.body}}</h2>
       </ion-col>
       <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">
         <ion-textarea placeholder="Hacer un comentario" maxlength="4096" autofocus="true" rows="7" #txtComment>
@@ -38,8 +38,13 @@
         <div class="comment-button">
           <ion-button><ion-icon name="image"></ion-icon></ion-button>
           <ion-button><ion-icon name="link"></ion-icon></ion-button>
-          <div class="spacer"></div>
-          <ion-button (click)="comment()"><ion-icon slot="end" name="send"></ion-icon>Comentar</ion-button>
+          <div class="timer">
+            {{ timer }}
+          </div>
+          <ion-button disabled="{{ commentBtnDisabled }}" (click)="comment()">
+            <ion-icon slot="end" name="send"></ion-icon>
+            Comentar
+          </ion-button>
         </div>
         <ion-list>
           <ion-item>
