@@ -19,22 +19,26 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+
 const storage = multer.diskStorage({
-  destination: "uploads",
+  //destination: "uploads",
   filename: function (req, file, cb) {
     const parts = file.mimetype.split("/");
     cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
   }
+
+
+
 });
 const upload = multer({
   storage,
   limits: { fileSize: 15000000 },
   fileFilter: (req, file, cb) => {
-    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
-      cb(new Error('Subí solo imagenes'))
-    } {
-      cb(undefined, true);
-    }
+    let ext = path.extname(file.originalname);
+    if(ext !== '.webm' &&  ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+      return cb(null, false)
+  }
+  cb(null, true)
   }
 });
 
@@ -91,6 +95,7 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   //
   if (res.status(200)) {
     const img = req.file;
+    if (img == undefined) return res.sendStatus(400);
     const imgPath = req.file.path;
     const { category, title, body, opid } = req.body;
 
@@ -114,18 +119,21 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   }
 });
 
-app.post("/comment", async (req, res) => {
+app.post("/comment",upload.single("post-img-upload"), async (req, res) => {
   // chequear archivo de baneos diarios
 
   // console.log(req.headers["x-forwarded-for"]);
-  console.log("body", req.body);
 
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
-    const { body, img, postId, userId } = req.body;
+    const imgPath = req.file.path;
+    const { body, postId, userId } = req.body;
+    const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
+    const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
+    const publicUrl = signedUrls[0];
     const commentData = {
       body,
-      img,
+      imgPath: publicUrl,
       postId,
       userId,
       createdAt: fireDate.Timestamp.now(),
