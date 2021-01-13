@@ -8,11 +8,15 @@ export class PostService {
 
   constructor(private db: AngularFirestore) { }
 
+  getPostById(postId: string) {
+    return this.db.collection('posts').doc(postId).get();
+  }
+
   getPostList() {
     return this.db.collection('posts').ref.orderBy('createdAt', 'desc').get();
   }
 
-  getPostListByCategory(category: string){
+  getPostListByCategory(category: string) {
     return this.db.collection('posts').ref.where('category', '==', category).orderBy('createdAt', 'desc').get();
   }
 

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, ModalController, ToastController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
 import { Post } from 'src/app/interfaces/post';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
@@ -15,7 +15,7 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class PostPage implements OnInit, AfterViewInit {
   public postId: string;
-  public post: Post;
+  public post: Post = new Post();
   public comments = new Array<any>();
   public commentBtnDisabled = false; // Button is enable.
   public timer: string;
@@ -25,7 +25,6 @@ export class PostPage implements OnInit, AfterViewInit {
   constructor(
     public toastCtrl: ToastController,
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
     private title: Title,
     private http: HttpClient,
     private postServ: PostService,
@@ -33,8 +32,10 @@ export class PostPage implements OnInit, AfterViewInit {
     private alertCtrl: AlertController,
     private sessionServ: SessionService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
+    const postDoc = await this.postServ.getPostById(this.postId).toPromise();
+    this.post = postDoc.data() as any;
     this.title.setTitle(this.post.title + ' | Anon Land');
     this.getComments();
   }
@@ -92,19 +93,9 @@ export class PostPage implements OnInit, AfterViewInit {
     });
   }
 
-  async goBack() {
-    const overlay = await this.modalCtrl.getTop();
-
-    if (overlay != undefined)
-      this.modalCtrl.dismiss();
-  }
-
-  getComments() {
-    this.postServ
-      .getComments(this.post.id)
-      .then(comments => comments
-        .forEach(comment => this.comments.push(comment.data()))
-      )
+  async getComments() {
+    const comments = await this.postServ.getComments(this.postId)
+    comments.forEach(comment => this.comments.push(comment.data()));
   }
 
   // Random ANON icon.
@@ -123,7 +114,6 @@ export class PostPage implements OnInit, AfterViewInit {
     this.postServ.deletePost(this.post.id);
     const toast = await this.toastCtrl.create({ header: 'Post borrado correctamente' });
     await toast.present();
-    this.modalCtrl.dismiss();
   }
 
   deleteComment() {

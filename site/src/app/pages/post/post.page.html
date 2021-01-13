@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-back-button text="Atrás" (click)="goBack()" defaultHref="/"></ion-back-button>
+      <ion-back-button text="Atrás" defaultHref="/"></ion-back-button>
     </ion-buttons>
     <ion-title class="margin-left">{{post.title}}</ion-title>
   </ion-toolbar>
@@ -36,8 +36,12 @@
         <ion-textarea placeholder="Hacer un comentario" maxlength="4096" autofocus="true" rows="7" #txtComment>
         </ion-textarea>
         <div class="comment-button">
-          <ion-button><ion-icon name="image"></ion-icon></ion-button>
-          <ion-button><ion-icon name="link"></ion-icon></ion-button>
+          <ion-button>
+            <ion-icon name="image"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon name="link"></ion-icon>
+          </ion-button>
           <div class="timer">
             {{ timer }}
           </div>
@@ -50,7 +54,7 @@
           <ion-item>
             <h4>Comentarios:</h4>
           </ion-item>
-          <ion-item  class="post-comments" *ngFor="let comment of comments">
+          <ion-item class="post-comments" *ngFor="let comment of comments">
             <ion-avatar slot="start">
               <!-- TODO: load the function only on init -->
               <img class="anon-img" [src]="randomAnon()">
@@ -58,16 +62,15 @@
             <ion-label>
               <div class="anon-information">
                 <ion-badge class="post-tags post-op" color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
-                <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON</ion-badge>
+                <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
+                </ion-badge>
                 <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
                 <!-- TODO: options for hide a comment (only hide for the client that did chosen), report comment. -->
-                <ion-badge color="medium" class="comment-options-button"
-                  (click)="showOptions($event, comment.id)"
-                >
+                <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
               </div>
-                <div class="comment-content">
+              <div class="comment-content">
                 {{comment.body}}
               </div>
             </ion-label>
