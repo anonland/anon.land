@@ -1,4 +1,4 @@
-export interface Post{
+export class Post{
     icon: string;
     id: string;
     opIP: string;

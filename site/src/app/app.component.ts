@@ -18,47 +18,47 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: '/off/',
-      url: '',
+      title: 'General',
+      url: '/off',
       icon: 'grid'
     },
     {
-      title: '/prg/',
+      title: 'Preguntas',
       url: '/prg',
       icon: 'help'
     },
     {
-      title: '/mus/',
+      title: 'Música',
       url: '/mus',
       icon: 'musical-notes'
     },
     {
-      title: '/cin/',
+      title: 'Cine',
       url: '/cin',
       icon: 'videocam'
     },
     {
-      title: '/sci/',
+      title: 'Ciencia y tecnología',
       url: '/sci',
-      icon: 'telescope'
+      icon: 'terminal'
     },
     {
-      title: '/pol/',
+      title: 'Política',
       url: '/pol',
       icon: 'megaphone'
     },
     {
-      title: '/art/',
+      title: 'Arte',
       url: '/art',
       icon: 'brush'
     },
     {
-      title: '/nor/',
+      title: 'Normie',
       url: '/nor',
       icon: 'walk'
     },
     {
-      title: '/uff/',
+      title: 'Random',
       url: '/uff',
       icon: 'dice'
     }
