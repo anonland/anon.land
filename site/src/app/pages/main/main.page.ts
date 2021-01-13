@@ -38,14 +38,18 @@ export class MainPage implements OnInit {
     this.category = this.activatedRoute.snapshot.paramMap.get('category');
 
     await this.sessionServ.verifySession();
-   
-    this.postServ.getPostList().then((posts) => {
-      posts.forEach(post => {
-        const postObj: Post = post.data() as Post;
-        postObj.id = post.id;
 
-        this.posts.push(postObj);
-      });
+    let posts;
+    if (!this.category || this.category == 'off')
+      posts = await this.postServ.getPostList();
+    else
+      posts = await this.postServ.getPostListByCategory(this.category);
+
+    posts.forEach(post => {
+      const postObj: Post = post.data() as Post;
+      postObj.id = post.id;
+
+      this.posts.push(postObj);
     });
   }
 
@@ -65,10 +69,10 @@ export class MainPage implements OnInit {
     this.title.setTitle('Anon Land');
   }
 
-    // Close post.
-    async closePost() {
-      await this.modalCtrl.dismiss();
-    }
+  // Close post.
+  async closePost() {
+    await this.modalCtrl.dismiss();
+  }
 
   private changeUrl(url: string) {
     // Generate the URL:

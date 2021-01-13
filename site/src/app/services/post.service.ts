@@ -12,6 +12,10 @@ export class PostService {
     return this.db.collection('posts').ref.orderBy('createdAt', 'desc').get();
   }
 
+  getPostListByCategory(category: string){
+    return this.db.collection('posts').ref.where('category', '==', category).orderBy('createdAt', 'desc').get();
+  }
+
   getComments(postId: string) {
     return this.db.collection('comments').ref.where('postId', '==', postId).orderBy('createdAt', 'desc').get();
   }
