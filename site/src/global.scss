@@ -32,6 +32,10 @@
     format("truetype");
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     padding: 0;
     box-sizing: border-box;
@@ -39,7 +43,7 @@
 }
 
 .alert-radio-label.sc-ion-alert-md {
-    color: var(--ion-color-light);
+    color: var(--ion-text-color);
 }
 
 [aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
@@ -50,6 +54,9 @@
     border-radius: 2em;
     height: 70vh;
     width: 60vw;
+    .toolbar-background {
+        --background: var(--ion-color-primary-shade)
+    }
 }
 
 .create-post-modal-full {
@@ -74,11 +81,22 @@
     padding: 2em;
     width: 40vw;
 }
+
+// For not supports features.
+@supports not (backdrop-filter: none) {
+    .color-scheme-changer-modal .modal-wrapper {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: #5c5c5ccc;  
+        border: solid 3px #777777;
+    }
+}
+
 //For typical mobile devices in portrait or landscape
 @media only screen and (max-width: 767px) {
     .create-new-post-modal .modal-wrapper {
         border-radius: 0em;
-        height: 100vh;
+        height: 100vh !important;
         width: 100vw;
     }
 
@@ -96,7 +114,17 @@
 }
 
 //For tablets
+@media only screen and (max-height: 768px) {
+    .create-new-post-modal .modal-wrapper {
+        height: 90vh;
+    }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 979px) {
+    .create-new-post-modal .modal-wrapper {
+        width: 80vw;
+    }
+
     .div-modal {
         --width: 70% !important;
         --height: 70% !important;
@@ -125,7 +153,7 @@
 @media only screen and (min-width: 1024px) and (max-width: 1199px) {
     .div-modal {
         --width: 50% !important;
-        --height: 70% !important;
+        --height: 80% !important;
     }
 
     .color-scheme-changer-modal .modal-wrapper {

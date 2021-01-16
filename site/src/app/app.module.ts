@@ -16,13 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ColorSchemeService } from './services/color-scheme.service';
 import { IonicStorageModule } from '@ionic/storage';
 
-
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
-    //ColorSchemeService,
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,

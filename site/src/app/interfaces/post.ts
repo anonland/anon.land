@@ -6,4 +6,5 @@ export class Post{
     body: string;
     image: string;
     category: string;
+    readonly imgPath: any;
 }

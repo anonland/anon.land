@@ -4,26 +4,35 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>{{ category | fullCategory }}</ion-title>
-
-    <ion-label></ion-label>
+    <p class="title">{{ category | fullCategory }}</p>
 
     <ion-buttons slot="end">
       <ion-button color="primary" shape="round" (click)="openNotificationsPreview($event)">
         <ion-icon name="notifications"></ion-icon>
       </ion-button>
-      <ion-button color="primary" fill="solid" (click)="createPost()">
-        <ion-icon name="add"></ion-icon> Nuevo post
+      <ion-button class="create-post" color="primary" fill="solid" (click)="createPost()">
+        <p>Nuevo post</p>
+        <ion-icon name="duplicate"></ion-icon> 
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" onLoad="closePost()">
+<ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <div class="container">
     <div class="main-post-img" *ngFor="let post of posts"
       (click)="openPost(post)">
-      <img [src]="post.imgPath" [alt]="post.title">
+      <ng-template [ngIf]="post.imgPath" [ngIfElse]="notImage" >
+        <img [src]="post.imgPath" [alt]="post.title"
+        (load)="loadEndOfThePage()"
+        class="image"
+      >
+      </ng-template>
+      <ng-template #notImage>
+        <img src="../../assets/default-post.svg" [alt]="post.title" >
+      </ng-template>
+      <!-- TODO: set default post image ('../../assets/default-post.svg') 
+      if Post.imgPath does not exist. -->
       <div class="content">
         <div class="information">
           <!-- Uncomment for enable post options below -->
@@ -32,8 +41,21 @@
           </ion-badge>
           <ion-badge color="primary">{{post.category | uppercase}}</ion-badge>
         </div>
-        <h1>{{post.title}}</h1>
+        <div class="post-text">
+          <h1>{{post.title}}</h1>
+        </div>
       </div>
     </div>
   </div>
+  <div *ngIf="endOfThePage" class="end">
+    <p>
+      Fin de los posts, Anon. <br>
+      Pero aún podés hacer el tuyo...
+    </p>
+  </div>
 </ion-content>
+
+<div class="scroll-top" (click)="goToTop()" *ngIf="isDown">
+  <ion-icon name="chevron-up"></ion-icon>
+  <span class="scroll-title">Arriba</span>
+</div>

@@ -57,8 +57,8 @@ const scene = {
   day: {
     bgColor: '#FFFFFF',
     color: '#000000',
-    toolbarBg: '#CCCCCC',
-    toolbarTxt: '#333333',
+    toolbarBg: '#F4F4F4',
+    toolbarTxt: '#222222',
     itemBg: '#EEEEEE',
     itemTxt: '#555555'
   },
@@ -66,8 +66,8 @@ const scene = {
   night: {
     bgColor: '#000000',
     color: '#FFFFFF',
-    toolbarBg: '#333333',
-    toolbarTxt: '#CCCCCC',
+    toolbarBg: '#222222',
+    toolbarTxt: '#F4F4F4',
     itemBg: '#555555',
     itemTxt: '#EEEEEE'
   }
