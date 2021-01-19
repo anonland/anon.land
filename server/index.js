@@ -35,10 +35,10 @@ const upload = multer({
   limits: { fileSize: 15000000 },
   fileFilter: (req, file, cb) => {
     let ext = path.extname(file.originalname);
-    if(ext !== '.webm' &&  ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+    if (ext !== '.webm' && ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
       return cb(null, false)
-  }
-  cb(null, true)
+    }
+    cb(null, true)
   }
 });
 
@@ -74,13 +74,14 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname));
 });
 
-function isAdmin(token) {
- firebase.admin.auth().verifyIdToken(token).then((decodedToken) => {
-  const uid = decodedToken.uid;
-  return true
-}).catch((error) => {
-  return false
-});}
+async function getAdminData(token) {
+  try {
+    const decodedToken = await firebase.admin.auth().verifyIdToken(token)
+    return decodedToken;
+  } catch (error) {
+    return null;
+  }
+}
 
 app.post("/session", async (req, res) => {
   if (res.status(200)) {
@@ -127,7 +128,7 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   }
 });
 
-app.post("/comment",upload.single("post-img-upload"), async (req, res) => {
+app.post("/comment", upload.single("post-img-upload"), async (req, res) => {
   // chequear archivo de baneos diarios
 
   // console.log(req.headers["x-forwarded-for"]);
@@ -163,24 +164,24 @@ app.post("/report", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.post("/delete", async (req, res)=>{
+app.post("/delete", async (req, res) => {
   //admin delete post
   console.log(req.body);
-  if(req?.body?.token == null | undefined) {res.sendStatus(401); return};
-  if(isAdmin(req.body.token)){
-
-    await firebase.db.collection("posts").doc(req.body.postID).delete();
-    console.log('post borrado por ADMIN');
-    res.sendStatus(200);
+  if (req.body.token == null) {
+    res.sendStatus(401);
+    return;
   }
-  else{ res.sendStatus(401);
-    console.log("no funcionó borrar post");
 
+  const adminData = await getAdminData(req.body.token);
+  if (!adminData) {
+    res.sendStatus(401);
+    console.log("no se pudo borrar post");
   }
+
+  await firebase.db.collection("posts").doc(req.body.postID).delete();
+  console.log('post borrado por ADMIN' + adminData.email);
+  res.sendStatus(200);
 });
-
-
-// aca
 
 const server = http.createServer(app);
 // heroku port access..

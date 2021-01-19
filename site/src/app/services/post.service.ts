@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class PostService {
 
-  constructor(private db: AngularFirestore, private http:HttpClient, private auth:AuthService) { }
+  constructor(private db: AngularFirestore, private http: HttpClient, private auth: AuthService) { }
 
   getPostById(postId: string) {
     return this.db.collection('posts').doc(postId).get();
@@ -32,9 +32,9 @@ export class PostService {
     }
   }
 
-  async deletePost(postId: string) {
-    this.http.post('http://localhost:3000/delete', {postID: postId, token: this.auth.getToken()}).subscribe((data) => console.log(data));
-    //return this.db.collection('posts').doc(postId).delete();
+  async deletePost(postID: string) {
+    const token = await this.auth.getToken();
+    this.http.post('http://localhost:3000/delete', { postID, token }).subscribe((data) => console.log(data));
   }
 
   async changePostCategory(postId: string, category: string) {
