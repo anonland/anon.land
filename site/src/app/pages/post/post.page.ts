@@ -21,6 +21,7 @@ export class PostPage implements OnInit, AfterViewInit {
   public timer: string;
 
   @ViewChild("txtComment") private txtComment: HTMLIonTextareaElement;
+  @ViewChild("selMove") private selMove: HTMLIonSelectElement;
 
   constructor(
     public toastCtrl: ToastController,
@@ -129,8 +130,13 @@ export class PostPage implements OnInit, AfterViewInit {
 
   }
 
-  movePost() {
+  async movePost() {
+    if (this.selMove.value == null)
+      return;
 
+    await this.postServ.movePost(this.postId, this.selMove.value);
+    const toast = await this.toastCtrl.create({ header: 'Post movido correctamente' });
+    await toast.present();
   }
 
   async banUser() {

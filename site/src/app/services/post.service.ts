@@ -37,6 +37,11 @@ export class PostService {
     this.http.post('http://localhost:3000/delete', { postID, token }).subscribe((data) => console.log(data));
   }
 
+  async movePost(postID: string, category: string) {
+    const token = await this.auth.getToken();
+    this.http.post('http://localhost:3000/move', { postID, token, category }).subscribe((data) => console.log(data));
+  }
+
   async changePostCategory(postId: string, category: string) {
     return this.db.collection('posts').doc(postId).set({ category: category }, { merge: true })
   }

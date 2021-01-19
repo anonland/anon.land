@@ -18,12 +18,23 @@
           <ion-button (click)="deletePost()">
             <ion-icon name="trash-outline"></ion-icon>Borrar
           </ion-button>
-          <ion-button (click)="movePost()">
+          <ion-button (click)="selMove.open()">
             <ion-icon name="arrow-redo"></ion-icon>Mover
           </ion-button>
           <ion-button (click)="banUser()">
             <ion-icon name="skull"></ion-icon>Banear
           </ion-button>
+          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove>
+            <ion-select-option value="off">General</ion-select-option>
+            <ion-select-option value="prg">Preguntas</ion-select-option>
+            <ion-select-option value="mus">Música</ion-select-option>
+            <ion-select-option value="cin">Cine</ion-select-option>
+            <ion-select-option value="sci">Ciencia</ion-select-option>
+            <ion-select-option value="pol">Política</ion-select-option>
+            <ion-select-option value="art">Arte</ion-select-option>
+            <ion-select-option value="nor">Normie</ion-select-option>
+            <ion-select-option value="uff">Random</ion-select-option>
+          </ion-select>
         </div>
         <div *ngIf="this.authServ.user == undefined">
           <ion-button class="margin-left" (click)="report()">

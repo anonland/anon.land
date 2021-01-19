@@ -183,6 +183,24 @@ app.post("/delete", async (req, res) => {
   res.sendStatus(200);
 });
 
+app.post("/move", async (req, res) => {
+  //admin delete post
+  console.log(req.body);
+  if (req.body.token == null) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const adminData = await getAdminData(req.body.token);
+  if (!adminData) {
+    res.sendStatus(401);
+  }
+
+  await firebase.db.collection("posts").doc(req.body.postID).update({ category: req.body.category });
+  console.log('post updateado por ADMIN' + adminData.email);
+  res.sendStatus(200);
+});
+
 const server = http.createServer(app);
 // heroku port access..
 app.set("port", process.env.PORT || 3000);
