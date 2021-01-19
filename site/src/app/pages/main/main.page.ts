@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
+import { AfterViewInit, Component, OnInit, Inject, ViewChild, EventEmitter  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { ModalController, PopoverController, IonContent } from '@ionic/angular';
 import { NotificationsPreviewComponent } from '../../components/notifications-preview/notifications-preview.component';
 import { PostOptionsComponent } from '../../components/post-options/post-options.component';
 import { Post } from '../../interfaces/post';
@@ -11,18 +12,25 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { SessionService } from 'src/app/services/session.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage implements OnInit {
-  public category: string;
+export class MainPage implements OnInit, AfterViewInit {
 
+  @ViewChild(IonContent) content: IonContent;
+
+  public category: string;
+  // public defaultImg: string;
   public posts = new Array<Post>();
+  public endOfThePage = false;
+  public isDown = false;
 
   constructor(
+    @Inject(DOCUMENT) public document: Document,
     private activatedRoute: ActivatedRoute,
     private modalCtrl: ModalController,
     private popoverCtrl: PopoverController,
@@ -40,10 +48,12 @@ export class MainPage implements OnInit {
     await this.sessionServ.verifySession();
 
     let posts;
-    if (!this.category || this.category == 'off')
+    if (!this.category || this.category === 'off') {
       posts = await this.postServ.getPostList();
-    else
+    }
+    else {
       posts = await this.postServ.getPostListByCategory(this.category);
+    }
 
     posts.forEach(post => {
       const postObj: Post = post.data() as Post;
@@ -55,11 +65,6 @@ export class MainPage implements OnInit {
 
   async openPost(post: Post) {
     this.router.navigate([post.category, post.id]);
-  }
-
-  // Close post.
-  async closePost() {
-    await this.modalCtrl.dismiss();
   }
 
   async createPost() {
@@ -83,11 +88,13 @@ export class MainPage implements OnInit {
   }
 
   async showOptions($event: MouseEvent, postId: string) {
+    console.log($event);
+    console.log(postId);
     $event.stopPropagation();
     const popover = await this.popoverCtrl.create({
       component: PostOptionsComponent,
       event: $event,
-      componentProps: { postId: postId }
+      componentProps: { postId }
     });
     await popover.present();
   }
@@ -99,4 +106,24 @@ export class MainPage implements OnInit {
     });
     await popover.present();
   }
+
+  onScroll(e: any) {
+    if (e.detail.scrollTop > 500) {
+      this.isDown = true;
+    } else if (e.detail.scrollTop < 500) {
+      this.isDown = false;
+    }
+  }
+
+  goToTop() {
+    this.content.scrollToPoint(0, 0, 400);
+  }
+
+  loadEndOfThePage() {
+    this.endOfThePage = true;
+  }
+
+  ngAfterViewInit() {
+  }
+
 }

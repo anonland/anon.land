@@ -1,13 +1,15 @@
 .new-vox-title {
-    background-color: var(--ion-color-dark);
+    --background: var(--ion-color-primary-shade);
+    font-weight: bolder;
     padding: 0 2%;
     ion-toolbar {
-        --background: var(--ion-color-dark);
-        color: #FEFFFC;
+        --background: var(--ion-color-primary-shade);
+        --color: #FEFFFC;
     }
     ion-button {
         width: 80px;
         height: 40px;
+        font-weight: bolder;
         &:last-child {
             width: 150px;
         }

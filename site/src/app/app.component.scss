@@ -31,7 +31,12 @@ ion-menu.md ion-note {
 }
 
 ion-menu.md ion-list#inbox-list {
-  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
+  border-bottom: 3px solid var(--ion-item-background-color);
+  border: 50%;
+}
+
+.color-scheme {
+  --inner-border-width: 0;
 }
 
 ion-menu.md ion-list#inbox-list ion-list-header {

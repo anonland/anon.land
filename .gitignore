@@ -1,4 +1,22 @@
+# npm dependencies.
 node_modules
+
+# Firebase folder.
 server/db
+
+# Compiled application.
 site/www
+
+# Firebase log.
 firebase-debug.log
+debug.log
+
+# Workspace setting for VScode.
+.vscode
+*.code-workspace
+
+# Emacs project interaction library.
+.projectile 
+
+# Vim swap.
+*.swp
