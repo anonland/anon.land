@@ -21,7 +21,9 @@
 <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <div class="container">
     <div class="main-post-img" *ngFor="let post of posts"
+      id="post-{{ post.id }}"
       (click)="openPost(post)">
+      <div class="hidden"><p>Post oculto <ion-icon name="eye-off"></ion-icon></p></div>
       <ng-template [ngIf]="post.imgPath" [ngIfElse]="notImage" >
         <img [src]="post.imgPath" [alt]="post.title"
         (load)="loadEndOfThePage()"

@@ -11,8 +11,9 @@ site/www
 firebase-debug.log
 debug.log
 
-# Workspace folder for VScode.
+# Workspace setting for VScode.
 .vscode
+*.code-workspace
 
 # Emacs project interaction library.
 .projectile 

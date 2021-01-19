@@ -88,11 +88,13 @@ export class MainPage implements OnInit, AfterViewInit {
   }
 
   async showOptions($event: MouseEvent, postId: string) {
+    console.log($event);
+    console.log(postId);
     $event.stopPropagation();
     const popover = await this.popoverCtrl.create({
       component: PostOptionsComponent,
       event: $event,
-      componentProps: { postId: postId }
+      componentProps: { postId }
     });
     await popover.present();
   }
@@ -105,14 +107,6 @@ export class MainPage implements OnInit, AfterViewInit {
     await popover.present();
   }
 
-  loadEndOfThePage() {
-    this.endOfThePage = true;
-  }
-
-  getContent() {
-    return document.querySelector('ion-content');
-  }
-
   onScroll(e: any) {
     if (e.detail.scrollTop > 500) {
       this.isDown = true;
@@ -122,8 +116,11 @@ export class MainPage implements OnInit, AfterViewInit {
   }
 
   goToTop() {
-    // this.content.scrollToTop();
     this.content.scrollToPoint(0, 0, 400);
+  }
+
+  loadEndOfThePage() {
+    this.endOfThePage = true;
   }
 
   ngAfterViewInit() {

@@ -50,6 +50,16 @@ ion-badge{
   object-fit: cover;
   overflow: hidden;
 
+  .hidden {
+    align-self: center;
+    border-radius: none;
+    display: none;
+    height: 100%;
+    justify-content: center;
+    padding: 2em;
+    width: 100%;
+  }
+
   img {
     object-fit: cover;
     width: 100%;
@@ -72,16 +82,16 @@ ion-badge{
 }
 
 .image {
-  border-radius: 1em;
+  border-radius: 0;
   filter: grayscale(60%);
-  transform: scale(0.95);
+  transform: scale(1);
   transition: 0.4s ease;
 }
 
 .main-post-img:hover .image {
-  border-radius: 0;
+  border-radius: 1em;
   filter: grayscale(0%);
-  transform: scale(1);
+  transform: scale(0.95);
   transition: 0.4s ease;
   box-shadow: -6px -68px 79px -37px rgba(0,0,0,0.59) inset;
 }
@@ -92,7 +102,7 @@ ion-badge{
 
 .post-text {
   position: absolute;
-  margin-top: 100% !important;
+  //margin-top: 100% !important;
 }
 
 .end {
