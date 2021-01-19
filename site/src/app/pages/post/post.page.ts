@@ -110,8 +110,9 @@ export class PostPage implements OnInit, AfterViewInit {
   }
 
   async deletePost() {
+    
     // this.alertCtrl.create({header: 'Borrar post', body: '¿Estas seguro de borrar este post?'})
-    this.postServ.deletePost(this.post.id);
+    await this.postServ.deletePost(this.post.id);
     const toast = await this.toastCtrl.create({ header: 'Post borrado correctamente' });
     await toast.present();
   }

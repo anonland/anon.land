@@ -1,12 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, QueryFn, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private http:HttpClient, private auth:AuthService) { }
 
   getPostById(postId: string) {
     return this.db.collection('posts').doc(postId).get();
@@ -31,7 +33,8 @@ export class PostService {
   }
 
   async deletePost(postId: string) {
-    return this.db.collection('posts').doc(postId).delete();
+    this.http.post('http://localhost:3000/delete', {postID: postId, token: this.auth.getToken()}).subscribe((data) => console.log(data));
+    //return this.db.collection('posts').doc(postId).delete();
   }
 
   async changePostCategory(postId: string, category: string) {

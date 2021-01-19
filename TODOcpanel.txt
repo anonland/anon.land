@@ -1,0 +1,3 @@
+- metodos post desde nodejs [ borrar, mover de nicho, banear, desbanear ]
+- diseñar el cpanel desde front ./admin/log , ./admin/reports
+- desarrollarlo en front y back

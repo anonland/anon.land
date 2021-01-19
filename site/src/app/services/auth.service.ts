@@ -31,6 +31,10 @@ export class AuthService {
     return data.docs[0].data();
   }
 
+  async getToken(){
+    return this.user.token;
+  }
+
   async signOut() {
     await this.afAuth.signOut();
     this.user = undefined;
