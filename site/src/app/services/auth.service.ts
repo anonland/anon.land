@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth, PERSISTENCE } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
@@ -19,7 +19,7 @@ export class AuthService {
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
-
+    this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     this.user = await this.getModProfile(credential.user.email);
   }
 
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   async getToken(){
-    return this.user.token;
+    return (await this.afAuth.currentUser).getIdToken(true)
   }
 
   async signOut() {
