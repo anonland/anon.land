@@ -74,6 +74,14 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname));
 });
 
+function isAdmin(token) {
+ firebase.admin.auth().verifyIdToken(token).then((decodedToken) => {
+  const uid = decodedToken.uid;
+  return true
+}).catch((error) => {
+  return false
+});}
+
 app.post("/session", async (req, res) => {
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
@@ -154,6 +162,23 @@ app.post("/report", async (req, res) => {
   console.log("asdasd");
   res.sendStatus(200);
 });
+
+app.post("/delete", async (req, res)=>{
+  //admin delete post
+  console.log(req.body);
+  if(req?.body?.token == null | undefined) {res.sendStatus(401); return};
+  if(isAdmin(req.body.token)){
+
+    await firebase.db.collection("posts").doc(req.body.postID).delete();
+    console.log('post borrado por ADMIN');
+    res.sendStatus(200);
+  }
+  else{ res.sendStatus(401);
+    console.log("no funcionó borrar post");
+
+  }
+});
+
 
 // aca
 
