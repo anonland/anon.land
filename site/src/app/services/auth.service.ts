@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth, PERSISTENCE } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
@@ -13,7 +13,9 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router) {  }
+    private router: Router) {  
+      this.afAuth.onAuthStateChanged(user => this.user = user);
+    }
 
   // Sign in with Google
   async googleSignin() {

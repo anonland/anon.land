@@ -7,8 +7,6 @@ import { PostOptionsComponent } from '../../components/post-options/post-options
 import { Post } from '../../interfaces/post';
 import { NewPostPage } from '../new-post/new-post.page';
 import { PostService } from '../../services/post.service';
-import { PostPage } from '../post/post.page';
-import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { SessionService } from 'src/app/services/session.service';
