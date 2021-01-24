@@ -129,24 +129,27 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
 });
 
 app.post("/comment", upload.single("post-img-upload"), async (req, res) => {
-  // chequear archivo de baneos diarios
-
-  // console.log(req.headers["x-forwarded-for"]);
-
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
-    const imgPath = req.file.path;
+
+    if (req.file) {
+      const uploadedFile = await firebase.admin.storage().bucket().upload(req.file.path, { public: true });
+      const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
+      var publicUrl = signedUrls[0];
+    }
+
     const { body, postId, userId } = req.body;
-    const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
-    const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
-    const publicUrl = signedUrls[0];
+
     const commentData = {
       body,
-      imgPath: publicUrl,
+      imgPath: publicUrl || '',
       postId,
       userId,
+      anonType: Math.floor(Math.random() * 9) + 1,
+      reports: 0,
       createdAt: fireDate.Timestamp.now(),
-    };
+    }
+
     await firebase.db.collection("comments").add(commentData);
     return res.status(200);
   } else {
@@ -163,6 +166,15 @@ app.post("/report", async (req, res) => {
   console.log("asdasd");
   res.sendStatus(200);
 });
+
+app.post("/reportComment", async (req, res) => {
+  await firebase.db
+    .collection("comments")
+    .doc(req.body.commentID)
+    .update({ reports: FieldValue.increment(1) });
+  res.sendStatus(200);
+});
+
 
 app.post("/delete", async (req, res) => {
   //admin delete post

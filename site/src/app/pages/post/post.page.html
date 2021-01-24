@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row>
+    <ion-row class="height-100">
       <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
         <div class="post-img">
           <img [src]='post.imgPath'>
@@ -44,11 +44,22 @@
         <h2 class="margin-left">{{post.body}}</h2>
       </ion-col>
       <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">
-        <ion-textarea placeholder="Hacer un comentario" maxlength="4096" autofocus="true" rows="7" #txtComment>
-        </ion-textarea>
+        <ion-row>
+          <ion-col size="7">
+            <ion-textarea placeholder="Hacer un comentario" maxlength="250" autofocus="true" rows="7" #txtComment>
+            </ion-textarea>
+          </ion-col>
+          <ion-col size="5">
+            <img [src]="imgPreview" width="200px" height="200px" alt="">
+          </ion-col>
+        </ion-row>
         <div class="comment-button">
+          <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)"
+            hidden />
           <ion-button>
-            <ion-icon name="image"></ion-icon>
+            <label for="upload-img" id="file-drag">
+              <ion-icon name="image"></ion-icon>
+            </label>
           </ion-button>
           <ion-button>
             <ion-icon name="link"></ion-icon>
@@ -68,7 +79,7 @@
           <ion-item class="post-comments" *ngFor="let comment of comments">
             <ion-avatar slot="start">
               <!-- TODO: load the function only on init -->
-              <img class="anon-img" [src]="randomAnon()">
+              <img class="anon-img" [src]="'../../../assets/anon/anon-'+ comment.anonType +'.svg'">
             </ion-avatar>
             <ion-label>
               <div class="anon-information">
@@ -81,9 +92,9 @@
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
               </div>
-              <div class="comment-content">
-                {{comment.body}}
+              <div class="comment-content" [innerHtml]="comment.body">
               </div>
+              <img *ngIf="comment.imgPath" [src]="comment.imgPath" width="150px" height="150px">
             </ion-label>
           </ion-item>
         </ion-list>

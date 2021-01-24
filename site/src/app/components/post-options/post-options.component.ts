@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-post-options',
@@ -11,7 +10,7 @@ import { Storage } from '@ionic/storage';
 export class PostOptionsComponent implements OnInit {
   postId: string;
 
-  constructor(private http: HttpClient, private toastCtrl: ToastController, storage: Storage) { }
+  constructor(private http: HttpClient, private toastCtrl: ToastController) { }
 
   ngOnInit() { }
 
