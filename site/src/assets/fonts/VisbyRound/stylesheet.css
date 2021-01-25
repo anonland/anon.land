@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Visby Round CF';
+
+    src: local('Visby Round CF Heavy'), local('VisbyRoundCF-Heavy'),
+
+
+
+        url('VisbyRoundCF-Heavy.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+
+    src: local('Visby Round CF Bold'), local('VisbyRoundCF-Bold'),
+
+
+
+        url('VisbyRoundCF-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Visby Round CF';
+
+    src: local('Visby Round CF Regular'), local('VisbyRoundCF-Regular'),
+
+
+
+        url('VisbyRoundCF-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

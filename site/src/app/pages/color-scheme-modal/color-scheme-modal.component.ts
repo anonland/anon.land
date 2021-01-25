@@ -68,7 +68,7 @@ const scene = {
     color: '#FFFFFF',
     toolbarBg: '#222222',
     toolbarTxt: '#F4F4F4',
-    itemBg: '#555555',
+    itemBg: '#444444',
     itemTxt: '#EEEEEE'
   }
 };

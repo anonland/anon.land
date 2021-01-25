@@ -24,20 +24,12 @@
       id="post-{{ post.id }}"
       (click)="openPost(post)">
       <div class="hidden"><p>Post oculto <ion-icon name="eye-off"></ion-icon></p></div>
-      <ng-template [ngIf]="post.imgPath" [ngIfElse]="notImage" >
-        <img [src]="post.imgPath" [alt]="post.title"
-        (load)="loadEndOfThePage()"
-        class="image"
-      >
-      </ng-template>
-      <ng-template #notImage>
-        <img src="../../assets/default-post.svg" [alt]="post.title" >
-      </ng-template>
-      <!-- TODO: set default post image ('../../assets/default-post.svg') 
-      if Post.imgPath does not exist. -->
+        <img [src]="post.imgPath || '../../assets/default-post.svg'" [alt]="post.title"
+          (load)="loadEndOfThePage()"
+          class="image"
+        >
       <div class="content">
         <div class="information">
-          <!-- Uncomment for enable post options below -->
           <ion-badge color="medium" class="options" (click)="showOptions($event, post.id)">
             <ion-icon name="ellipsis-vertical"></ion-icon>
           </ion-badge>
