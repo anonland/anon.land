@@ -25,12 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-// Global standard font family.
-@font-face {
-    font-family: "Manrope";
-    src: local("Manrope"), url(./assets/fonts/Manrope/Manrope-variable.ttf)
-    format("truetype");
-}
+// Main type face.
+@import url("./assets/fonts/VisbyRound/stylesheet.css");
 
 html {
     scroll-behavior: smooth;
@@ -39,7 +35,7 @@ html {
 * {
     padding: 0;
     box-sizing: border-box;
-    font-family: "Manrope";
+    font-family: "Visby Round CF";
 }
 
 .alert-radio-label.sc-ion-alert-md {

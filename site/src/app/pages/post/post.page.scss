@@ -23,10 +23,6 @@ ion-grid {
     height: 100%;
 }
 
-.height-100 {
-    height: 100%;
-}
-
 .timer {
     align-items: center;
     color: var(--ion-color-secondary);
@@ -86,5 +82,9 @@ ion-grid {
     .post-id {
         width: 60px;
         border-radius: 8px;
+    }
+
+    .comment-content[text='test'] {
+        color: red;  
     }
 }
