@@ -98,15 +98,6 @@ app.post("/session", async (req, res) => {
   }
 });
 
-
-app.get("/:category/:postId?", async (req, res)=> {
- const category = firebase.db.collection('posts');
-  const postId = firebase.db.collection('posts').doc();
-//  const queryRef = postId.where('posts');
-  console.log(category, " ")
-});
-
-
 app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   //
   if (res.status(200)) {
