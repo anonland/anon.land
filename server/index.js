@@ -70,8 +70,8 @@ app.use(middleware, express.static(path.join(__dirname, "../site/www")));
 let pathBanList = __dirname + "/blacklist-historic.json";
 
 // main endpoint..
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "../site/www/index.html"));
 });
 
 async function getAdminData(token) {
@@ -98,8 +98,6 @@ app.post("/session", async (req, res) => {
   }
 });
 
-
-
 app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   //
   if (res.status(200)) {
@@ -107,7 +105,6 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
     if (img == undefined) return res.sendStatus(400);
     const imgPath = req.file.path;
     const { category, title, body, opid } = req.body;
-
     const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
     const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
     const publicUrl = signedUrls[0];
