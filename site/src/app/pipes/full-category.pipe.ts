@@ -26,7 +26,7 @@ export class FullCategoryPipe implements PipeTransform {
       case 'uff':
         return '/uff/ ~ Random';
       case 'a':
-        return '/a/ ~ Anime';
+        return '/anm/ ~ Anime';
       default:
         return '/off/ ~ General';
     }

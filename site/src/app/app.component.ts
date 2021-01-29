@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Historia',
       url: '/his',
-      icon: 'earth'
+      icon: 'book'
     },
     {
       title: 'Política',
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Anime',
-      url: '/a',
+      url: '/anm',
       icon: 'transgender'
     }
   ];

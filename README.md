@@ -39,18 +39,22 @@
 
 ### high priorities
 
++ [ ] Apply sockets.
++ [ ] Select options in report button.
++ [ ] Sort reports by importance (green, orange, red).
++ [ ] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
-+ [ ] Make an admin control panel for deleting posts.
++ [ ] __Doing__ Make an admin control panel for deleting posts.
 + [x] Upload imgs in posts (multer).
 + [x] Make it responsive.
 + [x] Add comments in posts.
 
 ### non-so higher priorities
-
++ [x] Green text stories ">".
++ [x] Hide posts and comments.
 + [ ] Add points in posts.
 + [x] Make compulsory all the inputs in all forms.
-+ [ ] Add greentext stories ">".
 + [ ] Make a real rank system with the points.
 + [ ] Make a trending posts.
 + [ ] Use an api or npm pkg for the user's ip and country flag. :jp: :it: :fr:

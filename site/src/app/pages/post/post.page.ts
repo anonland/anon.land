@@ -66,7 +66,18 @@ export class PostPage implements OnInit {
   }
 
   async comment() {
-    const body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    // Replace escaped characters.
+    let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    console.log(body);
+
+    // Make green text.
+    const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
+    body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
+    console.log(body);
+    
+    document.querySelector(".comment-content").innerHTML = body;
+
+    // Alert message.
     let buttonAlert: string;
 
     // Manage comment status.
