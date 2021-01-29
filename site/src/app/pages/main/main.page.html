@@ -20,14 +20,15 @@
 
 <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="onScroll($event)">
   <div class="container">
-    <div class="main-post-img" *ngFor="let post of posts"
-      id="post-{{ post.id }}"
-      (click)="openPost(post)">
-      <div class="hidden"><p>Post oculto <ion-icon name="eye-off"></ion-icon></p></div>
-        <img [src]="post.imgPath || '../../assets/default-post.svg'" [alt]="post.title"
-          (load)="loadEndOfThePage()"
-          class="image"
-        >
+    <div class="main-post-img" *ngFor="let post of posts">
+      <div class="show-post" id="post_{{ post.id }}" (click)="showPost(post.id)">
+        <ion-icon  class="show-post-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+        <ion-label class="show-post-title">   Click Para mostrar</ion-label>
+      </div>
+      <img [src]="post.imgPath || '../../assets/default-post.svg'" [alt]="post.title"
+        (click)="openPost(post)"
+        (load)="loadEndOfThePage()"
+        class="image">
       <div class="content">
         <div class="information">
           <ion-badge color="medium" class="options" (click)="showOptions($event, post.id)">

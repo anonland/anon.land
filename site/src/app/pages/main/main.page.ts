@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { SessionService } from 'src/app/services/session.service';
 import { DOCUMENT } from '@angular/common';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-main',
@@ -22,7 +23,6 @@ export class MainPage implements OnInit, AfterViewInit {
   @ViewChild(IonContent) content: IonContent;
 
   public category: string;
-  // public defaultImg: string;
   public posts = new Array<Post>();
   public endOfThePage = false;
   public isDown = false;
@@ -36,7 +36,8 @@ export class MainPage implements OnInit, AfterViewInit {
     private router: Router,
     private http: HttpClient,
     private title: Title,
-    private sessionServ: SessionService
+    private sessionServ: SessionService,
+    private storage: Storage
   ) { }
 
   async ngOnInit() {
@@ -59,6 +60,9 @@ export class MainPage implements OnInit, AfterViewInit {
 
       this.posts.push(postObj);
     });
+
+    // Hide posts.
+    this.hideSavedPosts();
   }
 
   async openPost(post: Post) {
@@ -95,6 +99,48 @@ export class MainPage implements OnInit, AfterViewInit {
       componentProps: { postId }
     });
     await popover.present();
+  }
+
+  // Iterate all IDs in hiddenPostId.
+  hideSavedPosts() {
+    this.storage.forEach((value, key) => {
+      if (key === 'hiddenPostId') {
+        value.forEach((id: string) => this.toggleHide(id));
+      }
+    });
+  }
+
+  // Display placard for show the post.
+  toggleHide(postId: string) {
+    const post = (document.querySelector(`#post_${postId}`) as HTMLElement);
+    const postImg = (document.querySelector(`#post_${postId} + img`) as HTMLElement);
+    post.style.display = 'flex';
+    postImg.style.display = 'none';
+
+    // Delete the post id as value from 'hiddenPostId'.
+    this.storage.get('hiddenPostId').then((id: string[]) => {
+      //if (!id || id.length === 0) { return null; } // Do nothing if is null.
+
+      const toKeep: string[] = [];
+
+      for (const i of id) {
+        if (i !== postId) {
+          toKeep.push(i);
+        }
+      }
+
+      // Finally return the new hidden comments list.
+      this.storage.set('hiddenPostId', toKeep);
+    });
+  }
+
+  // Show the post and pop its id.
+  showPost(postId: string) {
+    const post = (document.querySelector(`#post_${postId}`) as HTMLElement);
+    const postImg = (document.querySelector(`#post_${postId} + img`) as HTMLElement);
+    post.style.display = 'none';
+    postImg.style.display = 'block';
+
   }
 
   async openNotificationsPreview($event: MouseEvent) {
