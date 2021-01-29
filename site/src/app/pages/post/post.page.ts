@@ -8,6 +8,7 @@ import { Post } from 'src/app/interfaces/post';
 import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-post',
@@ -23,8 +24,8 @@ export class PostPage implements OnInit {
   public imgComment;
   public imgPreview = '../../../assets/anon/anon-1.svg';
 
-  @ViewChild("txtComment") private txtComment: HTMLIonTextareaElement;
-  @ViewChild("selMove") private selMove: HTMLIonSelectElement;
+  @ViewChild('txtComment') private txtComment: HTMLIonTextareaElement;
+  @ViewChild('selMove') private selMove: HTMLIonSelectElement;
 
   constructor(
     public toastCtrl: ToastController,
@@ -35,7 +36,8 @@ export class PostPage implements OnInit {
     private authServ: AuthService,
     private alertCtrl: AlertController,
     private sessionServ: SessionService,
-    private popoverCtrl: PopoverController) { }
+    private popoverCtrl: PopoverController,
+    private storage: Storage) { }
 
   async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
@@ -50,9 +52,9 @@ export class PostPage implements OnInit {
 
     setTimeout(() => {
       this.commentBtnDisabled = false;
-    }, 30000); // Time to wait for comment.
+    }, 5000); // Time to wait for comment.
 
-    let timeLeft = 30;
+    let timeLeft = 5;
     const commentTime = setInterval(() => {
       timeLeft--;
       this.timer = `Esperar ${timeLeft}s`;
@@ -64,11 +66,18 @@ export class PostPage implements OnInit {
   }
 
   async comment() {
-    const body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    // Replace escaped characters.
+    let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    console.log(body);
+
+    // Make green text.
+    const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
+    body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
+
+    // Alert message.
     let buttonAlert: string;
 
-    // If comment is void send an alert.
-    // Else the timer start.
+    // Manage comment status.
     switch (body.length) {
       case 0:
         buttonAlert = 'El comentario está vacio.';
@@ -79,7 +88,7 @@ export class PostPage implements OnInit {
         break;
     }
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('body', body);
     formData.append('post-img-upload', this.imgComment);
     formData.append('postId', this.postId);
@@ -100,8 +109,14 @@ export class PostPage implements OnInit {
     this.comments = comments.docs.map(comment => {
       const commentObj: any = comment.data();
       commentObj.id = comment.id;
+      // Display placard for each hide comment.
+      this.storage.forEach((key, value) => {
+        if (value === 'hiddenCommentId') {
+          key.forEach((id: string) => this.toggleHide(id));
+        }
+      });
       return commentObj;
-    })
+    });
   }
 
   async showOptions($event: MouseEvent, commentId: string) {
@@ -109,9 +124,42 @@ export class PostPage implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: CommentOptionsComponent,
       event: $event,
-      componentProps: { commentId: commentId }
+      componentProps: { commentId }
     });
     await popover.present();
+  }
+
+  // Disappear placard on the comment and show then.
+  showComment(commentId: string) {
+    const comment = (document.querySelector(`#comment_${commentId}`) as HTMLElement);
+    const commentIcon = (document.querySelector(`#comment_${commentId} + ion-avatar`) as HTMLElement);
+    comment.style.display = 'none';
+    commentIcon.style.display = 'block';
+
+    // Delete the comment id as value from 'hiddenCommentId'.
+    this.storage.get('hiddenCommentId').then((id: string[]) => {
+      if (!id || id.length === 0) { return null; } // Do nothing if is null.
+
+      const toKeep: string[] = [];
+
+      for (const i of id) {
+        if (i !== commentId) {
+          toKeep.push(i);
+        }
+      }
+
+      // Finally return the new hidden comments list.
+      this.storage.set('hiddenCommentId', toKeep);
+    });
+  }
+
+  // Display placard for show the comment.
+  // Function is call in getComments().
+  toggleHide(commentId: string) {
+    const comment = (document.querySelector(`#comment_${commentId}`) as HTMLElement);
+    const commentIcon = (document.querySelector(`#comment_${commentId} + ion-avatar`) as HTMLElement);
+    comment.style.display = 'flex';
+    commentIcon.style.display = 'none';
   }
 
   async deletePost() {
@@ -135,8 +183,9 @@ export class PostPage implements OnInit {
   }
 
   async movePost() {
-    if (this.selMove.value == null)
+    if (this.selMove.value == null) {
       return;
+    }
 
     await this.postServ.movePost(this.postId, this.selMove.value);
     const toast = await this.toastCtrl.create({ header: 'Post movido correctamente' });

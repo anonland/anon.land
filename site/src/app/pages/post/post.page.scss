@@ -1,3 +1,7 @@
+* {
+    font-family: 'Visby Round CF';
+}
+
 .margin-left {
     margin-left: 3%;
 }
@@ -33,11 +37,51 @@ ion-grid {
     padding: 0.5em;
 }
 
+.greenText {
+
+}
+
+.loading-comments {
+    height: 100%;
+    width: 100%;
+    z-index: 7;
+    background-color: red;
+}
+
 .post-comments {
     font-weight: 400;
     ion-label {
         --background: var(--ion-color-primary-shade);
         padding: 4%;
+    }
+
+    .show-comment {
+        align-items: center;
+        background-color: var(--ion-toolbar-background-color);
+        cursor: pointer;
+        display: none;
+        flex-direction: row;
+        font-size: 1.1em;
+        font-weight: bold;
+        height: 100%;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+
+        .show-comment-title {
+            font-family: 'Visby Round CF';
+            font-weight: bold;
+            opacity: 60%;
+            transition: 0.4s ease;
+        }
+
+        &:hover {
+            .show-comment-title {
+                opacity: 100%;
+                transition: 0.4s ease;
+            }
+        }
     }
 
     .anon-information {
@@ -84,7 +128,8 @@ ion-grid {
         border-radius: 8px;
     }
 
-    .comment-content[text='test'] {
-        color: red;  
+    .comment-content {
+        font-weight: 500;
     }
+
 }

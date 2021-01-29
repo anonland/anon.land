@@ -33,6 +33,13 @@
           </ion-item>
         </ion-menu-toggle>
 
+        <ion-menu-toggle auto-hide="false" *ngIf="this.authServ.user">
+          <ion-item class="pointer" routerDirection="root" [routerLink]="['/admins']" lines="none" detail="false">
+            <ion-icon slot="start" ios="hammer-outline" md="hammer-sharp"></ion-icon>
+            <ion-label>Admin Cpanel</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
         <ion-menu-toggle auto-hide="true">
           <ion-item (click)="changeColorScheme()" class="pointer color-scheme">
             <ion-icon slot="start" ios="color-palette-outline" md="color-palette-sharp"></ion-icon>

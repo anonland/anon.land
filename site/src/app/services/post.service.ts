@@ -29,7 +29,7 @@ export class PostService {
   getCommentsWebSocket(postId: string) {
     return new WebSocket('http://localhost:3000/' + postId).onmessage = () => {
       this.getComments(postId);
-    }
+    };
   }
 
   async deletePost(postID: string) {

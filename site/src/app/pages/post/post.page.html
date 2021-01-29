@@ -30,10 +30,12 @@
             <ion-select-option value="mus">Música</ion-select-option>
             <ion-select-option value="cin">Cine</ion-select-option>
             <ion-select-option value="sci">Ciencia</ion-select-option>
+            <ion-select-option value="his">Historia</ion-select-option>
             <ion-select-option value="pol">Política</ion-select-option>
             <ion-select-option value="art">Arte</ion-select-option>
             <ion-select-option value="nor">Normie</ion-select-option>
             <ion-select-option value="uff">Random</ion-select-option>
+            <ion-select-option value="anm">Anime</ion-select-option>
           </ion-select>
         </div>
         <div *ngIf="this.authServ.user == undefined">
@@ -77,8 +79,11 @@
             <h4>Comentarios:</h4>
           </ion-item>
           <ion-item class="post-comments" *ngFor="let comment of comments">
+            <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
+              <ion-icon  class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+              <ion-label class="show-comment-title" >Click Para mostrar</ion-label>
+            </div>
             <ion-avatar slot="start">
-              <!-- TODO: load the function only on init -->
               <img class="anon-img" [src]="'../../../assets/anon/anon-'+ comment.anonType +'.svg'">
             </ion-avatar>
             <ion-label>
@@ -87,7 +92,6 @@
                 <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
                 </ion-badge>
                 <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
-                <!-- TODO: options for hide a comment (only hide for the client that did chosen), report comment. -->
                 <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>

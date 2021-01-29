@@ -15,6 +15,8 @@ export class FullCategoryPipe implements PipeTransform {
         return '/cin/ ~ Cine';
       case 'sci':
         return '/sci/ ~ Ciencia y Tecnonlogía';
+      case 'his':
+        return '/his/ ~ Historia';
       case 'art':
         return '/art/ ~ Arte';
       case 'pol':
@@ -23,6 +25,8 @@ export class FullCategoryPipe implements PipeTransform {
         return '/nor/ ~ Normie';
       case 'uff':
         return '/uff/ ~ Random';
+      case 'a':
+        return '/anm/ ~ Anime';
       default:
         return '/off/ ~ General';
     }

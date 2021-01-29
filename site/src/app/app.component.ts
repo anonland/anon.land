@@ -43,6 +43,11 @@ export class AppComponent implements OnInit {
       icon: 'terminal'
     },
     {
+      title: 'Historia',
+      url: '/his',
+      icon: 'book'
+    },
+    {
       title: 'Política',
       url: '/pol',
       icon: 'megaphone'
@@ -61,6 +66,11 @@ export class AppComponent implements OnInit {
       title: 'Random',
       url: '/uff',
       icon: 'dice'
+    },
+    {
+      title: 'Anime',
+      url: '/anm',
+      icon: 'transgender'
     }
   ];
 
@@ -68,7 +78,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private authServ: AuthService,
+    protected authServ: AuthService,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private theme: ColorSchemeService,
