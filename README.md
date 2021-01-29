@@ -45,7 +45,7 @@
 + [ ] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
-+ [ ] __Doing__ Make an admin control panel for deleting posts.
++ [ ] Make an admin control panel for deleting posts.
 + [x] Upload imgs in posts (multer).
 + [x] Make it responsive.
 + [x] Add comments in posts.
