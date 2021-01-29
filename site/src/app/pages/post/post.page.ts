@@ -73,9 +73,6 @@ export class PostPage implements OnInit {
     // Make green text.
     const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
     body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
-    console.log(body);
-    
-    document.querySelector(".comment-content").innerHTML = body;
 
     // Alert message.
     let buttonAlert: string;
