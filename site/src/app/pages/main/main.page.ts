@@ -1,7 +1,6 @@
-import { async } from '@angular/core/testing';
-import { AfterViewInit, Component, OnInit, Inject, ViewChild, EventEmitter  } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController, PopoverController, IonContent } from '@ionic/angular';
+import { ModalController, PopoverController, IonContent, ToastController } from '@ionic/angular';
 import { NotificationsPreviewComponent } from '../../components/notifications-preview/notifications-preview.component';
 import { PostOptionsComponent } from '../../components/post-options/post-options.component';
 import { Post } from '../../interfaces/post';
@@ -18,7 +17,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage implements OnInit, AfterViewInit {
+export class MainPage {
 
   @ViewChild(IonContent) content: IonContent;
 
@@ -26,26 +25,35 @@ export class MainPage implements OnInit, AfterViewInit {
   public posts = new Array<Post>();
   public endOfThePage = false;
   public isDown = false;
+  public newPosts = 0;
+  private newPostsToast: HTMLIonToastElement;
 
   constructor(
     @Inject(DOCUMENT) public document: Document,
     private activatedRoute: ActivatedRoute,
     private modalCtrl: ModalController,
     private popoverCtrl: PopoverController,
+    private toastCtrl: ToastController,
     private postServ: PostService,
     private router: Router,
     private http: HttpClient,
     private title: Title,
     private sessionServ: SessionService,
     private storage: Storage
-  ) { }
+  ) {
+    this.activatedRoute.params.subscribe(async _ => {
+      this.title.setTitle('Anon Land');
+      this.category = this.activatedRoute.snapshot.paramMap.get('category');
 
-  async ngOnInit() {
-    this.title.setTitle('Anon Land');
-    this.category = this.activatedRoute.snapshot.paramMap.get('category');
+      await this.sessionServ.verifySession();
+      await this.getPostsFeed();
 
-    await this.sessionServ.verifySession();
+      this.hideSavedPosts();
+      this.setSocketsHandler();
+    });
+  }
 
+  async getPostsFeed() {
     let posts;
     if (!this.category || this.category === 'off') {
       posts = await this.postServ.getPostList();
@@ -54,18 +62,43 @@ export class MainPage implements OnInit, AfterViewInit {
       posts = await this.postServ.getPostListByCategory(this.category);
     }
 
+    this.posts = new Array<Post>();
     posts.forEach(post => {
       const postObj: Post = post.data() as Post;
       postObj.id = post.id;
 
       this.posts.push(postObj);
     });
+  }
 
-    // Hide posts.
-    this.hideSavedPosts();
+  async setSocketsHandler() {
+    this.postServ.setSocketsHandler(async () => {
+      this.newPosts++
+
+      const header = `Hay ${this.newPosts} nuevos post`;
+
+      if (this.newPostsToast == undefined) {
+        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
+        await toast.present();
+
+        const reloadPosts = () => {
+          toast.dismiss();
+          this.newPosts = 0;
+          this.newPostsToast = undefined;
+          this.getPostsFeed();
+        }
+
+        toast.onclick = reloadPosts;
+        this.newPostsToast = toast;
+      } else {
+        this.newPostsToast.header = header;
+      }
+    });
   }
 
   async openPost(post: Post) {
+    this.newPostsToast?.dismiss();
+    this.postServ.removeSocketsHandler();
     this.router.navigate([post.category, post.id]);
   }
 
@@ -77,15 +110,22 @@ export class MainPage implements OnInit, AfterViewInit {
     await modal.present();
     const event = await modal.onDidDismiss();
     if (event.data != null) {
+      this.postServ.removeSocketsHandler();
+
       let formData = new FormData();
       formData.append('post-img-upload', event.data.img);
       formData.append('category', event.data.category);
       formData.append('title', event.data.title);
       formData.append('body', event.data.body);
       formData.append('opid', this.sessionServ.getSession());
+
       this.http
-        .post('http://localhost:3000/create', formData)
-        .subscribe((data) => console.log(data));
+        .post('http://localhost:3000/create', formData, { responseType: 'text' })
+        .subscribe(async _ => {
+          await this.getPostsFeed();
+          this.hideSavedPosts();
+          this.setSocketsHandler();
+        });
     }
   }
 
@@ -165,9 +205,6 @@ export class MainPage implements OnInit, AfterViewInit {
 
   loadEndOfThePage() {
     this.endOfThePage = true;
-  }
-
-  ngAfterViewInit() {
   }
 
 }

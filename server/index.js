@@ -4,13 +4,13 @@ const app = express();
 const path = require("path");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const session = require("express-session");
 const multer = require("multer");
 const firebase = require("./db/firebase");
-const http = require("http");
+const http = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
 const fs = require("fs");
+const io = require("socket.io")(http, { cors: { origin: '*' } });
 const { json } = require("express");
 const { type } = require("os");
 const { FieldValue } = require("@google-cloud/firestore");
@@ -19,6 +19,13 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('message', (message) => {
+    console.log(message);
+  })
+});
 
 const storage = multer.diskStorage({
   //destination: "uploads",
@@ -119,6 +126,7 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
     };
 
     await firebase.db.collection("posts").add(postData);
+    io.emit('newPostCreated')
     return res.sendStatus(200);
   } else {
     console.log("Error de conexión");
@@ -148,7 +156,8 @@ app.post("/comment", upload.single("post-img-upload"), async (req, res) => {
     }
 
     await firebase.db.collection("comments").add(commentData);
-    return res.status(200);
+    io.emit(`${postId}/newComment`)
+    return res.sendStatus(200);
   } else {
     console.log("Error de conexión");
   }
@@ -210,10 +219,10 @@ app.post("/move", async (req, res) => {
   res.sendStatus(200);
 });
 
-const server = http.createServer(app);
 // heroku port access..
 app.set("port", process.env.PORT || 3000);
+
 // Opening port..
-app.listen(app.get("port"), () => {
+http.listen(app.get("port"), () => {
   console.log("Opening in port 3000");
 });

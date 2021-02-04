@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { CommentOptionsComponent } from 'src/app/components/comment-options/comment-options.component';
 import { Post } from 'src/app/interfaces/post';
@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
 import { Storage } from '@ionic/storage';
+import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   selector: 'app-post',
@@ -23,6 +24,8 @@ export class PostPage implements OnInit {
   public timer: string;
   public imgComment;
   public imgPreview = '../../../assets/anon/anon-1.svg';
+  public newComments = 0;
+  public newCommentsToast: HTMLIonToastElement;
 
   @ViewChild('txtComment') private txtComment: HTMLIonTextareaElement;
   @ViewChild('selMove') private selMove: HTMLIonSelectElement;
@@ -37,7 +40,9 @@ export class PostPage implements OnInit {
     private alertCtrl: AlertController,
     private sessionServ: SessionService,
     private popoverCtrl: PopoverController,
-    private storage: Storage) { }
+    private router: Router,
+    private storage: Storage,
+    private commentServ: CommentService) { }
 
   async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
@@ -45,6 +50,32 @@ export class PostPage implements OnInit {
     this.post = postDoc.data() as any;
     this.title.setTitle(this.post.title + ' | Anon Land');
     this.getComments();
+    this.setSocketsHandler();
+  }
+
+  setSocketsHandler() {
+    this.commentServ.setSocketsHandler(this.postId, async () => {
+      this.newComments++;
+
+      const header = `Hay ${this.newComments} nuevos comentarios`;
+
+      if (this.newCommentsToast == undefined) {
+        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
+        await toast.present();
+
+        const reloadComments = () => {
+          toast.dismiss();
+          this.newComments = 0;
+          this.newCommentsToast = undefined;
+          this.getComments();
+        }
+
+        toast.onclick = reloadComments;
+        this.newCommentsToast = toast;
+      } else {
+        this.newCommentsToast.header = header;
+      }
+    })
   }
 
   commentTimer() {
@@ -88,13 +119,17 @@ export class PostPage implements OnInit {
         break;
     }
 
+    this.commentServ.removeSocketsHandler(this.postId);
+
     const formData = new FormData();
     formData.append('body', body);
     formData.append('post-img-upload', this.imgComment);
     formData.append('postId', this.postId);
     formData.append('userId', this.sessionServ.getSession());
 
-    this.http.post('http://localhost:3000/comment', formData).subscribe(async _ => {
+    this.http.post('http://localhost:3000/comment', formData, { responseType: 'text' }).subscribe(async _ => {
+      this.getComments();
+      this.setSocketsHandler();
       const toast = await this.toastCtrl.create({
         message: buttonAlert,
         position: 'top',
@@ -216,5 +251,10 @@ export class PostPage implements OnInit {
         this.imgPreview = event.target.result.toString();
       };
     }
+  }
+
+  navigateToMain() {
+    this.commentServ.removeSocketsHandler(this.postId);
+    this.router.navigate['/'];
   }
 }
