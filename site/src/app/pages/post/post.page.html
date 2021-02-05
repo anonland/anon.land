@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-back-button text="Atrás" defaultHref="/"></ion-back-button>
+      <ion-back-button text="Atrás" (click)="navigateToMain()"></ion-back-button>
     </ion-buttons>
     <ion-title class="margin-left">{{post.title}}</ion-title>
   </ion-toolbar>

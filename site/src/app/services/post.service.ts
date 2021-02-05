@@ -1,14 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, QueryFn, DocumentChangeAction, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from './auth.service';
-
+import { SocketService } from './socket.service';
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private db: AngularFirestore, private http: HttpClient, private auth: AuthService) { }
+  constructor(private db: AngularFirestore, private http: HttpClient, private auth: AuthService, private socket: SocketService) { }
+
+  setSocketsHandler(handler) {
+    this.socket.io.on('newPostCreated', handler);
+  }
+
+  removeSocketsHandler() {
+    this.socket.io.off('newPostCreated');
+  }
 
   getPostById(postId: string) {
     return this.db.collection('posts').doc(postId).get();
@@ -24,12 +32,6 @@ export class PostService {
 
   getComments(postId: string) {
     return this.db.collection('comments').ref.where('postId', '==', postId).orderBy('createdAt', 'desc').get();
-  }
-
-  getCommentsWebSocket(postId: string) {
-    return new WebSocket('http://localhost:3000/' + postId).onmessage = () => {
-      this.getComments(postId);
-    };
   }
 
   async deletePost(postID: string) {
