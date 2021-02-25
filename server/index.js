@@ -14,6 +14,7 @@ const io = require("socket.io")(http, { cors: { origin: '*' } });
 const { json } = require("express");
 const { type } = require("os");
 const { FieldValue } = require("@google-cloud/firestore");
+const { body, validationResult } = require('express-validator');
 // set cors policy
 app.use(cors());
 
@@ -35,8 +36,13 @@ const storage = multer.diskStorage({
   }
 
 
-
 });
+
+const categoryValidate = (value)=>{
+  let categories = ['off', 'prg', 'mus', 'cin', 'sci', 'pol', 'art', 'his', 'nor', 'uff', 'anm'];
+  return categories.includes(value);
+};
+
 const upload = multer({
   storage,
   limits: { fileSize: 15000000 },
@@ -105,9 +111,14 @@ app.post("/session", async (req, res) => {
   }
 });
 
-app.post("/create", upload.single("post-img-upload"), async (req, res) => {
-  //
+app.post("/create", upload.single("post-img-upload"), body("category").custom(categoryValidate),
+body("body").isLength({  min: 5, max: 1500}), body("title").isLength({  min: 5, max: 50}) , async (req, res) => {
   if (res.status(200)) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors, req.body);
+      return res.status(400).json({ errors: errors.array() });
+    }
     const img = req.file;
     if (img == undefined) return res.sendStatus(400);
     const imgPath = req.file.path;
@@ -115,7 +126,6 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
     const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
     const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
     const publicUrl = signedUrls[0];
-
     const postData = {
       category,
       imgPath: publicUrl,
@@ -133,10 +143,14 @@ app.post("/create", upload.single("post-img-upload"), async (req, res) => {
   }
 });
 
-app.post("/comment", upload.single("post-img-upload"), async (req, res) => {
+app.post("/comment", upload.single("post-img-upload"), body("body").isLength({min: 1, max: 1500}), async (req, res) => {
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"];
-
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log(errors);
+      return res.status(400).json({ errors: errors.array() });
+    }
     if (req.file) {
       const uploadedFile = await firebase.admin.storage().bucket().upload(req.file.path, { public: true });
       const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
