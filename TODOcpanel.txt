@@ -1,0 +1,13 @@
+Al comentar limpiar la caja de texto del comentario
+Las imagenes se alargan al resizear la pagina principal
+El boton de subir imagen solo funciona clickeando el centro
+Todos los comentarios tienen OP y id null
+WEBSOCKET para cuando se mueve de categoria un post
+WEBSOCKET para cuando se borra un post
+Fecha en los comentarios
+Se pone GENERAL en vez de OFF
+Eliminar comentario
+Banear usuario en el comentario
+Despues de borrar un post que no pueda acceder por URL
+Validar cantidad de caracteres que ( min: 1, body max: 1500, para titulo max: 50)
+TODO el admin Cpanel

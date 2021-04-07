@@ -1,0 +1,335 @@
+ion-tittle,
+ion-button,
+ion-icon {
+  font-weight: bolder;
+}
+
+ion-menu-button {
+  color: var(--ion-color-primary);
+}
+
+.create-post {
+  display: flex;
+  justify-content: space-between;
+  width: 15vw;
+  p {
+    margin-right: 5%;
+  }
+}
+
+ion-badge{
+  padding: 4px;
+
+  ion-icon{
+    font-size: 11.62px;
+  }
+}
+
+.options-badge {
+  position: absolute !important;
+  right: 0px;
+  top: 0px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.main-post-img {
+  background-color: var(--ion-background-color);
+  //background-image: URL('../../assets/default-post.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid var(--ion-toolbar-background-color);
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+  color: white;
+  object-fit: cover;
+  overflow: hidden;
+
+.show-post {
+  align-items: center;
+  background-color: var(--ion-toolbar-background-color);
+  cursor: pointer;
+  display: none;
+  flex-direction: row;
+  font-size: 1.3em;
+  font-weight: bold;
+  height: 100%;
+  justify-content: space-evenly;
+  width: 100%;
+  z-index: 10;
+
+  .show-post-title {
+    font-family: 'Visby Round CF';
+    font-weight: bold;
+    opacity: 60%;
+    transition: 0.4s ease;
+  }
+
+  &:hover {
+    .show-post-title {
+      opacity: 100%;
+      transition: 0.4s ease;
+    }
+  }
+}
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .content {
+    position: absolute;
+    padding: 1em;
+
+    .options {
+      margin-right: 1%;
+    }
+
+    h1 {
+      font-size: 1em;
+      font-weight: bold;
+      margin: 0;
+    }
+  }
+}
+
+.image {
+  border-radius: 0;
+  filter: grayscale(60%);
+  transform: scale(1);
+  transition: 0.4s ease;
+}
+
+.main-post-img:hover .image {
+  border-radius: 1em;
+  filter: grayscale(0%);
+  transform: scale(0.95);
+  transition: 0.4s ease;
+  box-shadow: -6px -68px 79px -37px rgba(0,0,0,0.59) inset;
+}
+
+.information {
+  width: 200px;
+}
+
+.post-text {
+  position: absolute;
+  //margin-top: 100% !important;
+}
+
+.end {
+  background-color: var(--ion-toolbar-background-color);
+  color: var(--ion-text-color);
+  display: grid;
+  font-weight: bold;
+  font-size: 1em;
+  place-content: center;
+  position: relative;
+  width: 100vw;
+  height: 20vh;
+}
+
+.scroll-top {
+  align-items: center;
+  background-color: var(--ion-color-tertiary);
+  border-radius: 1em;
+  bottom: 8vh;
+  color: var(--ion-item-background-color);
+  cursor: pointer;
+  display: flex;
+  font-size: .9em;
+  font-weight: bold;
+  height: 50px;
+  justify-content: space-evenly;
+  position: fixed;
+  right: 3%;
+  transition: 0.4s ease;
+  user-select: none;
+  width: 80px;
+}
+
+// For typical mobile devices (use 479px).
+@media only screen and (max-width: 679px) {
+  ion-toolbar {
+    padding: 1em !important;
+    height: 90px;
+    max-height: 90px;
+    .title {
+      font-size: .8em;
+    }
+  }
+
+  .create-post {
+    width: 35vw;
+    p {
+      margin-right: 5%;
+    }
+  }
+
+  .main-post-img {
+    border: 0;
+  }
+
+  .container {
+    border-radius: 1em;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    //height: 50vh;
+    margin: 6%;
+
+    .content {
+      padding: 0.5em;
+    }
+
+    img {
+      max-width: 100vw;
+      height: 50vh;
+      border-radius: 1em;
+      margin-bottom: 4%;
+    }
+  }
+
+  .image {
+    filter: grayscale(0%);
+    transform: scale(1);
+    transition: 0.4s ease;
+  }
+  
+  .main-post-img:hover .image {
+    border-radius: 1em;
+    filter: grayscale(0%);
+    transform: scale(1);
+    transition: 0.4s ease;
+  }
+  
+  .end {
+    height: 30vh;
+    margin-bottom: 100px;
+  }
+  
+  .scroll-top {
+    bottom: 110px;
+    right: 4%;
+  }
+
+  .post-text {
+    margin-top: 40vh;
+  }
+}
+// Default posts view. Two divs per row.
+// For mobile (landscape).
+@media only screen and (min-width: 580px) and (max-width: 767px) {
+  .create-post {
+    width: 30vw;
+    p {
+      margin-right: 5%;
+    }
+  }
+
+  .main-post-img {
+    background-color: none;
+    border: none;
+  }
+
+  .image {
+    filter: grayscale(0%);
+    transform: scale(1);
+    transition: 0.4s ease;
+  }
+  
+  .main-post-img:hover .image {
+    border-radius: 1em;
+    filter: grayscale(0%);
+    transform: scale(1);
+    transition: 0.4s ease;
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin: 3%;
+
+    .content {
+      padding: 0.5em;
+    }
+
+    img {
+      max-width: 100vw;
+      height: 50vh;
+      border-radius: 1em;
+      margin-bottom: 4%;
+    }
+  }
+
+  .post-text {
+    margin-top: 105%;
+  }
+}
+
+// For tablets
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+  .create-post {
+    width: 20vw;
+    p {
+      margin-right: 5%;
+    }
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+  }
+
+  .post-text {
+    margin-top: 77%;
+  }
+}
+
+// For small desktop
+@media only screen and (min-width: 980px) and (max-width: 1023px) {
+  .create-post {
+    width: 20vw;
+    p {
+      margin-right: 5%;
+    }
+  }
+
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+  }
+
+  .post-text {
+    margin-top: 65%;
+  }
+}
+
+// For typical desktop
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .post-text {
+    margin-top: 55%;
+  }
+}
+
+// For large desktop
+@media only screen and (min-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  .post-text {
+    margin-top: 60%;
+  }
+}

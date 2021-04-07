@@ -1,0 +1,64 @@
+/** CSS Color Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #8414FF;
+  --ion-color-primary-contrast: #FEFFFC;
+  --ion-color-primary-shade: #46157C;
+  --ion-color-primary-tint: #A55CF6;
+
+  /** secondary **/
+  --ion-color-secondary: #5260ff;
+  --ion-color-secondary-contrast: #FEFFFC;
+  --ion-color-secondary-shade: #4854e0;
+  --ion-color-secondary-tint: #6370ff;
+
+  /** tertiary **/
+  --ion-color-tertiary: #DEEFB7;
+  --ion-color-tertiary-contrast: #FEFFFC;
+  --ion-color-tertiary-shade: #618985;
+  --ion-color-tertiary-tint: #DEEFB7;
+
+  /** success **/
+  --ion-color-success: #2dd36f;
+  --ion-color-success-contrast: #FEFFFC;
+  --ion-color-success-shade: #28ba62;
+  --ion-color-success-tint: #42d77d;
+
+  /** warning **/
+  --ion-color-warning: #F29559;
+  --ion-color-warning-contrast: #270250;
+  --ion-color-warning-shade: #e0ac08;
+  --ion-color-warning-tint: #ffca22;
+
+  /** danger **/
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-contrast: #FEFFFC;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  /** dark **/
+  --ion-color-dark: #222428;
+  --ion-color-dark-contrast: #FEFFFC;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
+
+  /** medium **/
+  --ion-color-medium: #92949c;
+  --ion-color-medium-contrast: #FEFFFC;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  /** light **/
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-contrast: #270250;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+
+  /** interface **/
+  --ion-background-color: #FFFFFF;
+  --ion-text-color: #000000;
+  --ion-toolbar-background-color: #CCCCCC;
+  --ion-toolbar-text-color: #333333;
+  --ion-item-background-color: #EEEEEE;
+  --ion-item-text-color: #555555;
+}

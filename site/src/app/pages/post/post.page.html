@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-back-button text="Atrás" (click)="navigateToMain()"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="margin-left">{{post.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="height-100">
+      <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
+        <div class="post-img">
+          <img [src]='post.imgPath'>
+        </div>
+        <div *ngIf="this.authServ.user != undefined">
+          <ion-button (click)="deletePost()">
+            <ion-icon name="trash-outline"></ion-icon>Borrar
+          </ion-button>
+          <ion-button (click)="selMove.open()">
+            <ion-icon name="arrow-redo"></ion-icon>Mover
+          </ion-button>
+          <ion-button (click)="banUser()">
+            <ion-icon name="skull"></ion-icon>Banear
+          </ion-button>
+          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove>
+            <ion-select-option value="off">General</ion-select-option>
+            <ion-select-option value="prg">Preguntas</ion-select-option>
+            <ion-select-option value="mus">Música</ion-select-option>
+            <ion-select-option value="cin">Cine</ion-select-option>
+            <ion-select-option value="sci">Ciencia</ion-select-option>
+            <ion-select-option value="his">Historia</ion-select-option>
+            <ion-select-option value="pol">Política</ion-select-option>
+            <ion-select-option value="art">Arte</ion-select-option>
+            <ion-select-option value="nor">Normie</ion-select-option>
+            <ion-select-option value="uff">Random</ion-select-option>
+            <ion-select-option value="anm">Anime</ion-select-option>
+          </ion-select>
+        </div>
+        <div *ngIf="this.authServ.user == undefined">
+          <ion-button class="margin-left" (click)="report()">
+            <ion-icon slot="start" name="flag"></ion-icon>Reportar
+          </ion-button>
+        </div>
+        <h2 class="margin-left">{{post.body}}</h2>
+      </ion-col>
+      <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">
+        <ion-row>
+          <ion-col size="7">
+            <ion-textarea placeholder="Hacer un comentario" maxlength="250" autofocus="true" rows="7" #txtComment>
+            </ion-textarea>
+          </ion-col>
+          <ion-col size="5">
+            <img [src]="imgPreview" width="200px" height="200px" alt="">
+          </ion-col>
+        </ion-row>
+        <div class="comment-button">
+          <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)"
+            hidden />
+          <ion-button>
+            <label for="upload-img" id="file-drag">
+              <ion-icon name="image"></ion-icon>
+            </label>
+          </ion-button>
+          <ion-button>
+            <ion-icon name="link"></ion-icon>
+          </ion-button>
+          <div class="timer">
+            {{ timer }}
+          </div>
+          <ion-button disabled="{{ commentBtnDisabled }}" (click)="comment()">
+            <ion-icon slot="end" name="send"></ion-icon>
+            Comentar
+          </ion-button>
+        </div>
+        <ion-list>
+          <ion-item>
+            <h4>Comentarios:</h4>
+          </ion-item>
+          <ion-item class="post-comments" *ngFor="let comment of comments">
+            <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
+              <ion-icon  class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+              <ion-label class="show-comment-title" >Click Para mostrar</ion-label>
+            </div>
+            <ion-avatar slot="start">
+              <img class="anon-img" [src]="'../../../assets/anon/anon-'+ comment.anonType +'.svg'">
+            </ion-avatar>
+            <ion-label>
+              <div class="anon-information">
+                <ion-badge class="post-tags post-op" color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
+                <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
+                </ion-badge>
+                <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
+                <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
+                  <ion-icon name="chevron-down"></ion-icon>
+                </ion-badge>
+              </div>
+              <div class="comment-content" [innerHtml]="comment.body">
+              </div>
+              <img *ngIf="comment.imgPath" [src]="comment.imgPath" width="150px" height="150px">
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

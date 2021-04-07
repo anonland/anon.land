@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "voxednet2": {
+      "hosting": {
+        "app": [
+          "voxednet2"
+        ]
+      }
+    }
+  }
+}

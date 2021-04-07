@@ -1,0 +1,172 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+// Main type face.
+@import url("./assets/fonts/VisbyRound/stylesheet.css");
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Visby Round CF";
+}
+
+.alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-text-color);
+}
+
+[aria-checked=true].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-color-medium);
+}
+
+.create-new-post-modal .modal-wrapper {
+    border-radius: 2em;
+    height: 70vh;
+    width: 60vw;
+    .toolbar-background {
+        --background: var(--ion-color-primary-shade)
+    }
+}
+
+.create-post-modal-full {
+    --width: 100% !important;
+    --height: 100% !important;
+}
+
+.create-post-modal-full {
+    --width: 40% !important;
+    --height: 70% !important;
+}
+
+.color-scheme-changer-modal .modal-wrapper {
+    backdrop-filter: blur(40px) !important;
+    background: rgba(255,255,255, 0.2);
+    background-clip: padding-box;
+    border: solid 2px transparent;
+    border-radius: 2em;
+    height: 60vh;
+    max-height: 470px;
+    max-width: 765px;
+    padding: 2em;
+    width: 40vw;
+}
+
+// For not supports features.
+@supports not (backdrop-filter: none) {
+    .color-scheme-changer-modal .modal-wrapper {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: #5c5c5ccc;  
+        border: solid 3px #777777;
+    }
+}
+
+//For typical mobile devices in portrait or landscape
+@media only screen and (max-width: 767px) {
+    .create-new-post-modal .modal-wrapper {
+        border-radius: 0em;
+        height: 100vh !important;
+        width: 100vw;
+    }
+
+    .ion-page {
+        flex-direction: column-reverse;
+    }
+
+    .color-scheme-changer-modal .modal-wrapper {
+        border-radius: 0em;
+        height: 100vh;
+        max-height: 100vh !important;
+        max-width: 100vw !important;
+        width: 100vw;
+    }
+}
+
+//For tablets
+@media only screen and (max-height: 768px) {
+    .create-new-post-modal .modal-wrapper {
+        height: 90vh;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 979px) {
+    .create-new-post-modal .modal-wrapper {
+        width: 80vw;
+    }
+
+    .div-modal {
+        --width: 70% !important;
+        --height: 70% !important;
+    }
+
+    .color-scheme-changer-modal .modal-wrapper {
+        height: 75vh;
+        width: 80vw;
+    }
+}
+
+//For small desktop
+@media only screen and (min-width: 980px) and (max-width: 1023px) {
+    .div-modal {
+        --width: 50% !important;
+        --height: 70% !important;
+    }
+
+    .color-scheme-changer-modal .modal-wrapper {
+        height: 80vh;
+        width: 75vw;
+    }
+}
+
+//For typical desktop
+@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+    .div-modal {
+        --width: 50% !important;
+        --height: 80% !important;
+    }
+
+    .color-scheme-changer-modal .modal-wrapper {
+        height: 70vh;
+        width: 65vw;
+    }
+}
+
+//For large desktop
+@media only screen and (min-width: 1200px) and (max-width: 1699px) {
+    .div-modal {
+        --width: 30% !important;
+        --height: 70% !important;
+    }
+
+    .color-scheme-changer-modal .modal-wrapper {
+        height: 75vh;
+        width: 55vw;
+    }
+}

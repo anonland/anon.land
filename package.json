@@ -1,7 +1,7 @@
 {
   "name": "expressit",
-  "version": "1.0.0",
-  "description": "Social network project with true freedom of expression",
+  "version": "0.1.0",
+  "description": "New voxed, voxed2.net",
   "main": "index.js",
   "scripts": {
     "start": "node ./server/index.js",
@@ -10,22 +10,28 @@
   "author": "Grunt",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/firestore": "^4.7.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
-    "mongodb": "^3.5.8",
+    "express-validator": "^6.10.0",
+    "firebase-admin": "^9.4.1",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "socket.io": "^3.1.1",
+    "uuid": "^8.3.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "2.2.0"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/igruntplay/ExpressIt.git"
+    "url": "git+https://github.com/igruntplay/voxed4.git"
   },
   "bugs": {
-    "url": "https://github.com/igruntplay/ExpressIt/issues"
+    "url": "https://github.com/igruntplay/voxed4issues"
   },
-  "homepage": "https://github.com/igruntplay/ExpressIt#readme"
+  "homepage": "https://github.com/igruntplay/voxed4#readme"
 }
