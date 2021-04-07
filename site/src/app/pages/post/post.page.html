@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-back-button text="Atrás" (click)="navigateToMain()"></ion-back-button>
+      <ion-back-button text="Atrás" defaultHref="/" (click)="navigateToMain($evt)"></ion-back-button>
     </ion-buttons>
     <ion-title class="margin-left">{{post.title}}</ion-title>
   </ion-toolbar>
@@ -58,13 +58,13 @@
         <div class="comment-button">
           <input id="upload-img" type="file" name="post-img-upload" accept="image/*" (change)="onSelectFile($event)"
             hidden />
-          <ion-button>
+          <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
             <label for="upload-img" id="file-drag">
-              <ion-icon name="image"></ion-icon>
+              <ion-icon name="image" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
             </label>
           </ion-button>
-          <ion-button>
-            <ion-icon name="link"></ion-icon>
+          <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
+            <ion-icon name="link" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
           </ion-button>
           <div class="timer">
             {{ timer }}
@@ -80,8 +80,8 @@
           </ion-item>
           <ion-item class="post-comments" *ngFor="let comment of comments">
             <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
-              <ion-icon  class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
-              <ion-label class="show-comment-title" >Click Para mostrar</ion-label>
+              <ion-icon class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+              <ion-label class="show-comment-title">Click Para mostrar</ion-label>
             </div>
             <ion-avatar slot="start">
               <img class="anon-img" [src]="'../../../assets/anon/anon-'+ comment.anonType +'.svg'">
