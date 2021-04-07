@@ -115,6 +115,7 @@ export class PostPage implements OnInit {
         break;
       default:
         buttonAlert = 'Mensaje publicado correctamente.';
+        this.txtComment.value = "";
         this.commentTimer();
         break;
     }
