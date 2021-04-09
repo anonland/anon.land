@@ -126,7 +126,7 @@ export class PostPage implements OnInit {
     formData.append('body', body);
     formData.append('post-img-upload', this.imgComment);
     formData.append('postId', this.postId);
-    formData.append('userId', this.sessionServ.getSession());
+    formData.append('userId', await this.sessionServ.getSession());
 
     this.http.post('http://localhost:3000/comment', formData, { responseType: 'text' }).subscribe(async _ => {
       this.getComments();
