@@ -98,14 +98,14 @@ async function getAdminData(token) {
 
 app.post("/session", async (req, res) => {
   if (res.status(200)) {
-    const userIP = req.headers["x-forwarded-for"];
+    const userIP = req.headers["x-forwarded-for"] || req.ip;
     //verificar que no exista en el baneo historico + el baneo diario
 
     const userID = uuidv4().slice(-6);
-
+  
     const userData = { userIP, userID };
     await firebase.db.collection("users").add(userData);
-    res.json(token);
+    res.json(userID);
   } else {
     console.log("Error de conexión");
   }
