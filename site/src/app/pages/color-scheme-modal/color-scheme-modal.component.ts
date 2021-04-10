@@ -49,6 +49,28 @@ const themes = {
     light: '#FEFFFC',
     medium: '#D8D7D6',
     dark: '#013500'
+  },
+  aisatsana: {
+    primary: '#EA7191',
+    secondary: '#F58874',
+    tertiary: '#798474',
+    success: '#58C07A',
+    warning: '#fAD934',
+    danger: '#CA3116',
+    light: '#F1EDEE',
+    medium: '#D8D7D6',
+    dark: '#04100a'
+  },
+  ambar: {
+    primary: '#f5b834',
+    secondary: '#79A2AB',
+    tertiary: '#E7CEE3',
+    success: '#58C07A',
+    warning: '#fAD934',
+    danger: '#CA3116',
+    light: '#F1EDEE',
+    medium: '#D8D7D6',
+    dark: '#04100a'
   }
 };
 

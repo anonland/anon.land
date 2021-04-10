@@ -19,6 +19,7 @@ import { CommentService } from 'src/app/services/comment.service';
 export class PostPage implements OnInit {
   public postId: string;
   public post: Post = new Post();
+  public postDate: string;
   public comments = new Array<any>();
   public commentBtnDisabled = false; // Button is enable.
   public timer: string;
@@ -49,6 +50,7 @@ export class PostPage implements OnInit {
     const postDoc = await this.postServ.getPostById(this.postId).toPromise();
     this.post = postDoc.data() as any;
     this.title.setTitle(this.post.title + ' | Anon Land');
+    this.postDate = this.getDate(this.post.createdAt.seconds);
     this.getComments();
     this.setSocketsHandler();
   }
@@ -59,7 +61,7 @@ export class PostPage implements OnInit {
 
       const header = `Hay ${this.newComments} nuevos comentarios`;
 
-      if (this.newCommentsToast == undefined) {
+      if (this.newCommentsToast === undefined) {
         const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
         await toast.present();
 
@@ -115,7 +117,7 @@ export class PostPage implements OnInit {
         break;
       default:
         buttonAlert = 'Mensaje publicado correctamente.';
-        this.txtComment.value = "";
+        this.txtComment.value = '';
         this.commentTimer();
         break;
     }
@@ -138,6 +140,43 @@ export class PostPage implements OnInit {
       });
       await toast.present();
     });
+  }
+
+  getDate(postDate) {
+    return new Date(postDate * 1000).toLocaleDateString('es-AR');
+  }
+
+  postTime(milliseconds: number) {
+    // Post publish date.
+    const postTime: any = new Date(milliseconds * 1000);
+    // Actual date.
+    const localTime: any = new Date();
+    // Difference in milliseconds.
+    const timeDifference = localTime - postTime;
+    let timeElapsed: string;
+
+    //console.log(timeDifference);
+
+    // Times.
+    const days = Math.round(timeDifference / (24 * 60 * 60 * 1000));
+    const hours = Math.floor(timeDifference / 3600000);
+    const minutes = Math.round((timeDifference / 3600000) * 60);
+    const seconds = Math.round((timeDifference / 3600000) * 3600);
+
+    console.log('time:', minutes);
+    
+
+    if (minutes < 1) {
+      timeElapsed = 'Ahora';
+    } else if (minutes >= 1 && minutes <= 60) {
+      timeElapsed = `Hace ${minutes} min`;
+    }else if (minutes >= 60 && hours <= 24) {
+      timeElapsed = `Hace ${hours} h`;
+    }else if (days >= 1) {
+      timeElapsed = `Hace ${days} Días y ${hours - 24} h`;
+    }
+
+    return timeElapsed;
   }
 
   async getComments() {

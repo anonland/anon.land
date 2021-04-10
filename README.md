@@ -5,7 +5,7 @@
 
 <h1 align="center">
     <strong>Anon Land</strong>
-    <p style="font-size: .8em">A anonymous expression lounge</p>
+    <p style="font-size: .8em">An anonymous expression land</p>
 
 <p align="center">
 

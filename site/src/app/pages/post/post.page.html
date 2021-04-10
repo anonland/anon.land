@@ -42,6 +42,7 @@
           <ion-button class="margin-left" (click)="report()">
             <ion-icon slot="start" name="flag"></ion-icon>Reportar
           </ion-button>
+          <p class="post-date">Publicado: {{ postDate }}</p>
         </div>
         <h2 class="margin-left">{{post.body}}</h2>
       </ion-col>
@@ -92,6 +93,7 @@
                 <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
                 </ion-badge>
                 <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
+                <p class="post-time">{{ postTime(comment.createdAt.seconds) }}</p>
                 <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>

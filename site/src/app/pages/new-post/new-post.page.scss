@@ -4,7 +4,8 @@
     padding: 0 2%;
     ion-toolbar {
         --background: var(--ion-color-primary-shade);
-        --color: #FEFFFC;
+        --color: var(--ion-color-contrast);
+        //--color: #FEFFFC;
     }
     ion-button {
         width: 80px;
