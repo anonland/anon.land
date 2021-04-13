@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-comment-options',
@@ -15,7 +16,8 @@ export class CommentOptionsComponent implements OnInit {
     private http: HttpClient,
     private toastCtrl: ToastController,
     private popoverCtrl: PopoverController,
-    private storage: Storage) { }
+    private storage: Storage,
+    private authServ: AuthService) { }
 
   ngOnInit() { }
 
@@ -47,5 +49,23 @@ export class CommentOptionsComponent implements OnInit {
     } else {
       return this.storage.set('hiddenCommentId', [this.commentId]);
     }
+  }
+
+  async delete() {
+    this.http.post('http://localhost:3000/deleteComment', { commentID: this.commentId }, { responseType: 'text' })
+      .subscribe(async () => {
+        const toast = await this.toastCtrl.create({ header: 'El comentario fue borrado.', position: 'top', duration: 4000 });
+        await toast.present();
+      });
+    this.popoverCtrl.dismiss();
+  }
+
+  async ban() {
+    this.http.post('http://localhost:3000/ban', { commentID: this.commentId }, { responseType: 'text' })
+      .subscribe(async () => {
+        const toast = await this.toastCtrl.create({ header: 'El usuario fue baneado.', position: 'top', duration: 4000 });
+        await toast.present();
+      });
+    this.popoverCtrl.dismiss();
   }
 }

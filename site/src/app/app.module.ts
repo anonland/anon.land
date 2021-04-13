@@ -13,7 +13,6 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ColorSchemeService } from './services/color-scheme.service';
 import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({

@@ -14,11 +14,11 @@ export class NewPostPage implements OnInit {
 
   constructor(private modalCtrl: ModalController, private http: HttpClient) {
     this.newPostForm = new FormGroup({
-      category: new FormControl('general', Validators.required),
+      category: new FormControl('off', Validators.required),
       img: new FormControl(''),
       imgPreview: new FormControl(''),
-      title: new FormControl(undefined, Validators.required),
-      body: new FormControl(undefined),
+      title: new FormControl(undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+      body: new FormControl(undefined, Validators.maxLength(1500))
     });
   }
 
