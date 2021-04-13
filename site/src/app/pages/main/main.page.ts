@@ -117,7 +117,7 @@ export class MainPage {
       formData.append('category', event.data.category);
       formData.append('title', event.data.title);
       formData.append('body', event.data.body);
-      formData.append('opid', this.sessionServ.getSession());
+      formData.append('opid', await this.sessionServ.getSession());
 
       this.http
         .post('http://localhost:3000/create', formData, { responseType: 'text' })

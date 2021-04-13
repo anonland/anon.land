@@ -8,7 +8,8 @@ export class SessionService {
 
   constructor(private http: HttpClient) { }
 
-  getSession(): string {
+  async getSession(): Promise<string> {
+    await this.verifySession();
     return localStorage.getItem('session');
   }
 
@@ -17,11 +18,12 @@ export class SessionService {
   }
 
   async verifySession() {
-    if (!this.isSessionSetted) {
-      const session = await this.http.post('http://localhost:3000/session', {}).toPromise();
-      this.setSession(session.toString());
-    }
+    if (this.isSessionSetted())
+      return;
+
+    const session = await this.http.post('http://localhost:3000/session', {}).toPromise();
+    this.setSession(session.toString());
   }
 
-  isSessionSetted = () => this.getSession() != '';
+  isSessionSetted = () => !!localStorage.getItem('session');
 }

@@ -35,6 +35,7 @@ ion-badge{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  aspect-ratio: 1;
 }
 
 .main-post-img {
@@ -138,7 +139,6 @@ ion-badge{
 .scroll-top {
   align-items: center;
   background-color: var(--ion-color-tertiary);
-  border-radius: 1em;
   bottom: 8vh;
   color: var(--ion-item-background-color);
   cursor: pointer;
@@ -174,14 +174,15 @@ ion-badge{
 
   .main-post-img {
     border: 0;
+    max-height: 400px;
   }
 
   .container {
     border-radius: 1em;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    //height: 50vh;
-    margin: 6%;
+    
+    aspect-ratio: unset;
 
     .content {
       padding: 0.5em;
@@ -189,9 +190,6 @@ ion-badge{
 
     img {
       max-width: 100vw;
-      height: 50vh;
-      border-radius: 1em;
-      margin-bottom: 4%;
     }
   }
 
@@ -235,6 +233,7 @@ ion-badge{
   .main-post-img {
     background-color: none;
     border: none;
+    max-height: 400px;
   }
 
   .image {
@@ -253,7 +252,7 @@ ion-badge{
   .container {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    margin: 3%;
+    aspect-ratio: unset;
 
     .content {
       padding: 0.5em;
@@ -261,9 +260,6 @@ ion-badge{
 
     img {
       max-width: 100vw;
-      height: 50vh;
-      border-radius: 1em;
-      margin-bottom: 4%;
     }
   }
 
@@ -284,6 +280,7 @@ ion-badge{
   .container {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
+    aspect-ratio: 0.65;
   }
 
   .post-text {
