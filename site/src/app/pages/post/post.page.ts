@@ -47,6 +47,12 @@ export class PostPage implements OnInit {
   async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
     const postDoc = await this.postServ.getPostById(this.postId).toPromise();
+
+    if(!postDoc || !postDoc.exists){
+      this.router.navigate(['/']);
+      return;
+    }
+
     this.post = postDoc.data() as any;
     this.title.setTitle(this.post.title + ' | Anon Land');
     this.getComments();
@@ -57,7 +63,7 @@ export class PostPage implements OnInit {
     this.commentServ.setSocketsHandler(this.postId, async () => {
       this.newComments++;
 
-      const header = `Hay ${this.newComments} nuevos comentarios`;
+      const header = (this.newComments == 1) ? `Hay 1 nuevo comentario` : `Hay ${this.newComments} nuevos comentarios` ;
 
       if (this.newCommentsToast == undefined) {
         const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
@@ -99,7 +105,12 @@ export class PostPage implements OnInit {
   async comment() {
     // Replace escaped characters.
     let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    console.log(body);
+    
+    if(this.txtComment.value.match(/(?:\r\n|\r|\n)/g).length > 4){
+      const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 4000, position: 'top', color: 'warning' });
+      await toast.present();
+      return;
+    }
 
     // Make green text.
     const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';

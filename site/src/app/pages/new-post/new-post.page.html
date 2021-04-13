@@ -30,7 +30,8 @@
   <div class="new-post-content">
     <div class="new-post-category">
       <ion-label>Nicho</ion-label>
-      <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" name="category" formControlName="category">
+      <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" name="category"
+        formControlName="category">
         <ion-select-option value="off">General</ion-select-option>
         <ion-select-option value="prg">Preguntas</ion-select-option>
         <ion-select-option value="mus">Música</ion-select-option>
@@ -45,13 +46,23 @@
       </ion-select>
     </div>
     <div class="new-post-content-text">
+      <ion-label *ngIf="newPostForm.get('title').errors && newPostForm.get('title').hasError('required') && newPostForm.get('title').touched" color="danger">
+        El título es obligatorio
+      </ion-label>
+      <ion-label *ngIf="newPostForm.get('title').errors && newPostForm.get('title').hasError('maxlength') && newPostForm.get('title').touched" color="danger">
+        El título no puede exceder los 50 carácteres
+      </ion-label>
+
       <ion-item>
         <ion-input name="title" formControlName="title" placeholder="Título"></ion-input>
       </ion-item>
     </div>
     <div class="new-post-content-text">
+      <ion-label *ngIf="newPostForm.get('body').errors && newPostForm.get('body').hasError('maxlength') && newPostForm.get('body').touched" color="danger">
+        El contenido no puede exceder los 1500 carácteres
+      </ion-label>
       <ion-item class="content-text-last">
-        <ion-textarea rows="11" cols="30" placeholder="Contenido" maxlength="5000" name="body" formControlName="body">
+        <ion-textarea rows="11" cols="30" placeholder="Contenido" name="body" formControlName="body">
         </ion-textarea>
       </ion-item>
     </div>

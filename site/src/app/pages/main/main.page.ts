@@ -75,7 +75,7 @@ export class MainPage {
     this.postServ.setSocketsHandler(async () => {
       this.newPosts++
 
-      const header = `Hay ${this.newPosts} nuevos post`;
+      const header = (this.newPosts == 1) ? `Hay 1 nuevo post` : `Hay ${this.newPosts} nuevos post`;
 
       if (this.newPostsToast == undefined) {
         const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });

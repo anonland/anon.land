@@ -80,8 +80,8 @@
           </ion-item>
           <ion-item class="post-comments" *ngFor="let comment of comments">
             <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
-              <ion-icon  class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
-              <ion-label class="show-comment-title" >Click Para mostrar</ion-label>
+              <ion-icon class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+              <ion-label class="show-comment-title">Click para mostrar</ion-label>
             </div>
             <ion-avatar slot="start">
               <img class="anon-img" [src]="'../../../assets/anon/anon-'+ comment.anonType +'.svg'">
@@ -92,6 +92,9 @@
                 <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
                 </ion-badge>
                 <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
+                <ion-label color="medium" class="comment-options-button"
+                  style="width: 120px;bottom: 0px; right: 0px; font-size: 85%">{{comment.createdAt | timestampToDate}}
+                </ion-label>
                 <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
