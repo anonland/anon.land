@@ -105,8 +105,8 @@ export class PostPage implements OnInit {
   async comment() {
     // Replace escaped characters.
     let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    
-    if(this.txtComment.value.match(/(?:\r\n|\r|\n)/g).length > 4){
+
+    if((body.match(/<br>/g) || []).length > 4 || body.length > 280){
       const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 4000, position: 'top', color: 'warning' });
       await toast.present();
       return;
