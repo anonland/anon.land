@@ -58,7 +58,7 @@ const upload = multer({
 const middleware = (req, res, next) => {
   if (req.originalUrl == "/" || "/create" || "/session" || "/comment") {
     const cb = (err, data) => {
-      const userIP = req.headers["x-fo  rwarded-for"];
+      const userIP = req.headers["x-forwarded-for"];
       let bool = false;
       if (err) {
         console.log(err);
