@@ -58,7 +58,7 @@ const upload = multer({
 const middleware = (req, res, next) => {
   if (req.originalUrl == "/" || "/create" || "/session" || "/comment") {
     const cb = (err, data) => {
-      const userIP = req.headers["x-forwarded-for"];
+      const userIP = req.headers["x-fo  rwarded-for"];
       let bool = false;
       if (err) {
         console.log(err);
@@ -232,6 +232,29 @@ app.post("/move", async (req, res) => {
   console.log('post updateado por ADMIN' + adminData.email);
   res.sendStatus(200);
 });
+
+app.post("/ban", async (req, res) => {
+    //admin ban IP
+    if (req.body.token == null) {
+      res.sendStatus(401);
+      return;
+    }
+  
+    const adminData = await getAdminData(req.body.token);
+    if (!adminData) {
+      res.sendStatus(401);
+      console.log("no se pudo banear la IP");
+    }
+  
+  const {userID, userIP } = req.body;
+  let search = await firebase.db.collection("users").where('userId','==', req.body.userId).get();
+  console.log(search.data().userIP);
+  fs.appendFile("/blacklist-historic.json",`'\n'${search.data().userIP}`, (error)=>{
+    if(error) console.log(`Error al appendear IP al FILESYSTEM: ${error}`);
+  });
+});
+
+
 
 // heroku port access..
 app.set("port", process.env.PORT || 3000);
