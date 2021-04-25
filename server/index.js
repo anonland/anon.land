@@ -247,11 +247,17 @@ app.post("/ban", async (req, res) => {
     }
   
   const {userID, userIP } = req.body;
-  let search = await firebase.db.collection("users").where('userId','==', req.body.userId).get();
+  let search = await firebase.db.collection("users").where('userID','==', userID).get();
   console.log(search.data().userIP);
-  fs.appendFile("/blacklist-historic.json",`'\n'${search.data().userIP}`, (error)=>{
-    if(error) console.log(`Error al appendear IP al FILESYSTEM: ${error}`);
+  fs.open('/blacklist-historic.json', 'w+', function (err, f) {
+    if (err) {
+       return console.error(err);
+    }
+  
+    const bans = JSON.parse(f);
+    bans.ips.push(search.data().userIP);
   });
+  
 });
 
 
