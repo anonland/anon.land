@@ -48,7 +48,7 @@ export class PostPage implements OnInit {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
     const postDoc = await this.postServ.getPostById(this.postId).toPromise();
 
-    if(!postDoc || !postDoc.exists){
+    if (!postDoc || !postDoc.exists) {
       this.router.navigate(['/']);
       return;
     }
@@ -63,7 +63,7 @@ export class PostPage implements OnInit {
     this.commentServ.setSocketsHandler(this.postId, async () => {
       this.newComments++;
 
-      const header = (this.newComments == 1) ? `Hay 1 nuevo comentario` : `Hay ${this.newComments} nuevos comentarios` ;
+      const header = (this.newComments == 1) ? `Hay 1 nuevo comentario` : `Hay ${this.newComments} nuevos comentarios`;
 
       if (this.newCommentsToast == undefined) {
         const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
@@ -103,11 +103,17 @@ export class PostPage implements OnInit {
   }
 
   async comment() {
+    if (this.txtComment.value?.length == 0) {
+      const toast = await this.toastCtrl.create({ header: 'El comentario está vacio', duration: 3000, position: 'top', color: 'warning' });
+      await toast.present();
+      return;
+    }
+
     // Replace escaped characters.
     let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
-    if((body.match(/<br>/g) || []).length > 4 || body.length > 280){
-      const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 4000, position: 'top', color: 'warning' });
+    if ((body.match(/<br>/g) || []).length > 4 || body.length > 250) {
+      const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 3000, position: 'top', color: 'warning' });
       await toast.present();
       return;
     }
@@ -120,16 +126,9 @@ export class PostPage implements OnInit {
     let buttonAlert: string;
 
     // Manage comment status.
-    switch (body.length) {
-      case 0:
-        buttonAlert = 'El comentario está vacio.';
-        break;
-      default:
-        buttonAlert = 'Mensaje publicado correctamente.';
-        this.txtComment.value = "";
-        this.commentTimer();
-        break;
-    }
+    buttonAlert = 'Mensaje publicado correctamente.';
+    this.txtComment.value = "";
+    this.commentTimer();
 
     this.commentServ.removeSocketsHandler(this.postId);
 
