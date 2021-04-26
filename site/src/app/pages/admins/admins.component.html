@@ -1,0 +1,90 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+	<p class="header-title">Admins Cpanel</p>
+		<ion-buttons slot="end">
+			<ion-button color="primary" shape="round">
+				<ion-icon name="notifications"></ion-icon>
+			</ion-button>
+			<ion-title>
+				{{ moderator || 'Moderador' }}
+			</ion-title>
+			<ion-button class="exit" color="primary" fill="solid">
+				<p>Salir</p>
+				<ion-icon name="exit"></ion-icon> 
+			</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+	<main class="moderation">
+		<div class="dashboard">
+			<section class="reports">
+				<p class="title">Reportes</p>
+				<!-- <div class="report-card" *ngFor="let report of reports"> -->
+				<div class="report-card">
+					<div class="nicho">
+						<p>Nicho:</p>
+						<!-- <p>{{ report.nicho || '/off/'}}</p> -->
+						<span>'/off/'</span>
+					</div>
+					<div class="report-description">
+						<p>Reporte de categoría incorrecta</p>
+						<span>PostID: 2j28dn10dxh2ofcb18jf</span>
+						<!-- <p>{{ report.description || 'Reporte de categoría incorrecta'}}</p>
+						<p>{{ report.postId || '2j28dn10dxh2ofcb18jf'}} -->
+					</div>
+					<a [routerLink]="[category][id]" class="navigate-to-post">
+						<ion-icon name="chevron-forward-outline"></ion-icon>
+					</a>
+				</div>
+			</section>
+		
+			<section class="log">
+				<div class="log-title">
+					<p class="title">Log de acciones</p>
+					<ion-chip color="medium" class="time-filter">
+						<ion-label>Fecha</ion-label>
+						<ion-icon name="swap-vertical"></ion-icon>
+					</ion-chip>
+				</div>
+				<!-- <div class="log-card" *ngFor="let action of actions"> -->
+				<div class="log-card">
+					<!-- <p>{{ action.moderator }}:</p>
+					<p>{{ action.description }}</p> -->
+					<p class="action-title">Hizo esto:</p>
+					<p class="action-detail">Tal cosa</p>
+					<div class="log-details">
+						<!-- <p>{{ action.postId }}</p>
+						<p>{{ action.date }}</p> -->
+						<div class="log-post-id log-detail-label">
+							<p>PostID:</p>
+							<span>2j28dn10dxh2ofcb18jf</span>
+						</div>
+						<div class="log-date log-detail-label">
+							<p>Fecha:</p>
+							<span>24/01/2021 23:59</span>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div class="moderators">
+			<p class="title">Moderadores</p>
+			<div class="mod-list">
+				<!-- <div class="mod" *ngFor="let mod of mods"> -->
+				<div class="mod">
+					<img src="../../assets/mod/mod-1.svg" alt="">
+					<div class="mod-details">
+						<!-- <div class="mod-name">{{ mod.name || 'Moderator 1'}}</div>
+						<div class="mod-status">{{ mod.status || 'Active'}}</div> -->
+						<div class="mod-name">'Moderator 1'</div>
+						<div class="mod-status">'Active'</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</ion-content>
+

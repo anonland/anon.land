@@ -1,6 +1,6 @@
 <p align="center">
     <img width="200" alt="Anon-Land Logo"
-    src="https://github.com/New-Voxed/voxed4/blob/develop/site/src/assets/icon/logo.svg">
+    src="./site/src/assets/icon/logo.svg">
 </p>
 
 <h1 align="center">
@@ -17,7 +17,7 @@
     <img alt="telegram-chat" src="./resources/chat.png">
   </a>
 
-  <a href="https://github.com/New-Voxed/voxed4/blob/master/LICENSE.md">
+  <a href="github.com/New-Voxed/voxed4/blob/master/LICENSE.md">
     <img alt="licence" src="./resources/licence.png">
   </a>
 
@@ -26,7 +26,7 @@
 
 # PRS ARE WELCOME / PRS BIENVENIDOS.
 
-### Social media with 100% freedom of speech
+### Social media with 100% speech freedom.
 
 ### _Express It!_
 
@@ -39,6 +39,10 @@
 
 ### high priorities
 
++ [ ] Apply sockets.
++ [ ] Select options in report button.
++ [ ] Sort reports by importance (green, orange, red).
++ [ ] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
 + [ ] Make an admin control panel for deleting posts.
@@ -46,11 +50,11 @@
 + [x] Make it responsive.
 + [x] Add comments in posts.
 
-### not-so-higher priorities
-
+### non-so higher priorities
++ [x] Green text stories ">".
++ [x] Hide posts and comments.
 + [ ] Add points in posts.
-+ [x] Make all the inputs required in all forms.
-+ [ ] Add greentext stories ">".
++ [x] Make compulsory all the inputs in all forms.
 + [ ] Make a real rank system with the points.
 + [ ] Make a trending posts.
 + [ ] Use an api or npm pkg for the user's ip and country flag. :jp: :it: :fr:

@@ -3,6 +3,21 @@
 When contributing to this repository, please first discuss the change you wish to make via issue,or Telegram. 
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
+When you are ready to contribute, follow the next steps.
+
+1. Fork this repository.
+2. Clone your fork.
+3. > cd voxed4/site
+4. > npm install    
+   > npm install -g @ionic/cli native-run cordova-res   
+   > ng serve   
+   + Or run for all devices in your network.  
+   > ng serve --host _your.local.ip.addr_ --disableHostCheck true
+
+1. **_Lets code_**
+2. Commit changes.
+3. Push changes to new a branch.
+4. Make pull request.
 
 ## Pull Request Process
 

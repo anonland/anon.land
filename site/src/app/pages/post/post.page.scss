@@ -1,0 +1,135 @@
+* {
+    font-family: 'Visby Round CF';
+}
+
+.margin-left {
+    margin-left: 3%;
+}
+
+.post-img {
+    display: grid;
+    place-content: center;
+    img {
+        min-width: 350px;
+        width: 90vh;
+    }
+}
+
+.comment-button {
+    display: grid;
+    grid-template-columns: 1fr 1fr 5fr 3fr;
+    ion-button {
+        --background: var(--ion-color-primary);
+    }
+}
+
+ion-grid {
+    height: 100%;
+}
+
+.timer {
+    align-items: center;
+    color: var(--ion-color-secondary);
+    display: flex;
+    font-size: 1em;
+    font-weight: bold;
+    justify-content: flex-end;
+    padding: 0.5em;
+}
+
+.greenText {
+
+}
+
+.loading-comments {
+    height: 100%;
+    width: 100%;
+    z-index: 7;
+    background-color: red;
+}
+
+.post-comments {
+    font-weight: 400;
+    ion-label {
+        --background: var(--ion-color-primary-shade);
+        padding: 4%;
+    }
+
+    .show-comment {
+        align-items: center;
+        background-color: var(--ion-toolbar-background-color);
+        cursor: pointer;
+        display: none;
+        flex-direction: row;
+        font-size: 1.1em;
+        font-weight: bold;
+        height: 100%;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+        z-index: 10;
+
+        .show-comment-title {
+            font-family: 'Visby Round CF';
+            font-weight: bold;
+            opacity: 60%;
+            transition: 0.4s ease;
+        }
+
+        &:hover {
+            .show-comment-title {
+                opacity: 100%;
+                transition: 0.4s ease;
+            }
+        }
+    }
+
+    .anon-information {
+        align-items: center;
+        display: flex;
+    }
+
+    .anon-img {
+        height: 60px;
+        max-width: none !important;
+        width: 60px;
+    }
+    .post-tags {
+        background-color: var(--ion-color-primary);
+        color: white;
+        margin-right: 2%;
+        padding: 2px;
+        width: 50px;
+    }
+
+    .comment-options-button {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        right: 5%;
+        width: 30px;
+        height: 17px;
+    }
+
+    .post-op {
+        width: 30px;
+        border-radius: 8px;   
+    }
+
+    .post-anon {
+        border-radius: 8px;
+        widows: 60px;
+    }
+
+    .post-id {
+        width: 60px;
+        border-radius: 8px;
+    }
+
+    .comment-content {
+        font-weight: 500;
+    }
+
+}

@@ -1,0 +1,164 @@
+.modal-title {
+    align-items: center;
+    color: var(--ion-text-color);
+    display: flex;
+    font-size: 1.2em;
+    font-weight: bold;
+    justify-content: space-between;
+    padding: 5%;
+}
+
+ion-content,
+ion-label,
+ion-list,
+ion-list-header,
+ion-radio-group {
+    --background: none !important;
+    background: none !important;
+}
+
+.container {
+    color: var(--ion-text-color);
+    display: grid;
+    height: 100%;
+    grid-template-columns: 2fr 2fr;
+}
+
+.select-escena {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin: 5% 0 5% 0;
+    ion-label {
+        align-self: center;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+.escena-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ion-icon {
+        height: 30px;
+        width: 30px;
+    }
+    ion-toggle {
+        width: 60px;
+        height: 30px;
+    }
+}
+
+.select-color {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    ion-label {
+        align-items: center;
+        display: flex;
+        font-size: 1.2em;
+        font-weight: bold;
+        justify-content: center;
+    }
+}
+
+.color-selected {
+    --color: white;
+    font-size: 0.8em;
+    font-weight: 400;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    margin: 4% 0 4% 0;
+    transition: 0.4s ease;
+    widows: 100px;
+    ion-radio {
+        --color: var(--ion-color-light);
+    }
+    &:nth-child(1) {
+        --background: #8414FF;
+    }
+    &:nth-child(2) {
+        --background: #FF3E14;
+    }
+    &:nth-child(3) {
+        --background: #0A68B2;
+    }
+    &:nth-child(4) {
+        --background: #4fff75;
+        --color: var(--ion-color-dark);
+    }
+    &:hover {
+        filter: brightness(80%);
+        transition: 0.4s ease;
+    }
+}
+
+.img-preview-desktop, .img-preview-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.img-preview-mobile {
+    display: none;
+}
+
+g rect:nth-child(1) {
+    fill: var(--ion-background-color);
+}
+
+g rect {
+    fill: var(--ion-color-primary);
+}
+
+@supports not (backdrop-filter: none) {
+    .container,
+    .modal-title {
+        color: white;
+    }
+}
+
+// For mobile devices.
+@media only screen and (max-width: 767px) {
+    .modal-title {
+        font-size: 1em;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .container {
+        margin-top: 10%;
+        grid-template-columns: none;
+        grid-template-rows: 2fr 2fr;
+    }
+
+    .options {
+        grid-row: 2;
+    }
+
+    .select-escena {
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+
+    .select-color {
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+
+    .color-selected {
+        ion-label {
+            padding: 2em;
+        }
+        margin: 2% 0 2% 0;
+    }
+
+    .img-preview-desktop {
+        display: none;
+    }
+
+    .img-preview-mobile {
+        display: flex;
+    }
+}
