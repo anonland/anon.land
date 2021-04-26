@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CommentOptionsComponent implements OnInit {
   commentId: string;
+  userID: string;
 
   constructor(
     private http: HttpClient,
@@ -52,20 +53,20 @@ export class CommentOptionsComponent implements OnInit {
   }
 
   async delete() {
-    this.http.post('http://localhost:3000/deleteComment', { commentID: this.commentId }, { responseType: 'text' })
-      .subscribe(async () => {
-        const toast = await this.toastCtrl.create({ header: 'El comentario fue borrado.', position: 'top', duration: 4000 });
-        await toast.present();
-      });
+    const adminToken = await this.authServ.getToken();
+    this.http.post('http://localhost:3000/delete-comment', { commentID: this.commentId, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
+      const toast = await this.toastCtrl.create({ header: 'El comentario fue borrado.', position: 'top', duration: 4000 });
+      await toast.present();
+    });
     this.popoverCtrl.dismiss();
   }
 
   async ban() {
-    this.http.post('http://localhost:3000/ban', { commentID: this.commentId }, { responseType: 'text' })
-      .subscribe(async () => {
-        const toast = await this.toastCtrl.create({ header: 'El usuario fue baneado.', position: 'top', duration: 4000 });
-        await toast.present();
-      });
+    const adminToken = await this.authServ.getToken();
+    this.http.post('http://localhost:3000/ban', { userID: this.userID, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
+      const toast = await this.toastCtrl.create({ header: 'El usuario fue baneado.', position: 'top', duration: 4000 });
+      await toast.present();
+    });
     this.popoverCtrl.dismiss();
   }
 }

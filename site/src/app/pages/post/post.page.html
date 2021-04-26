@@ -95,7 +95,7 @@
                 <ion-label color="medium" class="comment-options-button"
                   style="width: 120px;bottom: 0px; right: 0px; font-size: 85%">{{comment.createdAt | timestampToDate}}
                 </ion-label>
-                <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id)">
+                <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id, comment.userId)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
               </div>
