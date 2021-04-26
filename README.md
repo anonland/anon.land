@@ -39,10 +39,8 @@
 
 ### high priorities
 
-+ [ ] Apply sockets.
++ [x] Apply sockets.
 + [ ] Select options in report button.
-+ [ ] Sort reports by importance (green, orange, red).
-+ [ ] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
 + [ ] Make an admin control panel for deleting posts.
