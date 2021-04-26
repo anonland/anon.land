@@ -245,19 +245,15 @@ app.post("/ban", async (req, res) => {
       res.sendStatus(401);
       console.log("no se pudo banear la IP");
     }
-  
-  const {userID, userIP } = req.body;
+
+  const {userID} = req.body;
   let search = await firebase.db.collection("users").where('userID','==', userID).get();
-  console.log(search.data().userIP);
-  fs.open('/blacklist-historic.json', 'w+', function (err, f) {
-    if (err) {
-       return console.error(err);
-    }
-  
-    const bans = JSON.parse(f);
-    bans.ips.push(search.data().userIP);
-  });
-  
+  const file  = fs.readFileSync("server/blacklist-historic.json", "utf8");
+  const bans = JSON.parse(file);
+  bans.ips.push(search.docs[0].data().userIP);
+  fs.writeFileSync("server/blacklist-historic.json", JSON.stringify(bans));
+ console.log(`usuario ${userID} baneado por ADMIN ${adminData.email}`);
+  res.sendStatus(200);
 });
 
 
