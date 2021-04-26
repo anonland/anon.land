@@ -6,11 +6,11 @@
   <ion-icon slot="start" name="eye-off"></ion-icon>
   <ion-label>Ocultar</ion-label>
 </ion-item>
-<ion-item *ngIf="this.authServ.user != undefined" (click)="delete()">
+<ion-item [hidden]="this.authServ.user == undefined" (click)="delete()">
   <ion-icon slot="start" name="trash"></ion-icon>
   <ion-label>Borrar</ion-label>
 </ion-item>
-<ion-item *ngIf="this.authServ.user != undefined" (click)="ban()">
+<ion-item [hidden]="this.authServ.user == undefined" (click)="ban()">
   <ion-icon slot="start" name="skull"></ion-icon>
   <ion-label>Banear usuario</ion-label>
 </ion-item>

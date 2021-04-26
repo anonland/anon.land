@@ -165,12 +165,12 @@ export class PostPage implements OnInit {
     });
   }
 
-  async showOptions($event: MouseEvent, commentId: string) {
+  async showOptions($event: MouseEvent, commentId: string, userID: string) {
     $event.stopPropagation();
     const popover = await this.popoverCtrl.create({
       component: CommentOptionsComponent,
       event: $event,
-      componentProps: { commentId }
+      componentProps: { commentId, userID }
     });
     await popover.present();
   }

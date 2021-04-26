@@ -13,9 +13,9 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    private router: Router) {  
-      this.afAuth.onAuthStateChanged(user => this.user = user);
-    }
+    private router: Router) {
+    this.afAuth.onAuthStateChanged(user => this.user = user);
+  }
 
   // Sign in with Google
   async googleSignin() {
@@ -27,13 +27,15 @@ export class AuthService {
 
   private async getModProfile(email: string) {
     const data = await this.afs.collection('mods', ref => ref.where('email', '==', email)).get().toPromise();
-    if (!data || data.empty)
+    if (!data || data.empty) {
+      this.user = undefined;
       throw new Error('Usuario no registrado como mod');
+    }
 
     return data.docs[0].data();
   }
 
-  async getToken(){
+  async getToken() {
     return (await this.afAuth.currentUser).getIdToken(true)
   }
 
