@@ -215,6 +215,25 @@ app.post("/delete", async (req, res) => {
   res.sendStatus(200);
 });
 
+app.post("/delete-comment", async (req, res) => {
+  //admin delete post
+  console.log(req.body);
+  if (req.body.token == null) {
+    res.sendStatus(401);
+    return;
+  }
+
+  const adminData = await getAdminData(req.body.token);
+  if (!adminData) {
+    res.sendStatus(401);
+    console.log("no se pudo borrar post");
+  }
+
+  await firebase.db.collection("comments").doc(req.body.commentID).delete();
+  console.log('comentario borrado por ADMIN' + adminData.email);
+  res.sendStatus(200);
+});
+
 app.post("/move", async (req, res) => {
   //admin delete post
   console.log(req.body);
