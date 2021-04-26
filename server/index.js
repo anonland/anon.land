@@ -233,6 +233,35 @@ app.post("/move", async (req, res) => {
   res.sendStatus(200);
 });
 
+app.post("/ban", async (req, res) => {
+    //admin ban IP
+    if (req.body.token == null) {
+      res.sendStatus(401);
+      return;
+    }
+  
+    const adminData = await getAdminData(req.body.token);
+    if (!adminData) {
+      res.sendStatus(401);
+      console.log("no se pudo banear la IP");
+    }
+  
+  const {userID, userIP } = req.body;
+  let search = await firebase.db.collection("users").where('userID','==', userID).get();
+  console.log(search.data().userIP);
+  fs.open('/blacklist-historic.json', 'w+', function (err, f) {
+    if (err) {
+       return console.error(err);
+    }
+  
+    const bans = JSON.parse(f);
+    bans.ips.push(search.data().userIP);
+  });
+  
+});
+
+
+
 // heroku port access..
 app.set("port", process.env.PORT || 3000);
 
