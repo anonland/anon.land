@@ -10,6 +10,7 @@ import { PostService } from 'src/app/services/post.service';
 import { SessionService } from 'src/app/services/session.service';
 import { Storage } from '@ionic/storage';
 import { CommentService } from 'src/app/services/comment.service';
+import { createUrl } from 'src/app/helpers/functions';
 
 @Component({
   selector: 'app-post',
@@ -138,7 +139,7 @@ export class PostPage implements OnInit {
     formData.append('postId', this.postId);
     formData.append('userId', await this.sessionServ.getSession());
 
-    this.http.post('http://localhost:3000/comment', formData, { responseType: 'text' }).subscribe(async _ => {
+    this.http.post(createUrl('comment'), formData, { responseType: 'text' }).subscribe(async _ => {
       this.getComments();
       this.setSocketsHandler();
       const toast = await this.toastCtrl.create({
@@ -239,13 +240,13 @@ export class PostPage implements OnInit {
   }
 
   async banUser() {
-    await this.http.post('http://localhost:3000', { opIP: this.post.opIP }).toPromise();
+    await this.http.post(createUrl('ban'), { opIP: this.post.opIP }).toPromise();
     const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente' });
     await toast.present();
   }
 
   report() {
-    this.http.post('http://localhost:3000/report', { postID: this.post.id }, { responseType: 'text' }).subscribe(async () => {
+    this.http.post(createUrl('report'), { postID: this.post.id }, { responseType: 'text' }).subscribe(async () => {
       const toast = await this.toastCtrl.create({ header: 'Post reportado correctamente', position: 'top' });
       await toast.present();
     });

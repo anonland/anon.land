@@ -11,6 +11,7 @@ import { Title } from '@angular/platform-browser';
 import { SessionService } from 'src/app/services/session.service';
 import { DOCUMENT } from '@angular/common';
 import { Storage } from '@ionic/storage';
+import { createUrl } from 'src/app/helpers/functions';
 
 @Component({
   selector: 'app-main',
@@ -120,7 +121,7 @@ export class MainPage {
       formData.append('opid', await this.sessionServ.getSession());
 
       this.http
-        .post('http://localhost:3000/create', formData, { responseType: 'text' })
+        .post(createUrl('create'), formData, { responseType: 'text' })
         .subscribe(async _ => {
           await this.getPostsFeed();
           this.hideSavedPosts();
