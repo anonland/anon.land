@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { createUrl } from '../helpers/functions';
 import { AuthService } from './auth.service';
 import { SocketService } from './socket.service';
 @Injectable({
@@ -36,12 +37,12 @@ export class PostService {
 
   async deletePost(postID: string) {
     const token = await this.auth.getToken();
-    this.http.post('http://localhost:3000/delete', { postID, token }).subscribe((data) => console.log(data));
+    this.http.post(createUrl('delete'), { postID, token }).subscribe((data) => console.log(data));
   }
 
   async movePost(postID: string, category: string) {
     const token = await this.auth.getToken();
-    this.http.post('http://localhost:3000/move', { postID, token, category }).subscribe((data) => console.log(data));
+    this.http.post(createUrl('move'), { postID, token, category }).subscribe((data) => console.log(data));
   }
 
   async changePostCategory(postId: string, category: string) {

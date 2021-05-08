@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { createUrl } from '../helpers/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class SessionService {
     if (this.isSessionSetted())
       return;
 
-    const session = await this.http.post('http://localhost:3000/session', {}).toPromise();
+    const session = await this.http.post(createUrl('session'), {}).toPromise();
     this.setSession(session.toString());
   }
 

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { createUrl } from 'src/app/helpers/functions';
 
 @Component({
   selector: 'app-post-options',
@@ -21,7 +22,7 @@ export class PostOptionsComponent implements OnInit {
 
   // Report a post sending the postId.
   report() {
-    this.http.post('http://localhost:3000/report', { postID: this.postId }, { responseType: 'text' })
+    this.http.post(createUrl('report'), { postID: this.postId }, { responseType: 'text' })
       .subscribe(async () => {
         const toast = await this.toastCtrl.create({ header: 'El post fue reportado.', position: 'top' });
         await toast.present();

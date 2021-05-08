@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { createUrl } from 'src/app/helpers/functions';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -24,7 +25,7 @@ export class CommentOptionsComponent implements OnInit {
 
   // Report a comment sending the commentId.
   report() {
-    this.http.post('http://localhost:3000/reportComment', { commentID: this.commentId }, { responseType: 'text' })
+    this.http.post(createUrl('reportComment'), { commentID: this.commentId }, { responseType: 'text' })
       .subscribe(async () => {
         const toast = await this.toastCtrl.create({ header: 'El comentario fue reportado.', position: 'top', duration: 4000 });
         await toast.present();
@@ -54,7 +55,7 @@ export class CommentOptionsComponent implements OnInit {
 
   async delete() {
     const adminToken = await this.authServ.getToken();
-    this.http.post('http://localhost:3000/delete-comment', { commentID: this.commentId, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
+    this.http.post(createUrl('delete-comment'), { commentID: this.commentId, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
       const toast = await this.toastCtrl.create({ header: 'El comentario fue borrado.', position: 'top', duration: 4000 });
       await toast.present();
     });
@@ -63,7 +64,7 @@ export class CommentOptionsComponent implements OnInit {
 
   async ban() {
     const adminToken = await this.authServ.getToken();
-    this.http.post('http://localhost:3000/ban', { userID: this.userID, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
+    this.http.post(createUrl('ban'), { userID: this.userID, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
       const toast = await this.toastCtrl.create({ header: 'El usuario fue baneado.', position: 'top', duration: 4000 });
       await toast.present();
     });
