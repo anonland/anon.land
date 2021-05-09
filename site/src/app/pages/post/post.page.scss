@@ -15,6 +15,26 @@
     }
 }
 
+.post-info {
+    margin-top: 3%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-date {
+    align-items: center;
+    background-color: var(--ion-item-background-color);
+    border-radius: 2em;
+    color: var(--ion-item-text-color);
+    display: flex;
+    font-weight: bold;
+    font-size: 0.8em;
+    height: 36px;
+    margin: 0;
+    padding: 0 1em;
+    width: fit-content;
+}
+
 .comment-button {
     display: grid;
     grid-template-columns: 1fr 1fr 5fr 3fr;

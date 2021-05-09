@@ -72,13 +72,41 @@ export class MainPage {
     });
   }
 
+  postTime(milliseconds: number) {
+    // Post publish date.
+    const postTime: any = new Date(milliseconds * 1000);
+    // Actual date.
+    const localTime: any = new Date();
+    // Difference in milliseconds.
+    const timeDifference = localTime - postTime;
+    let timeElapsed: string;
+
+    // Times.
+    const days = Math.round(timeDifference / (24 * 60 * 60 * 1000));
+    const hours = Math.floor(timeDifference / 3600000);
+    const minutes = Math.round((timeDifference / 3600000) * 60);
+    const seconds = Math.round((timeDifference / 3600000) * 3600);
+
+    if (minutes < 1) {
+      timeElapsed = 'Ahora';
+    } else if (minutes >= 1 && minutes <= 60) {
+      timeElapsed = `Hace ${minutes} min`;
+    }else if (minutes >= 60 && hours <= 24) {
+      timeElapsed = `Hace ${hours} h`;
+    }else if (days >= 1) {
+      timeElapsed = `Hace ${days} Días y ${hours - 24} h`;
+    }
+
+    return timeElapsed;
+  }
+
   async setSocketsHandler() {
     this.postServ.setSocketsHandler(async () => {
-      this.newPosts++
+      this.newPosts++;
 
       const header = (this.newPosts == 1) ? `Hay 1 nuevo post` : `Hay ${this.newPosts} nuevos post`;
 
-      if (this.newPostsToast == undefined) {
+      if (this.newPostsToast === undefined) {
         const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
         await toast.present();
 
@@ -87,7 +115,7 @@ export class MainPage {
           this.newPosts = 0;
           this.newPostsToast = undefined;
           this.getPostsFeed();
-        }
+        };
 
         toast.onclick = reloadPosts;
         this.newPostsToast = toast;
@@ -113,7 +141,7 @@ export class MainPage {
     if (event.data != null) {
       this.postServ.removeSocketsHandler();
 
-      let formData = new FormData();
+      const formData = new FormData();
       formData.append('post-img-upload', event.data.img);
       formData.append('category', event.data.category);
       formData.append('title', event.data.title);
@@ -160,7 +188,7 @@ export class MainPage {
 
     // Delete the post id as value from 'hiddenPostId'.
     this.storage.get('hiddenPostId').then((id: string[]) => {
-      //if (!id || id.length === 0) { return null; } // Do nothing if is null.
+      if (!id || id.length === 0) { return null; } // Do nothing if is null.
 
       const toKeep: string[] = [];
 

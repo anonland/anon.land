@@ -113,15 +113,15 @@ export class PostPage implements OnInit {
     // Replace escaped characters.
     let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+    // Make green text.
+    const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
+    body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
+
     if ((body.match(/<br>/g) || []).length > 4 || body.length > 250) {
       const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 3000, position: 'top', color: 'warning' });
       await toast.present();
       return;
     }
-
-    // Make green text.
-    const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
-    body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
 
     // Alert message.
     let buttonAlert: string;

@@ -181,7 +181,7 @@ ion-badge{
     border-radius: 1em;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    
+
     aspect-ratio: unset;
 
     .content {
@@ -198,19 +198,19 @@ ion-badge{
     transform: scale(1);
     transition: 0.4s ease;
   }
-  
+
   .main-post-img:hover .image {
     border-radius: 1em;
     filter: grayscale(0%);
     transform: scale(1);
     transition: 0.4s ease;
   }
-  
+
   .end {
     height: 30vh;
     margin-bottom: 100px;
   }
-  
+
   .scroll-top {
     bottom: 110px;
     right: 4%;
@@ -241,7 +241,7 @@ ion-badge{
     transform: scale(1);
     transition: 0.4s ease;
   }
-  
+
   .main-post-img:hover .image {
     border-radius: 1em;
     filter: grayscale(0%);

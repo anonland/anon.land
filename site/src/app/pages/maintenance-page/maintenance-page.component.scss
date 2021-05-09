@@ -1,0 +1,109 @@
+* {
+    transition: ease .4s;
+}
+
+.main {
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(var(--ion-color-primary), var(--ion-color-primary-tint));
+}
+
+.particle {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1000;
+}
+
+@for $i from 1 through 20 {
+    @keyframes particle-animation-#{$i} {
+        100% {
+            transform: translate3d((random(90) * 1vw),
+            (random(90) * 1vh), (random(100) * 1px));
+        }
+    }
+
+    .particle:nth-child(#{$i}) {
+        animation: particle-animation-#{$i} 8s infinite;
+        $size: random(8) + 8 + px;
+        opacity: random(100)/100;
+        height: $size;
+        width: $size;
+        animation-delay: -$i * .4s;
+        transform: translate3d((random(90) * 1vw),
+        (random(90) * 1vh), (random(100) * 1px));
+        background: hsl(random(360), 70%, 90%);
+    }
+}
+
+
+.message {
+    display: grid;
+    height: 100%;
+    padding: 1em;
+    place-content: center;
+    place-items: center;
+    position: fixed;
+    width: 100vw;
+    z-index: 1001;
+
+    .logo {
+        filter: brightness(30);
+        width: 150px;
+    }
+
+    .text {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1em;
+        margin-top: 5%;
+        
+        backdrop-filter: blur(10px) !important;
+        background: rgba(255,255,255, 0.2);
+        background-clip: padding-box;
+        border: solid 2px transparent;
+        border-radius: 2em;
+
+            p {
+                font-size: 3em;
+                font-weight: bold;
+                margin: 0;
+            }
+        
+            span {
+                font-size: 1.5em;
+                font-weight: normal;
+            }
+    }
+}
+
+// For not supports features.
+@supports not (backdrop-filter: none) {
+    .text {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: #5c5c5ccc;  
+        border: solid 3px #777777;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .message {
+        .logo {
+            width: 80px;
+        }
+
+        .text {
+        
+            p {
+                font-size: 1.8em;
+            }
+        
+            span {
+                font-size: 1.2em;
+            }
+        }
+    }
+}
