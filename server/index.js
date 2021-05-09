@@ -6,6 +6,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const firebase = require("./db/firebase");
+const sharp = require('sharp');
 const http = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
@@ -29,13 +30,11 @@ io.on('connection', (socket) => {
 });
 
 const storage = multer.diskStorage({
-  //destination: "uploads",
+  destination: "../site/www/images",
   filename: function (req, file, cb) {
     const parts = file.mimetype.split("/");
     cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
   }
-
-
 });
 
 const categoryValidate = (value) => {
@@ -79,6 +78,7 @@ const middleware = (req, res, next) => {
 };
 
 // path public..
+app.use('/images', express.static('../site/www/images'));
 app.use(middleware, express.static(path.join(__dirname, "../site/www")));
 let pathBanList = __dirname + "/blacklist.json";
 
@@ -105,7 +105,7 @@ app.post("/session", async (req, res) => {
 
     const userData = { userIP, userID };
     await firebase.db.collection("users").add(userData);
-    
+
     res.json(userID);
   } else {
     console.log("Error de conexión");
@@ -129,27 +129,22 @@ app.post("/create",
       const img = req.file;
       if (img == undefined) return res.sendStatus(400);
 
-      const imgPath = req.file.path;
-      const { category, title, body, opid } = req.body;
+          const { category, title, body, opid } = req.body;
 
-      const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
-      const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
-      const publicUrl = signedUrls[0];
+          const postData = {
+            category,
+            imgPath: '/images/' + req.file.filename,
+            title,
+            body,
+            opid,
+            createdAt: fireDate.Timestamp.now(),
+          };
 
-      const postData = {
-        category,
-        imgPath: publicUrl,
-        title,
-        body,
-        opid,
-        createdAt: fireDate.Timestamp.now(),
-      };
+          await firebase.db.collection("posts").add(postData);
 
-      await firebase.db.collection("posts").add(postData);
+          io.emit('newPostCreated');
 
-      io.emit('newPostCreated');
-
-      return res.sendStatus(200);
+          return res.sendStatus(200);
     } else {
       console.log("Error de conexión");
     }
@@ -162,18 +157,15 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({ m
       console.log(errors);
       return res.status(400).json({ errors: errors.array() });
     }
+
     if (req.file) {
-      const uploadedFile = await firebase.admin.storage().bucket().upload(req.file.path, { public: true });
-      uploadedFile[0].publicUrl();
-      const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
-      var publicUrl = signedUrls[0];
+      var imgPath = '/images/' + req.file.filename;
     }
 
     const { body, postId, userId } = req.body;
-
     const commentData = {
       body,
-      imgPath: publicUrl || '',
+      imgPath: imgPath || '',
       postId,
       userId,
       anonType: Math.floor(Math.random() * 9) + 1,
@@ -258,7 +250,7 @@ app.post("/move", async (req, res) => {
   }
 
   await firebase.db.collection("posts").doc(req.body.postID).update({ category: req.body.category });
-  
+
   io.emit('movedPost', req.body.postID, req.body.category);
 
   res.sendStatus(200);
