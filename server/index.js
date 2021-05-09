@@ -6,7 +6,6 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const firebase = require("./db/firebase");
-const sharp = require('sharp');
 const http = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
