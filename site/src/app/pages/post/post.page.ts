@@ -43,7 +43,8 @@ export class PostPage implements OnInit {
     private popoverCtrl: PopoverController,
     private router: Router,
     private storage: Storage,
-    private commentServ: CommentService) { }
+    private commentServ: CommentService
+  ) { }
 
   async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
@@ -61,7 +62,7 @@ export class PostPage implements OnInit {
   }
 
   setSocketsHandler() {
-    this.commentServ.setSocketsHandler(this.postId, async () => {
+    this.commentServ.setNewCommentSocket(this.postId, async () => {
       this.newComments++;
 
       const header = (this.newComments == 1) ? `Hay 1 nuevo comentario` : `Hay ${this.newComments} nuevos comentarios`;
@@ -82,7 +83,25 @@ export class PostPage implements OnInit {
       } else {
         this.newCommentsToast.header = header;
       }
-    })
+    });
+
+    this.commentServ.setDeletedCommentSocket(this.postId, async (commentID) => {
+      this.comments = this.comments.filter(comment => comment.id !== commentID);
+    });
+
+    this.postServ.setDeletedPostSocket(async (postId) => {
+      if (this.postId === postId)
+        this.router.navigate(['/']);
+    });
+
+    this.postServ.setMovedPostSocket(async (postId, category) => {
+      if (this.postId === postId) {
+        this
+        this.router.navigate([`${category}/${postId}`], { replaceUrl: true });
+        const toast = await this.toastCtrl.create({ header: 'El post fue movido de categoria', duration: 3000, position: 'top' });
+        await toast.present();
+      }
+    });
   }
 
   commentTimer() {
@@ -131,7 +150,7 @@ export class PostPage implements OnInit {
     this.txtComment.value = "";
     this.commentTimer();
 
-    this.commentServ.removeSocketsHandler(this.postId);
+    this.commentServ.removeNewCommentSocket(this.postId);
 
     const formData = new FormData();
     formData.append('body', body);
@@ -171,7 +190,7 @@ export class PostPage implements OnInit {
     const popover = await this.popoverCtrl.create({
       component: CommentOptionsComponent,
       event: $event,
-      componentProps: { commentId, userID }
+      componentProps: { postID: this.postId, commentId, userID }
     });
     await popover.present();
   }
@@ -216,7 +235,7 @@ export class PostPage implements OnInit {
       buttons: [{ text: 'Cancelar', role: 'cancel' }, {
         text: 'Aceptar', handler: async () => {
           await this.postServ.deletePost(this.postId);
-          const toast = await this.toastCtrl.create({ header: 'Post borrado correctamente' });
+          const toast = await this.toastCtrl.create({ header: 'Post borrado correctamente', duration: 3000 });
           await toast.present();
         }
       }]
@@ -235,19 +254,19 @@ export class PostPage implements OnInit {
     }
 
     await this.postServ.movePost(this.postId, this.selMove.value);
-    const toast = await this.toastCtrl.create({ header: 'Post movido correctamente' });
+    const toast = await this.toastCtrl.create({ header: 'Post movido correctamente', duration: 3000 });
     await toast.present();
   }
 
   async banUser() {
     await this.http.post(createUrl('ban'), { opIP: this.post.opIP }).toPromise();
-    const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente' });
+    const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente', duration: 3000 });
     await toast.present();
   }
 
   report() {
     this.http.post(createUrl('report'), { postID: this.post.id }, { responseType: 'text' }).subscribe(async () => {
-      const toast = await this.toastCtrl.create({ header: 'Post reportado correctamente', position: 'top' });
+      const toast = await this.toastCtrl.create({ header: 'Post reportado correctamente', duration: 3000, position: 'top' });
       await toast.present();
     });
   }
@@ -266,7 +285,8 @@ export class PostPage implements OnInit {
   }
 
   navigateToMain() {
-    this.commentServ.removeSocketsHandler(this.postId);
+    this.commentServ.removeNewCommentSocket(this.postId);
+    this.commentServ.removeDeletedCommentSocket(this.postId);
     this.router.navigate['/'];
   }
 }

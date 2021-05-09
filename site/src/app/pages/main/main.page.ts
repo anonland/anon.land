@@ -73,7 +73,7 @@ export class MainPage {
   }
 
   async setSocketsHandler() {
-    this.postServ.setSocketsHandler(async () => {
+    this.postServ.setNewPostSocket(async () => {
       this.newPosts++
 
       const header = (this.newPosts == 1) ? `Hay 1 nuevo post` : `Hay ${this.newPosts} nuevos post`;
@@ -95,11 +95,25 @@ export class MainPage {
         this.newPostsToast.header = header;
       }
     });
+
+    this.postServ.setDeletedPostSocket(async (postId) => {
+      this.posts = this.posts.filter(p => p.id !== postId)
+    });
+
+    this.postServ.setMovedPostSocket(async (postId, category) => {
+      this.posts = this.posts.map(p => {
+        if(p.id === postId)
+          p.category = category;
+        
+          return p;
+      });
+    });
+
   }
 
   async openPost(post: Post) {
     this.newPostsToast?.dismiss();
-    this.postServ.removeSocketsHandler();
+    this.postServ.removeNewPostSocket();
     this.router.navigate([post.category, post.id]);
   }
 
@@ -111,7 +125,7 @@ export class MainPage {
     await modal.present();
     const event = await modal.onDidDismiss();
     if (event.data != null) {
-      this.postServ.removeSocketsHandler();
+      this.postServ.removeNewPostSocket();
 
       let formData = new FormData();
       formData.append('post-img-upload', event.data.img);
