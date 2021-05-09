@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { createUrl } from '../helpers/functions';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socket: SocketService) { }
 
   async getSession(): Promise<string> {
     await this.verifySession();
@@ -27,4 +28,11 @@ export class SessionService {
   }
 
   isSessionSetted = () => !!localStorage.getItem('session');
+
+  setBanSocket() {
+    this.socket.io.on('ban', (userId) => {
+      if (userId == localStorage.getItem('session'))
+        location.reload();
+    });
+  }
 }

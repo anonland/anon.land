@@ -11,12 +11,20 @@ export class PostService {
 
   constructor(private db: AngularFirestore, private http: HttpClient, private auth: AuthService, private socket: SocketService) { }
 
-  setSocketsHandler(handler) {
+  setNewPostSocket(handler) {
     this.socket.io.on('newPostCreated', handler);
   }
-
-  removeSocketsHandler() {
+  
+  removeNewPostSocket() {
     this.socket.io.off('newPostCreated');
+  }
+
+  setDeletedPostSocket(handler) {
+    this.socket.io.on('deletedPost', handler);
+  }
+
+  setMovedPostSocket(handler) {
+    this.socket.io.on('movedPost', handler);
   }
 
   getPostById(postId: string) {

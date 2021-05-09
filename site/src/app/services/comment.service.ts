@@ -8,11 +8,19 @@ export class CommentService {
 
   constructor(private socket: SocketService) { }
 
-  setSocketsHandler(postId: string, handler) {
+  setNewCommentSocket(postId: string, handler) {
     this.socket.io.on(`${postId}/newComment`, handler);
   }
 
-  removeSocketsHandler(postId: string) {
+  removeNewCommentSocket(postId: string) {
     this.socket.io.off(`${postId}/newComment`);
+  }
+
+  setDeletedCommentSocket(postId: string, handler) {
+    this.socket.io.on(`${postId}/deletedComment`, handler);
+  }
+
+  removeDeletedCommentSocket(postId: string) {
+    this.socket.io.off(`${postId}/deletedComment`);
   }
 }

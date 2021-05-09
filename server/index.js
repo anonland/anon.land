@@ -38,7 +38,7 @@ const storage = multer.diskStorage({
 
 });
 
-const categoryValidate = (value)=>{
+const categoryValidate = (value) => {
   let categories = ['off', 'prg', 'mus', 'cin', 'sci', 'pol', 'art', 'his', 'nor', 'uff', 'anm'];
   return categories.includes(value);
 };
@@ -80,7 +80,7 @@ const middleware = (req, res, next) => {
 
 // path public..
 app.use(middleware, express.static(path.join(__dirname, "../site/www")));
-let pathBanList = __dirname + "/blacklist-historic.json";
+let pathBanList = __dirname + "/blacklist.json";
 
 // main endpoint..
 app.get('*', (req, res) => {
@@ -99,53 +99,64 @@ async function getAdminData(token) {
 app.post("/session", async (req, res) => {
   if (res.status(200)) {
     const userIP = req.headers["x-forwarded-for"] || req.ip;
-    //verificar que no exista en el baneo historico + el baneo diario
+    //verificar que no exista en el blacklist de baneos
 
     const userID = uuidv4().slice(-6);
-  
+
     const userData = { userIP, userID };
     await firebase.db.collection("users").add(userData);
+    
     res.json(userID);
   } else {
     console.log("Error de conexión");
   }
 });
 
-app.post("/create", upload.single("post-img-upload"), body("category").custom(categoryValidate),
-body("body").isLength({  min: 5, max: 1500}), body("title").isLength({  min: 5, max: 50}) , async (req, res) => {
-  if (res.status(200)) {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      console.log(errors, req.body);
-      return res.status(400).json({ errors: errors.array() });
+app.post("/create",
+  upload.single("post-img-upload"),
+  body("category").custom(categoryValidate),
+  body("body").isLength({ min: 5, max: 1500 }),
+  body("title").isLength({ min: 5, max: 50 }),
+  async (req, res) => {
+    if (res.status(200)) {
+      const errors = validationResult(req);
+
+      if (!errors.isEmpty()) {
+        console.log(errors, req.body);
+        return res.status(400).json({ errors: errors.array() });
+      }
+
+      const img = req.file;
+      if (img == undefined) return res.sendStatus(400);
+
+      const imgPath = req.file.path;
+      const { category, title, body, opid } = req.body;
+
+      const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
+      const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
+      const publicUrl = signedUrls[0];
+
+      const postData = {
+        category,
+        imgPath: publicUrl,
+        title,
+        body,
+        opid,
+        createdAt: fireDate.Timestamp.now(),
+      };
+
+      await firebase.db.collection("posts").add(postData);
+
+      io.emit('newPostCreated');
+
+      return res.sendStatus(200);
+    } else {
+      console.log("Error de conexión");
     }
-    const img = req.file;
-    if (img == undefined) return res.sendStatus(400);
-    const imgPath = req.file.path;
-    const { category, title, body, opid } = req.body;
-    const uploadedFile = await firebase.admin.storage().bucket().upload(imgPath, { public: true });
-    const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
-    const publicUrl = signedUrls[0];
-    const postData = {
-      category,
-      imgPath: publicUrl,
-      title,
-      body,
-      opid,
-      createdAt: fireDate.Timestamp.now(),
-    };
+  });
 
-    await firebase.db.collection("posts").add(postData);
-    io.emit('newPostCreated')
-    return res.sendStatus(200);
-  } else {
-    console.log("Error de conexión");
-  }
-});
-
-app.post("/comment", upload.single("post-img-upload"), body("body").isLength({min: 1, max: 1500}), async (req, res) => {
+app.post("/comment", upload.single("post-img-upload"), body("body").isLength({ min: 1, max: 1500 }), async (req, res) => {
   if (res.status(200)) {
-    const userIP = req.headers["x-forwarded-for"];
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       console.log(errors);
@@ -153,6 +164,7 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({mi
     }
     if (req.file) {
       const uploadedFile = await firebase.admin.storage().bucket().upload(req.file.path, { public: true });
+      uploadedFile[0].publicUrl();
       const signedUrls = await uploadedFile[0].getSignedUrl({ action: 'read', expires: '01-01-4499' })
       var publicUrl = signedUrls[0];
     }
@@ -167,10 +179,11 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({mi
       anonType: Math.floor(Math.random() * 9) + 1,
       reports: 0,
       createdAt: fireDate.Timestamp.now(),
-    }
+    };
 
     await firebase.db.collection("comments").add(commentData);
-    io.emit(`${postId}/newComment`)
+    io.emit(`${postId}/newComment`);
+
     return res.sendStatus(200);
   } else {
     console.log("Error de conexión");
@@ -178,12 +191,12 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({mi
 });
 
 app.post("/report", async (req, res) => {
-  console.log(req.body.postID);
+
   await firebase.db
     .collection("posts")
     .doc(req.body.postID)
     .update({ reports: FieldValue.increment(1) });
-  console.log("asdasd");
+
   res.sendStatus(200);
 });
 
@@ -192,13 +205,12 @@ app.post("/reportComment", async (req, res) => {
     .collection("comments")
     .doc(req.body.commentID)
     .update({ reports: FieldValue.increment(1) });
+
   res.sendStatus(200);
 });
 
 
 app.post("/delete", async (req, res) => {
-  //admin delete post
-  console.log(req.body);
   if (req.body.token == null) {
     res.sendStatus(401);
     return;
@@ -207,16 +219,17 @@ app.post("/delete", async (req, res) => {
   const adminData = await getAdminData(req.body.token);
   if (!adminData) {
     res.sendStatus(401);
-    console.log("no se pudo borrar post");
   }
 
   await firebase.db.collection("posts").doc(req.body.postID).delete();
   console.log('post borrado por ADMIN' + adminData.email);
+
+  io.emit('deletedPost', req.body.postID);
+
   res.sendStatus(200);
 });
 
 app.post("/delete-comment", async (req, res) => {
-  //admin delete post
   console.log(req.body);
   if (req.body.token == null) {
     res.sendStatus(401);
@@ -224,19 +237,16 @@ app.post("/delete-comment", async (req, res) => {
   }
 
   const adminData = await getAdminData(req.body.token);
-  if (!adminData) {
-    res.sendStatus(401);
-    console.log("no se pudo borrar post");
-  }
+  if (!adminData) res.sendStatus(401);
 
   await firebase.db.collection("comments").doc(req.body.commentID).delete();
-  console.log('comentario borrado por ADMIN' + adminData.email);
+
+  io.emit(`${req.body.postID}/deletedComment`, req.body.commentID);
+
   res.sendStatus(200);
 });
 
 app.post("/move", async (req, res) => {
-  //admin delete post
-  console.log(req.body);
   if (req.body.token == null) {
     res.sendStatus(401);
     return;
@@ -248,36 +258,37 @@ app.post("/move", async (req, res) => {
   }
 
   await firebase.db.collection("posts").doc(req.body.postID).update({ category: req.body.category });
-  console.log('post updateado por ADMIN' + adminData.email);
+  
+  io.emit('movedPost', req.body.postID, req.body.category);
+
   res.sendStatus(200);
 });
 
 app.post("/ban", async (req, res) => {
-    //admin ban IP
-    if (req.body.token == null) {
-      res.sendStatus(401);
-      return;
-    }
-  
-    const adminData = await getAdminData(req.body.token);
-    if (!adminData) {
-      res.sendStatus(401);
-      console.log("no se pudo banear la IP");
-    }
+  //admin ban IP
+  if (req.body.token == null) {
+    res.sendStatus(401);
+    return;
+  }
 
-  const {userID} = req.body;
-  let search = await firebase.db.collection("users").where('userID','==', userID).get();
-  const file  = fs.readFileSync("server/blacklist-historic.json", "utf8");
+  const adminData = await getAdminData(req.body.token);
+  if (!adminData) {
+    res.sendStatus(401);
+  }
+
+  const { userID } = req.body;
+  let search = await firebase.db.collection("users").where('userID', '==', userID).get();
+  const file = fs.readFileSync("server/blacklist.json", "utf8");
   const bans = JSON.parse(file);
   bans.ips.push(search.docs[0].data().userIP);
-  fs.writeFileSync("server/blacklist-historic.json", JSON.stringify(bans));
- console.log(`usuario ${userID} baneado por ADMIN ${adminData.email}`);
+  fs.writeFileSync("server/blacklist.json", JSON.stringify(bans));
+  console.log(`usuario ${userID} baneado por ADMIN ${adminData.email}`);
+
+  io.emit('ban', userID);
+
   res.sendStatus(200);
 });
 
-
-
-// heroku port access..
 app.set("port", process.env.PORT || 3000);
 
 // Opening port..
