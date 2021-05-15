@@ -10,7 +10,7 @@ const http = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
 const fs = require("fs");
-const io = require("socket.io")(http, { cors: { origin: '*' } });
+const io = require("socket.io")(5000);
 const { json } = require("express");
 const { type } = require("os");
 const { FieldValue } = require("@google-cloud/firestore");
@@ -281,9 +281,6 @@ app.post("/ban", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.set("port", process.env.PORT || 3000);
-
-// Opening port..
-http.listen(app.get("port"), () => {
-  console.log("Opening in port 3000");
+app.listen(3000, () => {
+  console.log('SERVER OPEN ' + Date(Date.now()).toString());
 });
