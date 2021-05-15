@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: ':category/:postId',
     loadChildren: () => import('./pages/post/post.module').then(m => m.PostPageModule)
-  }
+  },
 ];
 
 @NgModule({
