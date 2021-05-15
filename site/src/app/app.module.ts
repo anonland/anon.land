@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { PostPageModule } from './pages/post/post.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -23,6 +24,7 @@ import { IonicStorageModule } from '@ionic/storage';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AppRoutingModule,
     HttpClientModule,
+    PostPageModule,
     IonicStorageModule.forRoot()
   ],
   providers: [

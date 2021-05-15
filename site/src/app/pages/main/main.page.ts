@@ -102,13 +102,13 @@ export class MainPage {
 
   async setSocketsHandler() {
 
-    this.postServ.setSocketsHandler(async () => {
+    this.postServ.setNewPostSocket(async () => {
       this.newPosts++;
 
       const header = (this.newPosts == 1) ? `Hay 1 nuevo post` : `Hay ${this.newPosts} nuevos post`;
 
       if (this.newPostsToast === undefined) {
-        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
+        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success', cssClass: 'pointer' });
         await toast.present();
 
         const reloadPosts = () => {
@@ -160,7 +160,7 @@ export class MainPage {
       formData.append('post-img-upload', event.data.img);
       formData.append('category', event.data.category);
       formData.append('title', event.data.title);
-      formData.append('body', event.data.body);
+      formData.append('body', event.data.body || '');
       formData.append('opid', await this.sessionServ.getSession());
 
       this.http
