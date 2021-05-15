@@ -1,4 +1,3 @@
-<ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-back-button text="Atrás" defaultHref="/" (click)="navigateToMain($evt)"></ion-back-button>
@@ -24,7 +23,7 @@
           <ion-button (click)="banUser()">
             <ion-icon name="skull"></ion-icon>Banear
           </ion-button>
-          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove>
+          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove hidden>
             <ion-select-option value="off">General</ion-select-option>
             <ion-select-option value="prg">Preguntas</ion-select-option>
             <ion-select-option value="mus">Música</ion-select-option>
@@ -63,9 +62,9 @@
               <ion-icon name="image" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
             </label>
           </ion-button>
-          <!-- <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
+          <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
             <ion-icon name="link" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
-          </ion-button> -->
+          </ion-button>
           <div class="timer">
             {{ timer }}
           </div>

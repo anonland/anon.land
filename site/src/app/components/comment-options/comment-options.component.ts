@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./comment-options.component.scss'],
 })
 export class CommentOptionsComponent implements OnInit {
+  postID: string;
   commentId: string;
   userID: string;
 
@@ -55,7 +56,7 @@ export class CommentOptionsComponent implements OnInit {
 
   async delete() {
     const adminToken = await this.authServ.getToken();
-    this.http.post(createUrl('delete-comment'), { commentID: this.commentId, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
+    this.http.post(createUrl('delete-comment'), { postID: this.postID, commentID: this.commentId, token: adminToken }, { responseType: 'text' }).subscribe(async () => {
       const toast = await this.toastCtrl.create({ header: 'El comentario fue borrado.', position: 'top', duration: 4000 });
       await toast.present();
     });
