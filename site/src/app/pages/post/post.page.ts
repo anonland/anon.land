@@ -24,7 +24,7 @@ export class PostPage implements OnInit {
   public commentBtnDisabled = false; // Button is enable.
   public timer: string;
   public imgComment;
-  public imgPreview = '../../../assets/anon/anon-1.svg';
+  public imgPreview;
   public newComments = 0;
   public newCommentsToast: HTMLIonToastElement;
 
@@ -68,7 +68,7 @@ export class PostPage implements OnInit {
       const header = (this.newComments == 1) ? `Hay 1 nuevo comentario` : `Hay ${this.newComments} nuevos comentarios`;
 
       if (this.newCommentsToast == undefined) {
-        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success' });
+        const toast = await this.toastCtrl.create({ header, duration: 600000, position: 'top', color: 'success', cssClass: 'pointer' });
         await toast.present();
 
         const reloadComments = () => {
@@ -166,6 +166,8 @@ export class PostPage implements OnInit {
         position: 'top',
         duration: 3000
       });
+      
+      this.imgPreview = undefined;
       await toast.present();
     });
   }

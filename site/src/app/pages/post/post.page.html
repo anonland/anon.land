@@ -1,3 +1,4 @@
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
       <ion-back-button text="Atrás" defaultHref="/" (click)="navigateToMain($evt)"></ion-back-button>
@@ -11,7 +12,7 @@
     <ion-row class="height-100">
       <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
         <div class="post-img">
-          <img [src]='post.imgPath'>
+          <img [src]='post.imgPath' style="max-width: 600px;">
         </div>
         <div *ngIf="this.authServ.user != undefined">
           <ion-button (click)="deletePost()">
@@ -23,7 +24,8 @@
           <ion-button (click)="banUser()">
             <ion-icon name="skull"></ion-icon>Banear
           </ion-button>
-          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove hidden>
+          <ion-select placeholder="General" okText="Elegir" cancelText="Cancelar" (ionChange)="movePost()" #selMove
+            hidden>
             <ion-select-option value="off">General</ion-select-option>
             <ion-select-option value="prg">Preguntas</ion-select-option>
             <ion-select-option value="mus">Música</ion-select-option>
@@ -51,7 +53,7 @@
             </ion-textarea>
           </ion-col>
           <ion-col size="5">
-            <img [src]="imgPreview" width="200px" height="200px" alt="">
+            <img *ngIf="imgPreview" [src]="imgPreview" alt="">
           </ion-col>
         </ion-row>
         <div class="comment-button">
@@ -94,13 +96,14 @@
                 <ion-label color="medium" class="comment-options-button"
                   style="width: 120px;bottom: 0px; right: 0px; font-size: 85%">{{comment.createdAt | timestampToDate}}
                 </ion-label>
-                <ion-badge color="medium" class="comment-options-button" (click)="showOptions($event, comment.id, comment.userId)">
+                <ion-badge color="medium" class="comment-options-button"
+                  (click)="showOptions($event, comment.id, comment.userId)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
               </div>
               <div class="comment-content" [innerHtml]="comment.body">
               </div>
-              <img *ngIf="comment.imgPath" [src]="comment.imgPath" width="150px" height="150px">
+              <img *ngIf="comment.imgPath" [src]="comment.imgPath" style="max-width: 250px;margin-top: 20px;">
             </ion-label>
           </ion-item>
         </ion-list>

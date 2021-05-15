@@ -17,7 +17,7 @@ export class NewPostPage implements OnInit {
       category: new FormControl('off', Validators.required),
       img: new FormControl(''),
       imgPreview: new FormControl(''),
-      title: new FormControl(undefined, [Validators.required, Validators.minLength(1), Validators.maxLength(50)]),
+      title: new FormControl(undefined, [Validators.required, Validators.minLength(5), Validators.maxLength(100)]),
       body: new FormControl(undefined, Validators.maxLength(1500))
     });
   }

@@ -21,18 +21,14 @@ export class AuthService {
   async googleSignin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider);
-    this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-    this.user = await this.getModProfile(credential.user.email);
-  }
+    const mod = await this.afs.collection('mods').doc(credential.user.email).get().toPromise();
 
-  private async getModProfile(email: string) {
-    const data = await this.afs.collection('mods', ref => ref.where('email', '==', email)).get().toPromise();
-    if (!data || data.empty) {
+    if (mod.exists) {
+      this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+    } else {
       this.user = undefined;
-      throw new Error('Usuario no registrado como mod');
+      throw Error();
     }
-
-    return data.docs[0].data();
   }
 
   async getToken() {

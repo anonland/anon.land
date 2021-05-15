@@ -14,7 +14,7 @@ export class PostService {
   setNewPostSocket(handler) {
     this.socket.io.on('newPostCreated', handler);
   }
-  
+
   removeNewPostSocket() {
     this.socket.io.off('newPostCreated');
   }
@@ -45,12 +45,12 @@ export class PostService {
 
   async deletePost(postID: string) {
     const token = await this.auth.getToken();
-    this.http.post(createUrl('delete'), { postID, token }).subscribe((data) => console.log(data));
+    this.http.post(createUrl('delete'), { postID, token }, { responseType: 'text' }).subscribe((data) => console.log(data));
   }
 
   async movePost(postID: string, category: string) {
     const token = await this.auth.getToken();
-    this.http.post(createUrl('move'), { postID, token, category }).subscribe((data) => console.log(data));
+    this.http.post(createUrl('move'), { postID, token, category }, { responseType: 'text' }).subscribe((data) => console.log(data));
   }
 
   async changePostCategory(postId: string, category: string) {

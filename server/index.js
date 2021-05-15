@@ -89,7 +89,8 @@ app.get('*', (req, res) => {
 async function getAdminData(token) {
   try {
     const decodedToken = await firebase.admin.auth().verifyIdToken(token)
-    return decodedToken;
+    const mod = await firebase.db.collection('mods').doc(decodedToken.email).get();
+    return mod.exists ? decodedToken : null;
   } catch (error) {
     return null;
   }
@@ -114,8 +115,8 @@ app.post("/session", async (req, res) => {
 app.post("/create",
   upload.single("post-img-upload"),
   body("category").custom(categoryValidate),
-  body("body").isLength({ min: 5, max: 1500 }),
-  body("title").isLength({ min: 5, max: 50 }),
+  body("body").isLength({ max: 1500 }),
+  body("title").isLength({ min: 5, max: 100 }),
   async (req, res) => {
     if (res.status(200)) {
       const errors = validationResult(req);
