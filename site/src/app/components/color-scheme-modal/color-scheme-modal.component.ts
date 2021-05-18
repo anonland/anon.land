@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ColorSchemeService } from '../../services/color-scheme.service';
-import { Storage } from '@ionic/storage';
+import { ColorSchemeService } from 'src/app/services/color-scheme.service';
+
 
 // Themes.
 const themes = {
@@ -95,25 +95,25 @@ const scene = {
   }
 };
 
+
 @Component({
   selector: 'app-color-scheme-modal',
   templateUrl: './color-scheme-modal.component.html',
   styleUrls: ['./color-scheme-modal.component.scss'],
 })
+export class ColorSchemeModalComponent implements OnInit {
 
-export class ColorSchemeModalPage implements OnInit {
-
-  constructor(private modalCtrl: ModalController,
-              private theme: ColorSchemeService,
-              private storage: Storage
-  ) {  }
+  constructor(
+    private modalCtrl: ModalController,
+    private theme: ColorSchemeService
+  ) { }
 
   // TODO: improve the set theme function and avoid boilerplate code.
   // Defaults options.
   public sceneName = 'day';
 
   public themeValue: string;
-  public sceneValue: boolean;
+  public sceneValue: string;
 
   ngOnInit() {
     this.getThemeValue();
@@ -121,23 +121,21 @@ export class ColorSchemeModalPage implements OnInit {
   }
 
   getThemeValue() {
-    this.storage.get('themeName').then(value => {
-      if (value == null) {
-        this.themeValue = 'normal';
-      } else {
-        this.themeValue = value;
-      }
-    });
+    const value = localStorage.getItem('themeName');
+    if (value == null) {
+      this.themeValue = 'normal';
+    } else {
+      this.themeValue = value;
+    }
   }
 
   getSceneValue() {
-    this.storage.get('sceneStatus').then(value => {
-      if (value == null) {
-        this.sceneValue = false;
-      } else {
-        this.sceneValue = value;
-      }
-    });
+    const value = localStorage.getItem('sceneStatus');
+    if (value == null) {
+      this.sceneValue = 'day';
+    } else {
+      this.sceneValue = value;
+    }
   }
 
   // Switch scene mode between day and night.
@@ -149,14 +147,14 @@ export class ColorSchemeModalPage implements OnInit {
       this.sceneName = 'day';
     }
     this.theme.setTheme(themes[this.themeValue], scene[this.sceneName]);
-    this.storage.set('sceneStatus', JSON.stringify(status));
+    localStorage.setItem('sceneStatus', JSON.stringify(status));
   }
 
   // Change color scheme.
   setTheme(themeName: string) {
     this.themeValue = themeName;
     this.theme.setTheme(themes[this.themeValue], scene[this.sceneName]);
-    this.storage.set('themeName', this.themeValue);
+    localStorage.setItem('themeName', this.themeValue);
   }
 
   // Close modal.

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -15,10 +15,15 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { PostPageModule } from './pages/post/post.module';
+import { ColorSchemeModalComponent } from './components/color-scheme-modal/color-scheme-modal.component';
+import { CommentOptionsComponent } from './components/comment-options/comment-options.component';
+import { PostOptionsComponent } from './components/post-options/post-options.component';
+import { NewPostPage } from './pages/new-post/new-post.page';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     IonicModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
@@ -27,12 +32,22 @@ import { PostPageModule } from './pages/post/post.module';
     PostPageModule,
     IonicStorageModule.forRoot()
   ],
+  declarations: [
+    AppComponent,
+    CommentOptionsComponent,
+    PostOptionsComponent,
+    NewPostPage,
+    ColorSchemeModalComponent
+  ],
   providers: [
     StatusBar,
     SplashScreen,
     AngularFirestore,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
   ],
+  entryComponents: [
+    ColorSchemeModalComponent,
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

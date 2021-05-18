@@ -1,4 +1,4 @@
 
 export function createUrl(endpoint: string) {
-    return location.protocol + '//' + location.hostname + ':3000/' + endpoint;
+    return location.protocol + '//' + location.hostname + (location.hostname == 'localhost' ? ':3000/' : '/') + endpoint;
 }

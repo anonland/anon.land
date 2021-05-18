@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
 	<ion-toolbar>
-	<p class="header-title">Admins Cpanel</p>
+		<p class="header-title">Admins Cpanel</p>
 		<ion-buttons slot="end">
 			<ion-button color="primary" shape="round">
 				<ion-icon name="notifications"></ion-icon>
@@ -10,13 +10,13 @@
 			</ion-title>
 			<ion-button class="exit" color="primary" fill="solid">
 				<p>Salir</p>
-				<ion-icon name="exit"></ion-icon> 
+				<ion-icon name="exit"></ion-icon>
 			</ion-button>
 		</ion-buttons>
 	</ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true" (ionScroll)="onScroll($event)">
+<ion-content [scrollEvents]="true">
 	<main class="moderation">
 		<div class="dashboard">
 			<section class="reports">
@@ -34,12 +34,12 @@
 						<!-- <p>{{ report.description || 'Reporte de categoría incorrecta'}}</p>
 						<p>{{ report.postId || '2j28dn10dxh2ofcb18jf'}} -->
 					</div>
-					<a [routerLink]="[category][id]" class="navigate-to-post">
+					<a class="navigate-to-post">
 						<ion-icon name="chevron-forward-outline"></ion-icon>
 					</a>
 				</div>
 			</section>
-		
+
 			<section class="log">
 				<div class="log-title">
 					<p class="title">Log de acciones</p>
@@ -87,4 +87,3 @@
 		</div>
 	</main>
 </ion-content>
-

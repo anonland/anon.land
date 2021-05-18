@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-back-button text="Atrás" defaultHref="/" (click)="navigateToMain($evt)"></ion-back-button>
+      <ion-back-button text="Atrás" defaultHref="/" (click)="navigateToMain()"></ion-back-button>
     </ion-buttons>
     <ion-title class="margin-left">{{post.title}}</ion-title>
   </ion-toolbar>
@@ -14,7 +14,7 @@
         <div class="post-img">
           <img [src]='post.imgPath' style="max-width: 600px;">
         </div>
-        <div *ngIf="this.authServ.user != undefined">
+        <div *ngIf="authServ.user != undefined">
           <ion-button (click)="deletePost()">
             <ion-icon name="trash-outline"></ion-icon>Borrar
           </ion-button>
@@ -39,7 +39,7 @@
             <ion-select-option value="anm">Anime</ion-select-option>
           </ion-select>
         </div>
-        <div *ngIf="this.authServ.user == undefined">
+        <div *ngIf="authServ.user == undefined">
           <ion-button class="margin-left" (click)="report()">
             <ion-icon slot="start" name="flag"></ion-icon>Reportar
           </ion-button>

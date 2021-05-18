@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AdminsComponent } from './admins.component';
+import { ColorSchemeModalComponent } from './color-scheme-modal.component';
 
-describe('AdminsComponent', () => {
-  let component: AdminsComponent;
-  let fixture: ComponentFixture<AdminsComponent>;
+describe('ColorSchemeModalComponent', () => {
+  let component: ColorSchemeModalComponent;
+  let fixture: ComponentFixture<ColorSchemeModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminsComponent ],
+      declarations: [ ColorSchemeModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AdminsComponent);
+    fixture = TestBed.createComponent(ColorSchemeModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

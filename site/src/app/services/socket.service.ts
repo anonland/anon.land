@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
   providedIn: 'root'
 })
 export class SocketService {
-  public io = io();
+  public io = io(location.hostname == 'localhost' ? 'http://localhost:5000' : 'https://anon.land:5000');
 
   constructor() { }
 }

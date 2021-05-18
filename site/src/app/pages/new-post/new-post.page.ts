@@ -10,7 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class NewPostPage implements OnInit {
   public newPostForm: FormGroup;
-  private showUploadImgText = true;
+  public showUploadImgText = true;
 
   constructor(private modalCtrl: ModalController, private http: HttpClient) {
     this.newPostForm = new FormGroup({

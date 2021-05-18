@@ -10,13 +10,12 @@ const http = require("http").Server(app);
 const { v4: uuidv4 } = require("uuid");
 const fireDate = require("@google-cloud/firestore");
 const fs = require("fs");
-const io = require("socket.io")(5000);
-const { json } = require("express");
-const { type } = require("os");
+const io = require("socket.io")(5000, { cors: true, origins: ["http://localhost:5000", "https://anon.land"] });
 const { FieldValue } = require("@google-cloud/firestore");
 const { body, validationResult } = require('express-validator');
+
 // set cors policy
-app.use(cors());
+app.use(cors({ origin: ["http://localhost:5000", "https://anon.land"] }));
 
 app.use(bodyParser.json());
 
@@ -129,22 +128,22 @@ app.post("/create",
       const img = req.file;
       if (img == undefined) return res.sendStatus(400);
 
-          const { category, title, body, opid } = req.body;
+      const { category, title, body, opid } = req.body;
 
-          const postData = {
-            category,
-            imgPath: '/images/' + req.file.filename,
-            title,
-            body,
-            opid,
-            createdAt: fireDate.Timestamp.now(),
-          };
+      const postData = {
+        category,
+        imgPath: '/images/' + req.file.filename,
+        title,
+        body,
+        opid,
+        createdAt: fireDate.Timestamp.now(),
+      };
 
-          await firebase.db.collection("posts").add(postData);
+      await firebase.db.collection("posts").add(postData);
 
-          io.emit('newPostCreated');
+      io.emit('newPostCreated');
 
-          return res.sendStatus(200);
+      return res.sendStatus(200);
     } else {
       console.log("Error de conexión");
     }
