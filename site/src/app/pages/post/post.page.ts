@@ -37,7 +37,7 @@ export class PostPage implements OnInit {
     private title: Title,
     private http: HttpClient,
     private postServ: PostService,
-    private authServ: AuthService,
+    public authServ: AuthService,
     private alertCtrl: AlertController,
     private sessionServ: SessionService,
     private popoverCtrl: PopoverController,
@@ -261,7 +261,7 @@ export class PostPage implements OnInit {
   }
 
   async banUser() {
-    await this.http.post(createUrl('ban'), { opIP: this.post.opIP }).toPromise();
+    await this.http.post(createUrl('ban'), { opIP: this.post.opid }).toPromise();
     const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente', duration: 3000 });
     await toast.present();
   }

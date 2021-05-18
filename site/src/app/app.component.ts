@@ -5,7 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
 import { ModalController } from '@ionic/angular';
-import { ColorSchemeModalPage } from './pages/color-scheme-modal/color-scheme-modal.component';
+import { ColorSchemeModalComponent } from './components/color-scheme-modal/color-scheme-modal.component';
 
 import { ColorSchemeService } from './services/color-scheme.service';
 
@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    protected authServ: AuthService,
+    public authServ: AuthService,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private theme: ColorSchemeService,
@@ -117,7 +117,7 @@ export class AppComponent implements OnInit {
   // Color Scheme Changer function.
   async changeColorScheme() {
     const modal = await this.modalCtrl.create({
-      component: ColorSchemeModalPage,
+      component: ColorSchemeModalComponent,
       cssClass: 'color-scheme-changer-modal',
     });
     await modal.present();

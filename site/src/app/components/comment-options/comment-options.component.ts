@@ -20,7 +20,7 @@ export class CommentOptionsComponent implements OnInit {
     private toastCtrl: ToastController,
     private popoverCtrl: PopoverController,
     private storage: Storage,
-    private authServ: AuthService) { }
+    public authServ: AuthService) { }
 
   ngOnInit() { }
 

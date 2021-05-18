@@ -19,22 +19,22 @@
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-menu-toggle auto-hide="false" [hidden]="this.authServ.user != undefined">
+        <ion-menu-toggle auto-hide="false" [hidden]="authServ.user != undefined">
           <ion-item (click)="googleSignin()" class="pointer" routerDirection="root" lines="none" detail="false">
             <ion-icon slot="start" ios="log-in-outline" md="log-in-sharp"></ion-icon>
             <ion-label>Iniciar sesión (Mod)</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
-        <ion-menu-toggle auto-hide="false" [hidden]="this.authServ.user == undefined">
+        <ion-menu-toggle auto-hide="false" [hidden]="authServ.user == undefined">
           <ion-item (click)="googleSignout()" class="pointer" routerDirection="root" lines="none" detail="false">
             <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
             <ion-label>Cerrar sesión (Mod)</ion-label>
           </ion-item>
         </ion-menu-toggle>
 
-        <ion-menu-toggle auto-hide="false" *ngIf="this.authServ.user">
-          <ion-item class="pointer" routerDirection="root" [routerLink]="['/admins']" lines="none" detail="false">
+        <ion-menu-toggle auto-hide="false" *ngIf="authServ.user">
+          <ion-item class="pointer" routerDirection="root" [routerLink]="['/cpanel']" lines="none" detail="false">
             <ion-icon slot="start" ios="hammer-outline" md="hammer-sharp"></ion-icon>
             <ion-label>Admin Cpanel</ion-label>
           </ion-item>

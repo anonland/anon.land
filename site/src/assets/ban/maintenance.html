@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anon Land | En mantenimiento</title>
+
+    <style>
+        * {
+            transition: ease .4s;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .main {
+            color: white;
+            height: 100vh;
+            width: 100vw;
+            background: linear-gradient(darkblue, lightblue);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .message {
+            display: grid;
+            height: 100%;
+            padding: 1em;
+            place-content: center;
+            place-items: center;
+            position: fixed;
+            width: 100vw;
+            z-index: 1001;
+        }
+
+        .message .logo {
+            filter: brightness(30);
+            width: 150px;
+        }
+
+        .message .text {
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 1em;
+            margin-top: 5%;
+
+            backdrop-filter: blur(10px) !important;
+            background: rgba(255, 255, 255, 0.2);
+            background-clip: padding-box;
+            border: solid 2px transparent;
+            border-radius: 2em;
+        }
+
+        .text p {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .text span {
+            font-size: 1.5em;
+            font-weight: normal;
+        }
+
+        .text {
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            background-color: #5c5c5ccc;
+            border: solid 3px #777777;
+        }
+
+        @media only screen and (max-width: 750px) {
+            .message .logo {
+                width: 80px;
+            }
+
+            .text p {
+                font-size: 1.8em;
+            }
+
+            .text span {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <article class="main">
+        <section class="message">
+            <div class="logo"><img src="https://firebasestorage.googleapis.com/v0/b/anonland-prod-2add3.appspot.com/o/logo.svg?alt=media&token=ed11b71e-6c71-4718-81be-d60f76a8412b" alt="anon.land"></div>
+            <div class="text">
+                <p>Los devs están laburando</p>
+                <span>Volvé más tarde</span>
+            </div>
+        </section>
+    </article>
+</body>
+
+</html>

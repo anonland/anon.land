@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ScrollTopComponent } from './scroll-top.component';
+import { CpanelPage } from './cpanel.page';
 
-describe('ScrollTopComponent', () => {
-  let component: ScrollTopComponent;
-  let fixture: ComponentFixture<ScrollTopComponent>;
+describe('CpanelPage', () => {
+  let component: CpanelPage;
+  let fixture: ComponentFixture<CpanelPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScrollTopComponent ],
+      declarations: [ CpanelPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ScrollTopComponent);
+    fixture = TestBed.createComponent(CpanelPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

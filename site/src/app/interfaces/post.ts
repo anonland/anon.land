@@ -1,13 +1,11 @@
 export class Post{
+    title: string;
     body: string;
+    opid: string;
     category: string;
-    createAt: {
+    createdAt: {
         seconds: any;
     };
-    icon: string;
     id: string;
-    image: string;
-    opIP: string;
-    title: string;
     readonly imgPath: any;
 }

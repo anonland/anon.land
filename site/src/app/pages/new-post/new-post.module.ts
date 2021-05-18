@@ -6,10 +6,13 @@ import { IonicModule } from '@ionic/angular';
 import { NewPostPageRoutingModule } from './new-post-routing.module';
 
 import { NewPostPage } from './new-post.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     NewPostPageRoutingModule
   ],
