@@ -269,10 +269,10 @@ app.post("/ban", async (req, res) => {
 
   const { userID } = req.body;
   let search = await firebase.db.collection("users").where('userID', '==', userID).get();
-  const file = fs.readFileSync("server/blacklist.json", "utf8");
+  const file = fs.readFileSync(pathBanList, "utf8");
   const bans = JSON.parse(file);
   bans.ips.push(search.docs[0].data().userIP);
-  fs.writeFileSync("server/blacklist.json", JSON.stringify(bans));
+  fs.writeFileSync(pathBanList, JSON.stringify(bans));
   console.log(`usuario ${userID} baneado por ADMIN ${adminData.email}`);
 
   io.emit('ban', userID);
