@@ -66,7 +66,7 @@ const middleware = (req, res, next) => {
           if (element == userIP) bool = true;
         });
       }
-      if (bool) res.sendStatus(401);
+      if (bool) res.sendFile(path.join(__dirname, "../site/www/assets/ban/banned-user.html"));
       else next();
     };
     fs.readFile(pathBanList, "utf8", cb);
