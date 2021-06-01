@@ -39,9 +39,8 @@
 
 ### high priorities
 
-+ [ ] Apply sockets.
++ [X] Apply sockets.
 + [ ] Select options in report button.
-+ [ ] Sort reports by importance (green, orange, red).
 + [ ] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
@@ -51,7 +50,7 @@
 + [x] Add comments in posts.
 
 ### non-so higher priorities
-+ [x] Green text stories ">".
++ [] Green text stories ">".
 + [x] Hide posts and comments.
 + [ ] Add points in posts.
 + [x] Make compulsory all the inputs in all forms.
