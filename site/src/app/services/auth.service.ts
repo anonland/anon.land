@@ -24,8 +24,9 @@ export class AuthService {
     const mod = await this.afs.collection('mods').doc(credential.user.email).get().toPromise();
 
     if (mod.exists) {
-      this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+      await this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
     } else {
+      await this.afAuth.signOut();
       this.user = undefined;
       throw Error();
     }

@@ -12,6 +12,8 @@ import { SessionService } from 'src/app/services/session.service';
 import { DOCUMENT } from '@angular/common';
 import { Storage } from '@ionic/storage';
 import { createUrl } from 'src/app/helpers/functions';
+import { ReportsPreviewComponent } from 'src/app/components/reports-preview/reports-preview.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -40,7 +42,8 @@ export class MainPage {
     private http: HttpClient,
     private title: Title,
     private sessionServ: SessionService,
-    private storage: Storage
+    private storage: Storage,
+    private authServ: AuthService
   ) {
     this.activatedRoute.params.subscribe(async _ => {
       this.title.setTitle('Anon Land');
@@ -230,6 +233,14 @@ export class MainPage {
   async openNotificationsPreview($event: MouseEvent) {
     const popover = await this.popoverCtrl.create({
       component: NotificationsPreviewComponent,
+      event: $event,
+    });
+    await popover.present();
+  }
+
+  async openReportsPreview($event: MouseEvent) {
+    const popover = await this.popoverCtrl.create({
+      component: ReportsPreviewComponent,
       event: $event,
     });
     await popover.present();

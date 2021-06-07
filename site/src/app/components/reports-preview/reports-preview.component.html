@@ -1,0 +1,16 @@
+<ion-list>
+  <ion-item lines="none" *ngIf="reports.length == 0">No hay reportes</ion-item>
+  <ion-item *ngFor="let report of reports" (click)="goToPost(report.caategory, report.id)" style="cursor: pointer;">
+    <ion-label *ngIf="report.type === 'post'">
+      <h3>{{ 'POST ' + report.id }}</h3>
+      <p>{{ 'OP: ' + report.opid }}</p>
+      <p>{{ 'Cantidad de reportes: ' + report.reports }}</p>
+    </ion-label>
+    <ion-label *ngIf="report.type === 'comment'">
+      <h3>{{ 'COMENTARIO ' + report.id }}</h3>
+      <p>{{ 'ANON: ' + report.userId }}</p>
+      <p>{{ 'Cantidad de reportes: ' + report.reports }}</p>
+    </ion-label>
+    <ion-icon name="chevron-forward-outline"></ion-icon>
+  </ion-item>
+</ion-list>

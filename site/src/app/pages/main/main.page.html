@@ -7,12 +7,16 @@
     <p class="title">{{ category | fullCategory }}</p>
 
     <ion-buttons slot="end">
+      <ion-button color="primary" shape="round" *ngIf="authServ.user" (click)="openReportsPreview($event)">
+        REPORTES
+        <ion-icon name="notifications"></ion-icon>
+      </ion-button>
       <ion-button color="primary" shape="round" (click)="openNotificationsPreview($event)">
         <ion-icon name="notifications"></ion-icon>
       </ion-button>
       <ion-button class="create-post" color="primary" fill="solid" (click)="createPost()">
         <p>Nuevo post</p>
-        <ion-icon name="duplicate"></ion-icon> 
+        <ion-icon name="duplicate"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,13 +26,11 @@
   <div class="container">
     <div class="main-post-img" *ngFor="let post of posts">
       <div class="show-post" id="post_{{ post.id }}" (click)="showPost(post.id)">
-        <ion-icon  class="show-post-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
-        <ion-label class="show-post-title">   Click Para mostrar</ion-label>
+        <ion-icon class="show-post-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
+        <ion-label class="show-post-title"> Click Para mostrar</ion-label>
       </div>
-      <img [src]="post.imgPath || '../../assets/default-post.svg'" [alt]="post.title"
-        (click)="openPost(post)"
-        (load)="loadEndOfThePage()"
-        class="image">
+      <img [src]="post.imgPath || '../../assets/default-post.svg'" [alt]="post.title" (click)="openPost(post)"
+        (load)="loadEndOfThePage()" class="image">
       <div class="content">
         <div class="information">
           <ion-badge color="medium" class="options" (click)="showOptions($event, post.id)">

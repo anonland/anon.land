@@ -13,6 +13,7 @@ const fs = require("fs");
 const io = require("socket.io")(5000, { cors: true, origins: ["http://localhost:5000", "https://anon.land"] });
 const { FieldValue } = require("@google-cloud/firestore");
 const { body, validationResult } = require('express-validator');
+const sharp = require('sharp');
 
 // set cors policy
 app.use(cors({ origin: ["http://localhost:5000", "https://anon.land"] }));
@@ -28,7 +29,7 @@ io.on('connection', (socket) => {
 });
 
 const storage = multer.diskStorage({
-  destination: "../site/www/images",
+  destination: "../site/www/uploads",
   filename: function (req, file, cb) {
     const parts = file.mimetype.split("/");
     cb(null, `${file.fieldname}-${Date.now()}.${parts[1]}`)
@@ -128,6 +129,10 @@ app.post("/create",
       const img = req.file;
       if (img == undefined) return res.sendStatus(400);
 
+      await sharp(req.file.path)
+        .resize(600, 450, { fit: 'inside' })
+        .toFile('../site/www/images/' + req.file.filename);
+
       const { category, title, body, opid } = req.body;
 
       const postData = {
@@ -136,6 +141,7 @@ app.post("/create",
         title,
         body,
         opid,
+        reports: 0,
         createdAt: fireDate.Timestamp.now(),
       };
 
@@ -159,6 +165,10 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({ m
 
     if (req.file) {
       var imgPath = '/images/' + req.file.filename;
+
+      await sharp(req.file.path)
+        .resize(320, 240, { fit: 'inside' })
+        .toFile('../site/www/images/' + req.file.filename);
     }
 
     const { body, postId, userId } = req.body;
