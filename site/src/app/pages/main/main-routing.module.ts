@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('../post/post.module').then(m => m.PostPageModule)
   },
   {
+    path: ':category/:postId/:commentId',
+    loadChildren: () => import('../post/post.module').then(m => m.PostPageModule)
+  },
+  {
     path: 'cpanel',
     loadChildren: () => import('../cpanel/cpanel.module').then(m => m.CpanelPageModule)
   },

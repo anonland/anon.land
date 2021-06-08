@@ -146,10 +146,22 @@ ion-grid {
     .post-id {
         width: 60px;
         border-radius: 8px;
+        cursor: pointer;
     }
 
     .comment-content {
         font-weight: 500;
+        margin-top: 10px;
     }
 
+}
+
+.tag{
+    padding: 5px 12px;
+}
+
+.comment-tag{
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
 }

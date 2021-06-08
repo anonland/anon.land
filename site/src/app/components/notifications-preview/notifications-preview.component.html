@@ -1,3 +1,6 @@
 <div class="ion-text-center">
-    <p>Próximamente..</p>
+    <p *ngIf="notifications.length == 0">No hay notificaciones</p>
+    <div *ngIf="notifications.length != 0">
+        
+    </div>
 </div>

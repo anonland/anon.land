@@ -8,6 +8,7 @@ import { PostPageRoutingModule } from './post-routing.module';
 
 import { PostPage } from './post.page';
 import { TimestampToDatePipe } from 'src/app/pipes/timestamp-to-date.pipe';
+import { BypassSanitizerPipe } from 'src/app/pipes/bypass-sanitizer.pipe';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { TimestampToDatePipe } from 'src/app/pipes/timestamp-to-date.pipe';
   ],
   declarations: [
     PostPage,
-    TimestampToDatePipe
+    TimestampToDatePipe,
+    BypassSanitizerPipe
   ]
 })
 export class PostPageModule { }

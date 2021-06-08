@@ -20,6 +20,9 @@ import { CommentOptionsComponent } from './components/comment-options/comment-op
 import { PostOptionsComponent } from './components/post-options/post-options.component';
 import { NewPostPage } from './pages/new-post/new-post.page';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ReportsPreviewComponent } from './components/reports-preview/reports-preview.component';
+import { NotificationsPreviewComponent } from './components/notifications-preview/notifications-preview.component';
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -37,7 +40,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommentOptionsComponent,
     PostOptionsComponent,
     NewPostPage,
-    ColorSchemeModalComponent
+    ColorSchemeModalComponent,
+    ReportsPreviewComponent,
+    NotificationsPreviewComponent
   ],
   providers: [
     StatusBar,
