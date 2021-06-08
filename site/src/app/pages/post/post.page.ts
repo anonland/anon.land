@@ -19,7 +19,7 @@ import { Location } from '@angular/common';
   templateUrl: './post.page.html',
   styleUrls: ['./post.page.scss'],
 })
-export class PostPage implements OnInit, OnDestroy {
+export class PostPage implements OnInit {
   public postId: string;
   public post: Post = new Post();
   public comments = new Array<any>();
