@@ -50,7 +50,7 @@
 + [x] Add comments in posts.
 
 ### non-so higher priorities
-+ [] Green text stories ">".
++ [ ] Green text stories ">".
 + [x] Hide posts and comments.
 + [ ] Add points in posts.
 + [x] Make compulsory all the inputs in all forms.

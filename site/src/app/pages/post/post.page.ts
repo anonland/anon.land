@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
@@ -11,7 +11,9 @@ import { SessionService } from 'src/app/services/session.service';
 import { Storage } from '@ionic/storage';
 import { CommentService } from 'src/app/services/comment.service';
 import { createUrl } from 'src/app/helpers/functions';
-
+import { Subscription } from 'rxjs';
+import { Animation, AnimationController } from '@ionic/angular';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-post',
   templateUrl: './post.page.html',
@@ -27,6 +29,8 @@ export class PostPage implements OnInit {
   public imgPreview;
   public newComments = 0;
   public newCommentsToast: HTMLIonToastElement;
+  public routerSubscription: Subscription;
+  public commentId: string;
 
   @ViewChild('txtComment') private txtComment: HTMLIonTextareaElement;
   @ViewChild('selMove') private selMove: HTMLIonSelectElement;
@@ -43,11 +47,15 @@ export class PostPage implements OnInit {
     private popoverCtrl: PopoverController,
     private router: Router,
     private storage: Storage,
-    private commentServ: CommentService
+    private commentServ: CommentService,
+    private animationCtrl: AnimationController,
+    private location: Location
   ) { }
 
   async ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
+    this.commentId = this.activatedRoute.snapshot.paramMap.get('commentId');
+
     const postDoc = await this.postServ.getPostById(this.postId).toPromise();
 
     if (!postDoc || !postDoc.exists) {
@@ -57,7 +65,25 @@ export class PostPage implements OnInit {
 
     this.post = postDoc.data() as any;
     this.title.setTitle(this.post.title + ' | Anon Land');
-    this.getComments();
+
+    await this.getComments();
+
+    setTimeout(() => {
+      if (this.commentId != undefined) {
+        const commentElement = document.getElementById(this.commentId);
+        if (commentElement) {
+          commentElement.scrollIntoView({ behavior: 'smooth' });
+          const animation: Animation = this.animationCtrl.create()
+            .addElement(commentElement)
+            .duration(1000)
+            .fromTo('opacity', '1', '0')
+            .fromTo('opacity', '0', '1');
+
+          animation.play();
+        }
+      }
+    }, 1000);
+
     this.setSocketsHandler();
   }
 
@@ -96,7 +122,6 @@ export class PostPage implements OnInit {
 
     this.postServ.setMovedPostSocket(async (postId, category) => {
       if (this.postId === postId) {
-        this
         this.router.navigate([`${category}/${postId}`], { replaceUrl: true });
         const toast = await this.toastCtrl.create({ header: 'El post fue movido de categoria', duration: 3000, position: 'top' });
         await toast.present();
@@ -139,8 +164,8 @@ export class PostPage implements OnInit {
     }
 
     // Make green text.
-    const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
-    body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
+    // const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
+    // body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
 
     // Alert message.
     let buttonAlert: string;
@@ -166,7 +191,7 @@ export class PostPage implements OnInit {
         position: 'top',
         duration: 3000
       });
-      
+
       this.imgPreview = undefined;
       await toast.present();
     });
@@ -177,6 +202,12 @@ export class PostPage implements OnInit {
     this.comments = comments.docs.map(comment => {
       const commentObj: any = comment.data();
       commentObj.id = comment.id;
+
+      const tags = (commentObj.body as string).match(/>>[a-zA-Z0-9]{6,6}/g);
+      commentObj.body = (commentObj.body as string).replace(/>>[a-zA-Z0-9]{6,6}/g, '');
+      commentObj.body = this.clearFirstBrs(commentObj.body);
+      commentObj.tags = tags;
+
       // Display placard for each hide comment.
       this.storage.forEach((key, value) => {
         if (value === 'hiddenCommentId') {
@@ -185,6 +216,15 @@ export class PostPage implements OnInit {
       });
       return commentObj;
     });
+  }
+
+  clearFirstBrs(text: string){
+    if(text.startsWith('<br>')){
+      text = text.slice(4, text.length);
+      return this.clearFirstBrs(text);
+    }else{
+      return text;
+    }
   }
 
   async showOptions($event: MouseEvent, commentId: string, userID: string) {
@@ -246,10 +286,6 @@ export class PostPage implements OnInit {
     alert.present();
   }
 
-  deleteComment() {
-
-  }
-
   async movePost() {
     if (this.selMove.value == null) {
       return;
@@ -261,7 +297,8 @@ export class PostPage implements OnInit {
   }
 
   async banUser() {
-    await this.http.post(createUrl('ban'), { opIP: this.post.opid }).toPromise();
+    const adminToken = await this.authServ.getToken();
+    await this.http.post(createUrl('ban'), { userID: this.post.opid, token: adminToken }, { responseType: 'text' }).toPromise();
     const toast = await this.toastCtrl.create({ header: 'Usuario baneado correctamente', duration: 3000 });
     await toast.present();
   }
@@ -290,5 +327,29 @@ export class PostPage implements OnInit {
     this.commentServ.removeNewCommentSocket(this.postId);
     this.commentServ.removeDeletedCommentSocket(this.postId);
     this.router.navigate['/'];
+  }
+
+  tagComment(commentId: string) {
+    const commentFormatted = `>>${commentId.substr(0, 6)}`;
+
+    if (this.txtComment.value.indexOf(commentFormatted) == -1)
+      this.txtComment.value += `${commentFormatted}\n`;
+  }
+
+  goToComment(tag: string) {
+    const cleanTag = tag.replace('>>', '');
+    const commentElement = document.getElementById(cleanTag);
+    if (commentElement) {
+      this.location.replaceState(`${this.post.category}/${this.postId}/${cleanTag}`);
+
+      commentElement.scrollIntoView({ behavior: 'smooth' });
+      const animation: Animation = this.animationCtrl.create()
+        .addElement(commentElement)
+        .duration(1000)
+        .fromTo('opacity', '1', '0')
+        .fromTo('opacity', '0', '1');
+
+      animation.play();
+    }
   }
 }

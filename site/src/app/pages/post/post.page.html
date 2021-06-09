@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #content>
   <ion-grid>
     <ion-row class="height-100">
       <ion-col sizeLg="7" sizeMd="7" sizeSm="12" sizeXs="12">
@@ -75,11 +75,11 @@
             Comentar
           </ion-button>
         </div>
-        <ion-list>
+        <ion-list #lstComments>
           <ion-item>
             <h4>Comentarios:</h4>
           </ion-item>
-          <ion-item class="post-comments" *ngFor="let comment of comments">
+          <ion-item class="post-comments" *ngFor="let comment of comments" [id]="comment.id.substr(0, 6)">
             <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
               <ion-icon class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>
               <ion-label class="show-comment-title">Click para mostrar</ion-label>
@@ -92,7 +92,8 @@
                 <ion-badge class="post-tags post-op" color="medium" *ngIf="comment.userId == post.opid">OP</ion-badge>
                 <ion-badge class="post-tags post-anon" color="medium" *ngIf="comment.userId != post.opid">ANON
                 </ion-badge>
-                <ion-badge class="post-tags post-id" color="medium">{{comment.userId}}</ion-badge>
+                <ion-badge class="post-tags post-id" color="medium" (click)="tagComment(comment.id)">
+                  {{comment.userId}}</ion-badge>
                 <ion-label color="medium" class="comment-options-button"
                   style="width: 120px;bottom: 0px; right: 0px; font-size: 85%">{{comment.createdAt | timestampToDate}}
                 </ion-label>
@@ -100,6 +101,9 @@
                   (click)="showOptions($event, comment.id, comment.userId)">
                   <ion-icon name="chevron-down"></ion-icon>
                 </ion-badge>
+              </div>
+              <div class="comment-tag" *ngFor="let tag of comment.tags" (click)="goToComment(tag)">
+                {{tag}}
               </div>
               <div class="comment-content" [innerHtml]="comment.body">
               </div>
