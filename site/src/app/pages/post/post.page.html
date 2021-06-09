@@ -61,12 +61,10 @@
             hidden />
           <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
             <label for="upload-img" id="file-drag">
-              <ion-icon name="image" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
+              <ion-icon name="image" style="padding: 10px 15px;cursor: pointer; font-size: 1.5em;"></ion-icon>
             </label>
           </ion-button>
-          <ion-button style="--padding-end: 0px; --padding-start: 0px; --padding-top: 0px; --padding-bottom: 0px;">
-            <ion-icon name="link" style="padding: 10px 15px;cursor: pointer;"></ion-icon>
-          </ion-button>
+
           <div class="timer">
             {{ timer }}
           </div>
@@ -107,7 +105,8 @@
               </div>
               <div class="comment-content" [innerHtml]="comment.body">
               </div>
-              <img *ngIf="comment.imgPath" [src]="comment.imgPath" style="max-width: 250px;margin-top: 20px;">
+              <img class="comment-img" *ngIf="comment.imgPath" [src]="comment.imgPath">
+              <iframe width="420" height="315" [src]="youtubeEmbed(comment.body)" *ngIf="youtubeEmbed(comment.body)"></iframe>
             </ion-label>
           </ion-item>
         </ion-list>
