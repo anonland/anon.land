@@ -1,7 +1,7 @@
 {
-  "name": "expressit",
+  "name": "anon.land",
   "version": "0.1.0",
-  "description": "New voxed, voxed2.net",
+  "description": "Open source image board made with <3",
   "main": "index.js",
   "scripts": {
     "start": "node ./server/index.js",
@@ -16,7 +16,6 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.10.0",
     "firebase-admin": "^9.4.1",
-    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4",
     "path": "^0.12.7",
@@ -29,10 +28,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/igruntplay/voxed4.git"
+    "url": "git+https://github.com/anonland/anon.land.git"
   },
   "bugs": {
-    "url": "https://github.com/igruntplay/voxed4issues"
+    "url": "https://github.com/anonland/anon.land.git"
   },
-  "homepage": "https://github.com/igruntplay/voxed4#readme"
+  "homepage": "https://github.com/anonland/anon.land#readme"
 }
