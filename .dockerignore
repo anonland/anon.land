@@ -1,9 +1,6 @@
 # npm dependencies.
 node_modules
 
-# Firebase folder.
-server/db
-
 # Compiled application.
 site/www
 

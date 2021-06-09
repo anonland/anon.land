@@ -6,13 +6,8 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install 
-
 COPY . .
 
-RUN npm --prefix site run build
+RUN ./init.sh
 
-#nginx
-FROM nginx:alpine
-
-COPY --from=node /app/dist/anon.land /usr/share/nginx/html
+CMD ["npm", "start"]
