@@ -26,9 +26,9 @@ ion-badge{
 }
 
 .options-badge {
-  position: absolute !important;
-  right: 0px;
-  top: 0px;
+  position: relative;
+  right: 0;
+  top: 0;
 }
 
 .container {
@@ -40,15 +40,15 @@ ion-badge{
 
 .main-post-img {
   background-color: var(--ion-background-color);
-  //background-image: URL('../../assets/default-post.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  color: white;
   cursor: pointer;
   display: flex;
+  filter: grayscale(0.4);
+  flex-direction: column;
   font-weight: bold;
-  color: white;
-  object-fit: cover;
-  overflow: hidden;
+  justify-content: space-between;
+  transition: 0.4s ease;
+  width: 100%;
 
 .show-post {
   align-items: center;
@@ -78,14 +78,18 @@ ion-badge{
   }
 }
 
-  img {
-    object-fit: cover;
-    width: 100%;
-  }
-
   .content {
-    position: absolute;
+    background: {
+      size: cover;
+      repeat: no-repeat; 
+    }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    position: relative;
     padding: 1em;
+    transition: 0.4s ease;
 
     .options {
       margin-right: 1%;
@@ -99,27 +103,26 @@ ion-badge{
   }
 }
 
-.image {
-  border-radius: 0;
-  filter: grayscale(60%);
-  transform: scale(1);
-  transition: 0.4s ease;
-}
-
-.main-post-img:hover .image {
+.main-post-img .content:hover {
   border-radius: 1em;
   filter: grayscale(0%);
   transform: scale(0.95);
   transition: 0.4s ease;
-  box-shadow: -6px -68px 79px -37px rgba(0,0,0,0.59) inset;
+}
+
+.content:hover {
+  box-shadow: 1px -128px 119px -73px rgba(0,0,0,0.39) inset;
+  transition: 0.4s ease;
 }
 
 .information {
-  width: 200px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
 
 .post-text {
-  position: absolute;
+  position: relative;
   //margin-top: 100% !important;
 }
 
@@ -173,33 +176,21 @@ ion-badge{
 
   .main-post-img {
     border: 0;
+    font-size: 0.9em;
     max-height: 400px;
   }
 
   .container {
     border-radius: 1em;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-
-    aspect-ratio: unset;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
 
     .content {
       padding: 0.5em;
     }
-
-    img {
-      max-width: 100vw;
-    }
   }
 
-  .image {
-    filter: grayscale(0%);
-    transform: scale(1);
-    transition: 0.4s ease;
-  }
-
-  .main-post-img:hover .image {
-    border-radius: 1em;
+  .main-post-img .content:hover {
     filter: grayscale(0%);
     transform: scale(1);
     transition: 0.4s ease;
@@ -214,11 +205,8 @@ ion-badge{
     bottom: 110px;
     right: 4%;
   }
-
-  .post-text {
-    margin-top: 40vh;
-  }
 }
+
 // Default posts view. Two divs per row.
 // For mobile (landscape).
 @media only screen and (min-width: 580px) and (max-width: 767px) {
@@ -229,41 +217,10 @@ ion-badge{
     }
   }
 
-  .main-post-img {
-    background-color: none;
-    border: none;
-    max-height: 400px;
-  }
-
-  .image {
-    filter: grayscale(0%);
-    transform: scale(1);
-    transition: 0.4s ease;
-  }
-
-  .main-post-img:hover .image {
-    border-radius: 1em;
-    filter: grayscale(0%);
-    transform: scale(1);
-    transition: 0.4s ease;
-  }
-
   .container {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    aspect-ratio: unset;
-
-    .content {
-      padding: 0.5em;
-    }
-
-    img {
-      max-width: 100vw;
-    }
-  }
-
-  .post-text {
-    margin-top: 105%;
+    aspect-ratio: 1;
   }
 }
 
@@ -278,12 +235,7 @@ ion-badge{
 
   .container {
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    aspect-ratio: 0.65;
-  }
-
-  .post-text {
-    margin-top: 77%;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 }
 
@@ -300,10 +252,6 @@ ion-badge{
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
   }
-
-  .post-text {
-    margin-top: 65%;
-  }
 }
 
 // For typical desktop
@@ -312,10 +260,6 @@ ion-badge{
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   }
-
-  .post-text {
-    margin-top: 55%;
-  }
 }
 
 // For large desktop
@@ -323,9 +267,5 @@ ion-badge{
   .container {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  }
-
-  .post-text {
-    margin-top: 60%;
   }
 }

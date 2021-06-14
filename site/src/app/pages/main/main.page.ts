@@ -97,10 +97,21 @@ export class MainPage {
     }else if (minutes >= 60 && hours <= 24) {
       timeElapsed = `Hace ${hours} h`;
     }else if (days >= 1) {
-      timeElapsed = `Hace ${days} Días y ${hours - 24} h`;
+      //timeElapsed = `Hace ${days} Días y ${hours - 24} h`;
+      timeElapsed = `Hace ${days} Días`;
     }
 
     return timeElapsed;
+  }
+
+  getImgUrl(url: string) {
+    if (url) {
+        this.endOfThePage = true;
+        return `url('${url}')`
+    } else {
+        this.endOfThePage = true;
+        return "url('../../assets/default-post.svg')"
+    }
   }
 
   async setSocketsHandler() {
@@ -177,8 +188,6 @@ export class MainPage {
   }
 
   async showOptions($event: MouseEvent, postId: string) {
-    console.log($event);
-    console.log(postId);
     $event.stopPropagation();
     const popover = await this.popoverCtrl.create({
       component: PostOptionsComponent,
@@ -200,9 +209,9 @@ export class MainPage {
   // Display placard for show the post.
   toggleHide(postId: string) {
     const post = (document.querySelector(`#post_${postId}`) as HTMLElement);
-    const postImg = (document.querySelector(`#post_${postId} + img`) as HTMLElement);
+    const postContent = (document.querySelector(`#post_${postId} ~ .content`) as HTMLElement);
     post.style.display = 'flex';
-    postImg.style.display = 'none';
+    postContent.style.display = 'none';
 
     // Delete the post id as value from 'hiddenPostId'.
     this.storage.get('hiddenPostId').then((id: string[]) => {
@@ -224,9 +233,9 @@ export class MainPage {
   // Show the post and pop its id.
   showPost(postId: string) {
     const post = (document.querySelector(`#post_${postId}`) as HTMLElement);
-    const postImg = (document.querySelector(`#post_${postId} + img`) as HTMLElement);
+    const postContent = (document.querySelector(`#post_${postId} ~ .content`) as HTMLElement);
     post.style.display = 'none';
-    postImg.style.display = 'block';
+    postContent.style.display = 'block';
 
   }
 
@@ -257,9 +266,4 @@ export class MainPage {
   goToTop() {
     this.content.scrollToPoint(0, 0, 400);
   }
-
-  loadEndOfThePage() {
-    this.endOfThePage = true;
-  }
-
 }
