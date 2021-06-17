@@ -163,7 +163,7 @@ export class PostPage implements OnInit {
       await toast.present();
       return;
     }
-    
+
     // Alert message.
     let buttonAlert: string;
 
@@ -195,11 +195,23 @@ export class PostPage implements OnInit {
   }
 
   async getComments() {
-    const comments = await this.postServ.getComments(this.postId);
+    var comments = await this.postServ.getComments(this.postId);
     this.comments = comments.docs.map(comment => {
       const commentObj: any = comment.data();
       commentObj.id = comment.id;
-      
+
+
+      // Tag responses.
+      commentObj.responses = [];
+      comments.docs.forEach(doc => {
+        const docData = doc.data() as any;
+        const commentIdTag = `>>${comment.id.substr(0, 6).toUpperCase()}`;
+        const taggerIdTag = `>>${doc.id.substr(0, 6).toUpperCase()}`;
+
+        if ((docData.body as string).search(commentIdTag) != -1)
+          commentObj.responses.push(taggerIdTag)
+      })
+
       // Tag cooment.
       const tags = (commentObj.body as string).match(/>>[a-zA-Z0-9]{6,6}/g);
       commentObj.body = (commentObj.body as string).replace(/>>[a-zA-Z0-9]{6,6}/g, '');
@@ -229,11 +241,11 @@ export class PostPage implements OnInit {
     });
   }
 
-  clearFirstBrs(text: string){
-    if(text.startsWith('<br>')){
+  clearFirstBrs(text: string) {
+    if (text.startsWith('<br>')) {
       text = text.slice(4, text.length);
       return this.clearFirstBrs(text);
-    }else{
+    } else {
       return text;
     }
   }
@@ -247,7 +259,7 @@ export class PostPage implements OnInit {
       let embed = url.toString().replace(/\.com\/watch\?v=/, '-nocookie.com/embed/');
       return this.sanitizer.bypassSecurityTrustResourceUrl(embed);
     } else {
-        return false;
+      return false;
     }
   }
 

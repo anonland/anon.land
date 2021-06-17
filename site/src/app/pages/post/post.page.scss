@@ -177,4 +177,17 @@ ion-grid {
     font-weight: bold;
     color: var(--ion-color-primary);
     cursor: pointer;
+
+    .response{
+        font-size: 50% !important;
+    }
+}
+
+.comment-tag-response{
+    text-decoration: underline;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    cursor: pointer;
+    font-size: 70% !important;
+    margin: 10px 0px 0px 0px;
 }
