@@ -354,7 +354,7 @@ export class PostPage implements OnInit {
   }
 
   tagComment(commentId: string) {
-    const commentFormatted = `>>${commentId.substr(0, 6)}`;
+    const commentFormatted = `>>${commentId.substr(0, 6).toUpperCase()}`;
 
     if (this.txtComment.value.indexOf(commentFormatted) == -1)
       this.txtComment.value += `${commentFormatted}\n`;

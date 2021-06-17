@@ -124,7 +124,6 @@ ion-grid {
         color: white;
         margin-right: 2%;
         padding: 2px;
-        width: 50px;
     }
 
     .comment-options-button {
@@ -145,13 +144,14 @@ ion-grid {
 
     .post-anon {
         border-radius: 8px;
-        widows: 60px;
+        width: 51px;
     }
 
     .post-id {
-        width: 60px;
+        max-width: 100px;
         border-radius: 8px;
         cursor: pointer;
+        padding: 2px 10px
     }
 
     .comment-content {
