@@ -12,6 +12,6 @@ RUN npm install
 
 RUN npm --prefix ./site install
 
-RUN npm --prefx /site run build
+RUN npm --prefix /site run build
 
 CMD ["npm", "start"]
