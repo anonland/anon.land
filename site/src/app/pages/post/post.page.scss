@@ -37,7 +37,7 @@
 
 .comment-button {
     display: grid;
-    grid-template-columns: 1fr 1fr 5fr 3fr;
+    grid-template-columns: 1fr 4fr 2fr;
     ion-button {
         --background: var(--ion-color-primary);
     }
@@ -45,6 +45,14 @@
 
 ion-grid {
     height: 100%;
+}
+
+#upload-link {
+    background-color: var(--ion-item-background-color);
+    border-radius: 8px;
+    height: 40px;
+    position: absolute;
+    width: 300px;
 }
 
 .timer {
@@ -57,10 +65,6 @@ ion-grid {
     padding: 0.5em;
 }
 
-.greenText {
-
-}
-
 .loading-comments {
     height: 100%;
     width: 100%;
@@ -69,6 +73,7 @@ ion-grid {
 }
 
 .post-comments {
+    font-size: 1.1em;
     font-weight: 400;
     ion-label {
         --background: var(--ion-color-primary-shade);
@@ -119,7 +124,6 @@ ion-grid {
         color: white;
         margin-right: 2%;
         padding: 2px;
-        width: 50px;
     }
 
     .comment-options-button {
@@ -140,18 +144,26 @@ ion-grid {
 
     .post-anon {
         border-radius: 8px;
-        widows: 60px;
+        width: 51px;
     }
 
     .post-id {
-        width: 60px;
+        max-width: 100px;
         border-radius: 8px;
         cursor: pointer;
+        padding: 2px 10px
     }
 
     .comment-content {
         font-weight: 500;
         margin-top: 10px;
+        white-space: normal
+    }
+
+    .comment-img {
+        max-width: 300px;
+        margin-top: 20px;
+        border-radius: 8px;
     }
 
 }
@@ -162,6 +174,17 @@ ion-grid {
 
 .comment-tag{
     text-decoration: underline;
-    color: blue;
+    font-weight: bold;
+    color: var(--ion-color-primary);
     cursor: pointer;
+    margin-top: 5px;
+}
+
+.comment-tag-response{
+    text-decoration: underline;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    cursor: pointer;
+    font-size: 70% !important;
+    margin: 10px 0px 0px 0px;
 }

@@ -78,6 +78,18 @@ html {
     width: 40vw;
 }
 
+.green-text {
+    color: #2dd36f;
+    font-weight: bold;
+    font-size: 1.1em !important;
+}
+
+.url-green-text {
+    color:#68c0cf;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
 // For not supports features.
 @supports not (backdrop-filter: none) {
     .color-scheme-changer-modal .modal-wrapper {

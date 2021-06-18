@@ -50,13 +50,13 @@
 + [x] Add comments in posts.
 
 ### non-so higher priorities
-+ [ ] Green text stories ">".
++ [x] Green text stories ">".
 + [x] Hide posts and comments.
 + [ ] Add points in posts.
 + [x] Make compulsory all the inputs in all forms.
 + [ ] Make a real rank system with the points.
 + [ ] Make a trending posts.
-+ [ ] Use an api or npm pkg for the user's ip and country flag. :jp: :it: :fr:
++ [ ] Use an API or npm pkg for the user's IP and country flag. :jp: :it: :fr:
 + [ ] Make a system ladder with the rank system with season and rewards.
 
 ## Contributors

@@ -7,7 +7,7 @@ import { Timestamp } from '@google-cloud/firestore';
 export class TimestampToDatePipe implements PipeTransform {
 
   transform(value: Timestamp, ...args: any[]): any {
-    return new Date(value.toMillis()).toLocaleString([], { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
+    return new Date(value.toMillis()).toLocaleString('es-AR', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' });
   }
 
 }

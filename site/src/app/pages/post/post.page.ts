@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, PopoverController, ToastController } from '@ionic/angular';
 import { CommentOptionsComponent } from 'src/app/components/comment-options/comment-options.component';
@@ -20,6 +20,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./post.page.scss'],
 })
 export class PostPage implements OnInit {
+  public safeUrl: SafeResourceUrl;
   public postId: string;
   public post: Post = new Post();
   public comments = new Array<any>();
@@ -49,7 +50,8 @@ export class PostPage implements OnInit {
     private storage: Storage,
     private commentServ: CommentService,
     private animationCtrl: AnimationController,
-    private location: Location
+    private location: Location,
+    private sanitizer: DomSanitizer
   ) { }
 
   async ngOnInit() {
@@ -153,19 +155,14 @@ export class PostPage implements OnInit {
       await toast.present();
       return;
     }
-
     // Replace escaped characters.
-    let body = this.txtComment.value.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    let body = this.txtComment.value;
 
     if ((body.match(/<br>/g) || []).length > 4 || body.length > 250) {
       const toast = await this.toastCtrl.create({ header: 'El comentario es muy largo', duration: 3000, position: 'top', color: 'warning' });
       await toast.present();
       return;
     }
-
-    // Make green text.
-    // const greenText = '<div style="color: #2dd36f; font-weight: bold;">$1</div>';
-    // body = body.replace(/((^|\s|\t)[>].*<br>)/g, greenText);
 
     // Alert message.
     let buttonAlert: string;
@@ -198,15 +195,41 @@ export class PostPage implements OnInit {
   }
 
   async getComments() {
-    const comments = await this.postServ.getComments(this.postId);
+    var comments = await this.postServ.getComments(this.postId);
     this.comments = comments.docs.map(comment => {
       const commentObj: any = comment.data();
       commentObj.id = comment.id;
 
+
+      // Tag responses.
+      commentObj.responses = [];
+      comments.docs.forEach(doc => {
+        const docData = doc.data() as any;
+        const commentIdTag = `>>${comment.id.substr(0, 6).toUpperCase()}`;
+        const taggerIdTag = `>>${doc.id.substr(0, 6).toUpperCase()}`;
+
+        if ((docData.body as string).search(commentIdTag) != -1)
+          commentObj.responses.push(taggerIdTag)
+      })
+
+      // Tag cooment.
       const tags = (commentObj.body as string).match(/>>[a-zA-Z0-9]{6,6}/g);
       commentObj.body = (commentObj.body as string).replace(/>>[a-zA-Z0-9]{6,6}/g, '');
       commentObj.body = this.clearFirstBrs(commentObj.body);
       commentObj.tags = tags;
+
+      // Aply text decorations.
+      const matchGreen = /((^>)[^>]\w+)/gm;
+      const matchUrl = /(>>)((http[s]:\/\/(www\.|\w|\d))?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?)/gm;
+      const greenText = '<p class="green-text">$1</p>';
+      const urlGreenText = '<a href="$2" target="_blank" class="url-green-text">$1$2</a>';
+
+      if (commentObj.body.match(matchGreen)) {
+        commentObj.body = commentObj.body.replace(matchGreen, greenText);
+      }
+      if (commentObj.body.match(matchUrl)) {
+        commentObj.body = commentObj.body.replace(matchUrl, urlGreenText);
+      }
 
       // Display placard for each hide comment.
       this.storage.forEach((key, value) => {
@@ -218,12 +241,25 @@ export class PostPage implements OnInit {
     });
   }
 
-  clearFirstBrs(text: string){
-    if(text.startsWith('<br>')){
+  clearFirstBrs(text: string) {
+    if (text.startsWith('<br>')) {
       text = text.slice(4, text.length);
       return this.clearFirstBrs(text);
-    }else{
+    } else {
       return text;
+    }
+  }
+
+  // Get embed youtube link.
+  youtubeEmbed(url: any) {
+    const matchYoutube = /https:\/\/www.youtube.com\/(watch\?v=|embed\/)\w+/gm;
+    url = url.match(matchYoutube)
+
+    if (url) {
+      let embed = url.toString().replace(/\.com\/watch\?v=/, '-nocookie.com/embed/');
+      return this.sanitizer.bypassSecurityTrustResourceUrl(embed);
+    } else {
+      return false;
     }
   }
 
@@ -256,7 +292,7 @@ export class PostPage implements OnInit {
         }
       }
 
-      // Finally return the new hidden comments list.
+      // Return the new hidden comments list.
       this.storage.set('hiddenCommentId', toKeep);
     });
   }
@@ -273,7 +309,7 @@ export class PostPage implements OnInit {
   async deletePost() {
     const alert = await this.alertCtrl.create({
       header: 'Borrar post',
-      message: '¿Estas seguro de borrar este post?',
+      message: '¿Estas seguro de querer borrar este post?',
       buttons: [{ text: 'Cancelar', role: 'cancel' }, {
         text: 'Aceptar', handler: async () => {
           await this.postServ.deletePost(this.postId);
@@ -330,7 +366,7 @@ export class PostPage implements OnInit {
   }
 
   tagComment(commentId: string) {
-    const commentFormatted = `>>${commentId.substr(0, 6)}`;
+    const commentFormatted = `>>${commentId.substr(0, 6).toUpperCase()}`;
 
     if (this.txtComment.value.indexOf(commentFormatted) == -1)
       this.txtComment.value += `${commentFormatted}\n`;
