@@ -1,5 +1,5 @@
-npm install
-cd site/
-npm install
-npm run build
-cd ..
+# npm install
+# cd site/
+# npm install
+# npm run build
+# cd ..
