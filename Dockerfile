@@ -8,6 +8,10 @@ COPY package*.json ./
 
 COPY . .
 
-RUN ./init.sh
+RUN npm install
+
+RUN npm --prefix ./site install
+
+RUN npm --prefx /site run build
 
 CMD ["npm", "start"]
