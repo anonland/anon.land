@@ -1,6 +1,6 @@
 <ion-list>
   <ion-item lines="none" *ngIf="reports.length == 0">No hay reportes</ion-item>
-  <ion-item *ngFor="let report of reports" (click)="goToPost(report.caategory, report.id)" style="cursor: pointer;">
+  <ion-item *ngFor="let report of reports" (click)="goToPost(report.category, report.id)" style="cursor: pointer;">
     <ion-label *ngIf="report.type === 'post'">
       <h3>{{ 'POST ' + report.id }}</h3>
       <p>{{ 'OP: ' + report.opid }}</p>

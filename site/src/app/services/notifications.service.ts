@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AuthService } from './auth.service';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationsService {
 
-  constructor(private auth: AuthService, private afs: AngularFirestore) { }
+  constructor(private sessionServ: SessionService, private afs: AngularFirestore) { }
 
-  getNotifications() {
-    return this.afs.collection('notifications', ref => ref.where('userID', '==', this.auth.user.uid).orderBy('createdAt').limit(5)).get().toPromise();
+  async getNotifications() {
+    const userId = await this.sessionServ.getSession();
+    return this.afs.collection('notifications', ref => ref.where('userId', '==', userId).orderBy('createdAt').limit(5)).get().toPromise();
   }
 }

@@ -182,8 +182,31 @@ app.post("/comment", upload.single("post-img-upload"), body("body").isLength({ m
       createdAt: fireDate.Timestamp.now(),
     };
 
-    await firebase.db.collection("comments").add(commentData);
+    const addedComment = await firebase.db.collection("comments").add(commentData);
+    await firebase.db.collection("comments").doc(addedComment.id).update({ tag: (await addedComment.get()).id.substr(0, 6).toUpperCase() });
+
     io.emit(`${postId}/newComment`);
+
+    // Notifications
+    const matches = body.match(/>>[a-zA-Z0-9]{6,6}/g);
+
+    if (matches != undefined) {
+      await matches.forEach(async tag => {
+        tag = tag.replace('>>', '');
+        const comment = await firebase.db.collection("comments").where('tag', '==', tag).get();
+        const post = (await firebase.db.collection("posts").doc(postId).get()).data();
+        
+        const notification = {
+          userId: comment.docs[0].data().userId,
+          postUrl: `${post.category}/${postId}/${tag}`,
+          description: 'Fuiste tagueado en "' + post.title + '"',
+          imgPath: post.imgPath,
+          createdAt: fireDate.Timestamp.now()
+        }
+
+        await firebase.db.collection("notifications").add(notification);
+      });
+    }
 
     return res.sendStatus(200);
   } else {

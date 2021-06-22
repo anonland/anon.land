@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PopoverController } from '@ionic/angular';
 import { NotificationsService } from 'src/app/services/notifications.service';
 
 @Component({
@@ -8,7 +10,11 @@ import { NotificationsService } from 'src/app/services/notifications.service';
 })
 export class NotificationsPreviewComponent implements OnInit {
   public notifications: Array<any>;
-  constructor(private notificationsServ: NotificationsService) { }
+  constructor(
+    private notificationsServ: NotificationsService,
+    private popoverCtrl: PopoverController,
+    private router: Router
+    ) { }
 
   async ngOnInit() {
     this.notifications = new Array<any>();
@@ -17,5 +23,10 @@ export class NotificationsPreviewComponent implements OnInit {
       notificationObj.id = notification.id;
       this.notifications.push(notificationObj);
     });
+  }
+
+  async goToPost(postUrl) {
+    await this.popoverCtrl.dismiss();
+    await this.router.navigate([postUrl]);
   }
 }
