@@ -1,6 +1,11 @@
 <div class="ion-text-center">
     <p *ngIf="notifications.length == 0">No hay notificaciones</p>
     <div *ngIf="notifications.length != 0">
-        
+        <ion-item *ngFor="let notification of notifications" (click)="goToPost(notification.postUrl)"
+            style="cursor: pointer;">
+            <img [src]="notification.imgPath" width="30px" height="30px" style="border-radius: 5px;margin-right: 10px;">
+            <ion-label style="white-space: unset;">{{notification.description}}</ion-label>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-item>
     </div>
 </div>
