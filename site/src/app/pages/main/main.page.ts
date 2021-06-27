@@ -67,6 +67,18 @@ export class MainPage {
     }
 
     this.posts = new Array<Post>();
+
+    // Fixed post
+    this.posts.push({
+      opid: undefined,
+      body: 'Reglas',
+      title: 'Reglas',
+      createdAt: Date.now() as any,
+      id: 'reglas',
+      category:  'off',
+      imgPath: '../../assets/default-post.svg'
+    });
+
     posts.forEach(post => {
       const postObj: Post = post.data() as Post;
       postObj.id = post.id;
