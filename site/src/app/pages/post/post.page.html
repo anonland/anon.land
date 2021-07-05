@@ -14,7 +14,7 @@
         <div class="post-img">
           <img [src]='post.imgPath' style="max-width: 600px;">
         </div>
-        <div *ngIf="authServ.user != undefined">
+        <div *ngIf="authServ.user != undefined && postId != 'reglas'">
           <ion-button (click)="deletePost()">
             <ion-icon name="trash-outline"></ion-icon>Borrar
           </ion-button>
@@ -39,7 +39,7 @@
             <ion-select-option value="anm">Anime</ion-select-option>
           </ion-select>
         </div>
-        <div *ngIf="authServ.user == undefined">
+        <div *ngIf="authServ.user == undefined && postId != 'reglas'">
           <ion-button class="margin-left" (click)="report()">
             <ion-icon slot="start" name="flag"></ion-icon>Reportar
           </ion-button>
@@ -77,6 +77,7 @@
           <ion-item>
             <h4>Comentarios:</h4>
           </ion-item>
+          <h3 *ngIf="postId == 'reglas'" class="ion-text-center">Los comentarios estan deshabilitados</h3>
           <ion-item class="post-comments" *ngFor="let comment of comments" [id]="comment.id.substr(0, 6).toUpperCase()">
             <div class="show-comment" id="comment_{{ comment.id }}" (click)="showComment(comment.id)">
               <ion-icon class="show-comment-title" slot="start" ios="eye-off-outline" md="eye-off-sharp"></ion-icon>

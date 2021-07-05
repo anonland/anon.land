@@ -58,6 +58,22 @@ export class PostPage implements OnInit {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
     this.commentId = this.activatedRoute.snapshot.paramMap.get('commentId');
 
+    if (this.postId == 'reglas') {
+      this.post = {
+        opid: undefined,
+        body: 'Reglas',
+        title: 'Reglas',
+        createdAt: undefined,
+        id: 'reglas',
+        category: 'off',
+        imgPath: '../../assets/default-post.svg'
+      };
+
+      this.commentBtnDisabled = true;
+      this.title.setTitle('Reglas | Anon Land');
+      return;
+    }
+
     const postDoc = await this.postServ.getPostById(this.postId).toPromise();
 
     if (!postDoc || !postDoc.exists) {
