@@ -44,7 +44,35 @@
             <ion-icon slot="start" name="flag"></ion-icon>Reportar
           </ion-button>
         </div>
-        <h2 class="margin-left">{{post.body}}</h2>
+        <h2 *ngIf="postId == 'reglas'" class="margin-left">
+          <strong>Terminos y condiciones</strong>
+          <br>
+          Anon Land no asume ninguna responsabilidad legal sobre el contenido publicado por sus usuarios. Sin embargo,
+          Anon Land se compromete a eliminar cualquier contenido en discordancia con sus reglas y con la legislación
+          aplicable al sitio dentro de un plazo razonable conforme a la frecuencia de actividad de los miembros del
+          staff.
+          <br>
+          <br>
+          El contenido publicado en Anon Land no representa las opiniones de la administración y moderación del sitio. .
+          <br>
+          <br>
+          Anon Land es de uso anónimo y sin registro. No obstante, el sitio recogerá información estándar, incluyendo su
+          dirección IP, con el fin de proteger nuestros derechos y los de los usuarios en el cumplimiento de un proceso
+          legal.
+          <br>
+          <br>
+          Este documento podrá ser modificado en cualquier momento y sin necesidad de previo aviso.
+          <br>
+          <br>
+          <strong>Reglas</strong>
+          <br>
+          Los Usuarios se comprometen a hacer un uso legal y responsable de la plataforma y aceptar sus términos y
+          condiciones. No se permiten conductas que vayan contra las leyes, los derechos e intereses de terceros. Anon
+          Land se reserva el derecho de hacer llegar a la justicia y/u organismo de seguridad todo aquel material de
+          origen dudoso y/o sensible que considere contrario a derecho. Si no está de acuerdo podrá dejar de utilizar
+          los servicios del sitio.
+        </h2>
+        <h2 *ngIf="postId != 'reglas'" class="margin-left">{{post.body}}</h2>
       </ion-col>
       <ion-col sizeLg="5" sizeMd="5" sizeSm="12" sizeXs="12" class="comments-container">
         <ion-row>
