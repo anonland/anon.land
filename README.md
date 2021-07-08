@@ -41,7 +41,7 @@
 
 + [X] Apply sockets.
 + [ ] Select options in report button.
-+ [ ] Add number of reports array and save it in Firebase report section.
++ [x] Add number of reports array and save it in Firebase report section.
 + [x] Split front and back.
 + [x] Sort the posts by date.
 + [ ] Make an admin control panel for deleting posts.
