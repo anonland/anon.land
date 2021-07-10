@@ -12,7 +12,7 @@ firebase-debug.log
 debug.log
 
 # Workspace setting for VScode.
-.vscode
+vscode/
 *.code-workspace
 
 # Emacs project interaction library.
