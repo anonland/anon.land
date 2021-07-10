@@ -43,7 +43,7 @@ export class MainPage {
     private title: Title,
     private sessionServ: SessionService,
     private storage: Storage,
-    private authServ: AuthService
+    public authServ: AuthService
   ) {
     this.activatedRoute.params.subscribe(async _ => {
       this.title.setTitle('Anon Land');
@@ -59,13 +59,16 @@ export class MainPage {
 
   async getPostsFeed() {
     let posts;
+
+    this.postServ.clearLastPostDate();
+    
     if (!this.category || this.category === 'off') {
       posts = await this.postServ.getPostList();
     }
     else {
       posts = await this.postServ.getPostListByCategory(this.category);
     }
-
+    
     this.posts = new Array<Post>();
 
     // Fixed post
@@ -75,7 +78,7 @@ export class MainPage {
       title: 'Reglas',
       createdAt: Date.now() as any,
       id: 'reglas',
-      category:  'off',
+      category: 'off',
       imgPath: '../../assets/default-post.svg'
     });
 
@@ -106,9 +109,9 @@ export class MainPage {
       timeElapsed = 'Ahora';
     } else if (minutes >= 1 && minutes <= 60) {
       timeElapsed = `Hace ${minutes} min`;
-    }else if (minutes >= 60 && hours <= 24) {
+    } else if (minutes >= 60 && hours <= 24) {
       timeElapsed = `Hace ${hours} h`;
-    }else if (days >= 1) {
+    } else if (days >= 1) {
       //timeElapsed = `Hace ${days} Días y ${hours - 24} h`;
       timeElapsed = `Hace ${days} Días`;
     }
@@ -118,11 +121,11 @@ export class MainPage {
 
   getImgUrl(url: string) {
     if (url) {
-        this.endOfThePage = true;
-        return `url('${url}')`
+      this.endOfThePage = true;
+      return `url('${url}')`
     } else {
-        this.endOfThePage = true;
-        return "url('../../assets/default-post.svg')"
+      this.endOfThePage = true;
+      return "url('../../assets/default-post.svg')"
     }
   }
 
@@ -157,10 +160,10 @@ export class MainPage {
 
     this.postServ.setMovedPostSocket(async (postId, category) => {
       this.posts = this.posts.map(p => {
-        if(p.id === postId)
+        if (p.id === postId)
           p.category = category;
-        
-          return p;
+
+        return p;
       });
     });
 
@@ -277,5 +280,21 @@ export class MainPage {
 
   goToTop() {
     this.content.scrollToPoint(0, 0, 400);
+  }
+
+  async loadMorePosts($event) {
+    let posts;
+
+    if (!this.category || this.category === 'off')
+      posts = await this.postServ.getPostList();
+    else
+      posts = await this.postServ.getPostListByCategory(this.category);
+
+    posts.forEach(post => {
+      const postObj: Post = post.data() as Post;
+      postObj.id = post.id;
+
+      this.posts.push(postObj);
+    });
   }
 }
