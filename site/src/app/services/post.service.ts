@@ -8,6 +8,8 @@ import { SocketService } from './socket.service';
   providedIn: 'root'
 })
 export class PostService {
+  private readonly postsPerRefresh = 20;
+  private lastPostDate: FirebaseFirestore.Timestamp;
 
   constructor(private db: AngularFirestore, private http: HttpClient, private auth: AuthService, private socket: SocketService) { }
 
@@ -31,12 +33,35 @@ export class PostService {
     return this.db.collection('posts').doc(postId).get();
   }
 
-  getPostList() {
-    return this.db.collection('posts').ref.orderBy('createdAt', 'desc').get();
+  async getPostList() {
+    let query = this.db.collection('posts').ref.orderBy('createdAt', 'desc').limit(this.postsPerRefresh);
+
+    if (this.lastPostDate != undefined)
+      query = query.startAfter(this.lastPostDate);
+
+    const posts = await query.get();
+
+    if (!posts.empty)
+      this.lastPostDate = (posts.docs[posts.size - 1].data() as any).createdAt;
+
+    return posts;
   }
 
-  getPostListByCategory(category: string) {
-    return this.db.collection('posts').ref.where('category', '==', category).orderBy('createdAt', 'desc').get();
+  async getPostListByCategory(category: string) {
+    let query = this.db.collection('posts').ref
+      .where('category', '==', category)
+      .orderBy('createdAt', 'desc')
+      .limit(this.postsPerRefresh);
+
+    if (this.lastPostDate != undefined)
+      query = query.startAfter(this.lastPostDate);
+
+    const posts = await query.get();
+
+    if (!posts.empty)
+      this.lastPostDate = (posts.docs[posts.size - 1].data() as any).createdAt;
+
+    return posts;
   }
 
   getComments(postId: string) {
@@ -55,5 +80,9 @@ export class PostService {
 
   async changePostCategory(postId: string, category: string) {
     return this.db.collection('posts').doc(postId).set({ category: category }, { merge: true })
+  }
+
+  clearLastPostDate(){
+    this.lastPostDate = undefined;
   }
 }

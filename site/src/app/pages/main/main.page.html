@@ -44,6 +44,12 @@
       </div>
     </div>
   </div>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMorePosts($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más posts...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <div class="scroll-top" (click)="goToTop()" *ngIf="isDown" style="border-radius: 5px">
