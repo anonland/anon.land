@@ -16,7 +16,7 @@ const { body, validationResult } = require('express-validator');
 const sharp = require('sharp');
 
 // set cors policy
-app.use(cors({ origin: ["http://localhost:5000", "https://anon.land"] }));
+app.use(cors({ origin: ["https://localhost:5000", "https://anon.land"] }));
 
 app.use(bodyParser.json());
 
@@ -131,7 +131,7 @@ app.post("/create",
 
       await sharp(req.file.path)
         .resize(600, 450, { fit: 'inside' })
-        .toFile('../site/www/images/' + req.file.filename);
+        .toFile('../site/www/images/' + req.file.filename).catch(error => console.log("ERROR: ", error));
 
       const { category, title, body, opid } = req.body;
 
