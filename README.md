@@ -42,7 +42,6 @@
 + [X] Apply sockets.
 + [ ] Select options in report button.
 + [x] Add number of reports array and save it in Firebase report section.
-+ [x] Split front and back.
 + [x] Sort the posts by date.
 + [ ] Make an admin control panel for deleting posts.
 + [x] Upload imgs in posts (multer).
@@ -50,6 +49,7 @@
 + [x] Add comments in posts.
 
 ### non-so higher priorities
++ [ ] Split front and back with docker-compose.
 + [x] Green text stories ">".
 + [x] Hide posts and comments.
 + [ ] Add points in posts.
